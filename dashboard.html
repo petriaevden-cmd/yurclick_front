@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ЮрКлик — Дашборд</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Flowbite -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js" defer></script>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="h-full bg-[#fbf9fa] font-sans antialiased">
+
+  <!-- ═══════════════════════════════════════════════
+       SIDEBAR OVERLAY (mobile)
+  ═══════════════════════════════════════════════ -->
+  <div id="sidebar-overlay"
+       class="fixed inset-0 z-20 bg-gray-900/50 hidden lg:hidden"
+       onclick="toggleSidebar()">
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       LEFT SIDEBAR
+  ═══════════════════════════════════════════════ -->
+  <aside id="sidebar"
+         class="fixed inset-y-0 left-0 z-30 w-64 bg-white shadow-lg flex flex-col
+                -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out">
+
+    <!-- Logo -->
+    <div class="flex items-center gap-3 px-5 py-5 border-b border-gray-100">
+      <!-- Scales / Legal icon -->
+      <div class="flex-shrink-0 w-9 h-9 bg-indigo-600 rounded-lg flex items-center justify-center">
+        <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none"
+             xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- Balance / scales icon -->
+          <path d="M12 3v18M12 3l-6 4.5M12 3l6 4.5M6 7.5l-3 6h6l-3-6zM18 7.5l-3 6h6l-3-6z"
+                stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M8 21h8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <span class="text-xl font-bold text-gray-900 tracking-tight">ЮрКлик</span>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
+
+      <!-- Дашборд (active) -->
+      <a href="dashboard.html"
+         class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-indigo-50 text-indigo-700 font-medium text-sm group">
+        <svg class="w-5 h-5 text-indigo-600 flex-shrink-0" viewBox="0 0 24 24" fill="none"
+             xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="3" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8"/>
+          <rect x="14" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8"/>
+          <rect x="3" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8"/>
+          <rect x="14" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8"/>
+        </svg>
+        Дашборд
+      </a>
+
+      <!-- Пользователи -->
+      <a href="users.html"
+         class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 hover:text-gray-900 font-medium text-sm transition-colors">
+        <svg class="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24" fill="none"
+             xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M17 20c0-2.21-2.239-4-5-4s-5 1.79-5 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.8"/>
+          <path d="M23 20c0-1.657-1.567-3-3.5-3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          <path d="M19.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z" stroke="currentColor" stroke-width="1.8"/>
+          <path d="M1 20c0-1.657 1.567-3 3.5-3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          <path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z" stroke="currentColor" stroke-width="1.8"/>
+        </svg>
+        Пользователи
+      </a>
+
+      <!-- Оплата -->
+      <a href="payment.html"
+         class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 hover:text-gray-900 font-medium text-sm transition-colors">
+        <svg class="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24" fill="none"
+             xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="2" y="5" width="20" height="14" rx="2" stroke="currentColor" stroke-width="1.8"/>
+          <path d="M2 10h20" stroke="currentColor" stroke-width="1.8"/>
+          <path d="M6 15h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+        Оплата
+      </a>
+
+      <!-- Брендинг -->
+      <a href="branding.html"
+         class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 hover:text-gray-900 font-medium text-sm transition-colors">
+        <svg class="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24" fill="none"
+             xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/>
+          <path d="M9 12c0-1.657 1.343-3 3-3s3 1.343 3 3-1.343 3-3 3-3-1.343-3-3z"
+                stroke="currentColor" stroke-width="1.8"/>
+          <path d="M12 3v3M12 18v3M3 12h3M18 12h3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+        Брендинг
+      </a>
+    </nav>
+
+    <!-- User block -->
+    <div class="border-t border-gray-100 px-4 py-4">
+      <div class="flex items-center gap-3">
+        <!-- Avatar placeholder -->
+        <div class="w-9 h-9 rounded-full bg-indigo-100 flex items-center justify-center flex-shrink-0">
+          <span class="text-sm font-semibold text-indigo-700">ИП</span>
+        </div>
+        <div class="min-w-0">
+          <p class="text-sm font-semibold text-gray-900 truncate">Иван Петров</p>
+          <p class="text-xs text-gray-500 truncate">Администратор</p>
+        </div>
+        <!-- Logout icon -->
+        <button class="ml-auto text-gray-400 hover:text-gray-600 transition-colors flex-shrink-0" title="Выйти">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M17 16l4-4m0 0l-4-4m4 4H7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M9 20H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ═══════════════════════════════════════════════
+       MAIN WRAPPER (offset for sidebar)
+  ═══════════════════════════════════════════════ -->
+  <div class="lg:pl-64 flex flex-col min-h-screen">
+
+    <!-- ═══════════════════════════════════════════════
+         TOP NAVBAR
+    ═══════════════════════════════════════════════ -->
+    <header class="sticky top-0 z-10 bg-white shadow-sm">
+      <div class="flex items-center justify-between px-4 sm:px-6 h-16">
+
+        <!-- Left: hamburger + breadcrumb -->
+        <div class="flex items-center gap-3">
+          <!-- Hamburger (mobile only) -->
+          <button id="hamburger-btn"
+                  onclick="toggleSidebar()"
+                  class="lg:hidden p-2 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-gray-700 transition-colors"
+                  aria-label="Открыть меню">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </button>
+
+          <!-- Breadcrumb -->
+          <nav class="flex items-center gap-1.5 text-sm" aria-label="Breadcrumb">
+            <a href="#" class="text-gray-500 hover:text-gray-700 transition-colors">Главная</a>
+            <svg class="w-3.5 h-3.5 text-gray-400 flex-shrink-0" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="text-gray-900 font-medium">Дашборд</span>
+          </nav>
+        </div>
+
+        <!-- Right: notification + user dropdown -->
+        <div class="flex items-center gap-2">
+
+          <!-- Notification bell -->
+          <button class="relative p-2 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-gray-700 transition-colors"
+                  aria-label="Уведомления">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M15 17H9m9-5V9a6 6 0 1 0-12 0v3c0 2-1 3-1 3h14s-1-1-1-3z"
+                    stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+            <!-- Badge -->
+            <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full ring-2 ring-white"></span>
+          </button>
+
+          <!-- User dropdown button -->
+          <button id="user-menu-btn"
+                  onclick="toggleUserMenu()"
+                  class="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-lg hover:bg-gray-100 transition-colors text-sm"
+                  aria-expanded="false"
+                  aria-haspopup="true">
+            <div class="w-7 h-7 rounded-full bg-indigo-100 flex items-center justify-center flex-shrink-0">
+              <span class="text-xs font-semibold text-indigo-700">ИП</span>
+            </div>
+            <span class="hidden sm:block font-medium text-gray-700">Иван Петров</span>
+            <svg class="w-4 h-4 text-gray-400 hidden sm:block" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+
+          <!-- User dropdown menu -->
+          <div id="user-menu"
+               class="hidden absolute right-4 top-14 w-48 bg-white rounded-xl shadow-lg border border-gray-100 py-1 z-50">
+            <a href="#" class="flex items-center gap-2.5 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+              <svg class="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.8"/>
+                <path d="M4 20c0-3.314 3.582-6 8-6s8 2.686 8 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+              Мой профиль
+            </a>
+            <a href="#" class="flex items-center gap-2.5 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+              <svg class="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" stroke="currentColor" stroke-width="1.8"/>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"
+                      stroke="currentColor" stroke-width="1.8"/>
+              </svg>
+              Настройки
+            </a>
+            <div class="border-t border-gray-100 my-1"></div>
+            <a href="#" class="flex items-center gap-2.5 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M17 16l4-4m0 0l-4-4m4 4H7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M9 20H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+              Выйти
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ═══════════════════════════════════════════════
+         MAIN CONTENT
+    ═══════════════════════════════════════════════ -->
+    <main class="flex-1 p-4 sm:p-6 space-y-6">
+
+      <!-- Page heading -->
+      <div>
+        <h1 class="text-xl font-bold text-gray-900">Дашборд</h1>
+        <p class="text-sm text-gray-500 mt-0.5">Обзор показателей платформы за апрель 2026</p>
+      </div>
+
+      <!-- ─────────────────────────────────────────
+           ROW 1: 6 Stat Cards
+      ───────────────────────────────────────── -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+
+        <!-- Card 1: Тарифный план -->
+        <div class="bg-white rounded-xl shadow-sm p-5 flex flex-col">
+          <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Тарифный план</p>
+          <p class="text-lg font-bold text-gray-900 mt-2">ПАКЕТ 500</p>
+          <p class="text-sm text-gray-500 mt-0.5">Лимит 500 дел / осталось 200 дел</p>
+          <!-- Progress bar -->
+          <div class="mt-3 w-full bg-gray-100 rounded-full h-1.5">
+            <div class="bg-indigo-500 h-1.5 rounded-full w-[60%]"></div>
+          </div>
+          <div class="border-t border-gray-100 mt-4 pt-4 flex items-center justify-between">
+            <span class="text-xs text-gray-500">Дата оплаты: 15.05.2026</span>
+            <a href="payment.html" class="text-xs font-medium text-indigo-600 hover:text-indigo-700 transition-colors">
+              Тариф →
+            </a>
+          </div>
+        </div>
+
+        <!-- Card 2: Дел подано -->
+        <div class="bg-white rounded-xl shadow-sm p-5 flex flex-col">
+          <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Дел подано</p>
+          <p class="text-3xl font-bold text-gray-900 mt-2 tabular-nums">47</p>
+          <p class="text-sm text-gray-500 mt-1">Дел подано в текущем месяце</p>
+          <div class="border-t border-gray-100 mt-4 pt-4 flex items-center justify-between">
+            <span class="text-xs font-medium text-green-600">↑ 12% к прошлому месяцу</span>
+            <a href="#" class="text-xs font-medium text-indigo-600 hover:text-indigo-700 transition-colors">
+              Все дела →
+            </a>
+          </div>
+        </div>
+
+        <!-- Card 3: Дел в работе -->
+        <div class="bg-white rounded-xl shadow-sm p-5 flex flex-col">
+          <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Дел в работе</p>
+          <p class="text-3xl font-bold text-gray-900 mt-2 tabular-nums">128</p>
+          <p class="text-sm text-gray-500 mt-1">Среди 8 юристов команды</p>
+          <div class="border-t border-gray-100 mt-4 pt-4 flex items-center justify-between">
+            <span class="text-xs font-medium text-green-600">↑ 5% к прошлому месяцу</span>
+            <a href="users.html" class="text-xs font-medium text-indigo-600 hover:text-indigo-700 transition-colors">
+              Пользователи →
+            </a>
+          </div>
+        </div>
+
+        <!-- Card 4: Требуют внимания (danger) -->
+        <div class="bg-white rounded-xl shadow-sm p-5 flex flex-col border border-red-100">
+          <p class="text-xs font-semibold text-red-600 uppercase tracking-wider">Требуют внимания</p>
+          <p class="text-3xl font-bold text-red-600 mt-2 tabular-nums">14</p>
+          <p class="text-sm text-gray-500 mt-1">Ожидают действий юриста</p>
+          <div class="border-t border-gray-100 mt-4 pt-4 flex items-center justify-between">
+            <span class="bg-red-100 text-red-700 px-2 py-0.5 rounded-full text-xs font-medium">Срочно</span>
+            <a href="#" class="text-xs font-medium text-red-600 hover:text-red-700 transition-colors">
+              Срочные дела →
+            </a>
+          </div>
+        </div>
+
+        <!-- Card 5: Авторизованных клиентов -->
+        <div class="bg-white rounded-xl shadow-sm p-5 flex flex-col">
+          <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Авторизованных клиентов</p>
+          <div class="flex items-baseline gap-1 mt-2">
+            <p class="text-3xl font-bold text-gray-900 tabular-nums">60</p>
+            <span class="text-lg text-gray-400 font-medium tabular-nums">/500</span>
+          </div>
+          <p class="text-sm text-gray-500 mt-1">Зарегистрированных в системе</p>
+          <div class="border-t border-gray-100 mt-4 pt-4 flex items-center justify-between">
+            <span class="bg-green-100 text-green-700 px-2 py-0.5 rounded-full text-xs font-medium">12% активны</span>
+            <a href="#" class="text-xs font-medium text-indigo-600 hover:text-indigo-700 transition-colors">
+              Клиенты →
+            </a>
+          </div>
+        </div>
+
+        <!-- Card 6: Дел завершено -->
+        <div class="bg-white rounded-xl shadow-sm p-5 flex flex-col">
+          <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Дел завершено</p>
+          <p class="text-3xl font-bold text-gray-900 mt-2 tabular-nums">1&nbsp;247</p>
+          <p class="text-sm text-gray-500 mt-1">Завершённых дел с 01.01.2024</p>
+          <div class="border-t border-gray-100 mt-4 pt-4 flex items-center justify-between">
+            <span class="text-xs text-gray-500">32 за последние 7 дней</span>
+            <a href="#" class="text-xs font-medium text-indigo-600 hover:text-indigo-700 transition-colors">
+              Завершённые дела →
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─────────────────────────────────────────
+           ROW 2: Chart + Status
+      ───────────────────────────────────────── -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+
+        <!-- Block 1: Line chart (2/3) -->
+        <div class="lg:col-span-2 bg-white rounded-xl shadow-sm p-5">
+          <div class="flex items-start justify-between mb-1">
+            <div>
+              <h2 class="text-base font-semibold text-gray-900">Подача дел в суд</h2>
+              <p class="text-sm text-gray-500 mt-0.5">Последние 14 дней</p>
+            </div>
+            <!-- Mini legend -->
+            <div class="flex items-center gap-1.5 mt-0.5">
+              <span class="w-3 h-0.5 bg-indigo-600 rounded-full inline-block"></span>
+              <span class="text-xs text-gray-500">Подано дел</span>
+            </div>
+          </div>
+          <!-- Chart container -->
+          <div class="mt-4 relative h-56 sm:h-64">
+            <canvas id="casesChart" class="w-full h-full"></canvas>
+          </div>
+        </div>
+
+        <!-- Block 2: Statuses (1/3) -->
+        <div class="lg:col-span-1 bg-white rounded-xl shadow-sm p-5 flex flex-col">
+          <h2 class="text-base font-semibold text-gray-900">Статусы дел</h2>
+          <p class="text-sm text-gray-500 mt-0.5">Апрель 2026</p>
+
+          <ul class="mt-4 space-y-3">
+            <!-- Всего дел в работе -->
+            <li class="flex items-center justify-between">
+              <div class="flex items-center gap-2.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-gray-400 flex-shrink-0"></span>
+                <span class="text-sm text-gray-700">Всего дел в работе</span>
+              </div>
+              <span class="text-sm font-semibold text-gray-900 tabular-nums">128</span>
+            </li>
+            <!-- Новых дел -->
+            <li class="flex items-center justify-between">
+              <div class="flex items-center gap-2.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-indigo-500 flex-shrink-0"></span>
+                <span class="text-sm text-gray-700">Новых дел</span>
+              </div>
+              <span class="text-sm font-semibold text-gray-900 tabular-nums">47</span>
+            </li>
+            <!-- Требуют внимания -->
+            <li class="flex items-center justify-between">
+              <div class="flex items-center gap-2.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-red-500 flex-shrink-0"></span>
+                <span class="text-sm text-gray-700">Требуют срочного внимания</span>
+              </div>
+              <span class="text-sm font-semibold text-red-600 tabular-nums">14</span>
+            </li>
+          </ul>
+
+          <div class="border-t border-gray-100 mt-5 pt-5">
+            <h3 class="text-sm font-semibold text-gray-700 mb-3">Контроль сроков</h3>
+            <div class="space-y-3">
+              <!-- Среднее время -->
+              <div class="flex items-center justify-between">
+                <span class="text-sm text-gray-500">Среднее время подачи</span>
+                <span class="text-sm font-semibold text-gray-900">3 дня</span>
+              </div>
+              <!-- Успешность -->
+              <div>
+                <div class="flex items-center justify-between mb-1.5">
+                  <span class="text-sm text-gray-500">Успешность закрытия</span>
+                  <span class="text-sm font-semibold text-green-600">94%</span>
+                </div>
+                <div class="w-full bg-gray-100 rounded-full h-1.5">
+                  <div class="bg-green-500 h-1.5 rounded-full w-[94%]"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick action -->
+          <div class="mt-auto pt-5">
+            <a href="#"
+               class="block w-full text-center bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium py-2 rounded-lg transition-colors">
+              Подать новое дело
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="px-6 py-4 border-t border-gray-100 bg-white">
+      <p class="text-xs text-gray-400 text-center">© 2026 ЮрКлик. Все права защищены.</p>
+    </footer>
+  </div><!-- /main wrapper -->
+
+
+  <!-- ═══════════════════════════════════════════════
+       SCRIPTS
+  ═══════════════════════════════════════════════ -->
+  <script>
+    /* ── Sidebar toggle ──────────────────────────── */
+    function toggleSidebar() {
+      const sidebar  = document.getElementById('sidebar');
+      const overlay  = document.getElementById('sidebar-overlay');
+      const isOpen   = !sidebar.classList.contains('-translate-x-full');
+      if (isOpen) {
+        sidebar.classList.add('-translate-x-full');
+        overlay.classList.add('hidden');
+      } else {
+        sidebar.classList.remove('-translate-x-full');
+        overlay.classList.remove('hidden');
+      }
+    }
+
+    /* ── User menu toggle ────────────────────────── */
+    function toggleUserMenu() {
+      const menu = document.getElementById('user-menu');
+      const btn  = document.getElementById('user-menu-btn');
+      const open = menu.classList.contains('hidden');
+      menu.classList.toggle('hidden', !open);
+      btn.setAttribute('aria-expanded', open.toString());
+    }
+
+    document.addEventListener('click', function (e) {
+      const menu = document.getElementById('user-menu');
+      const btn  = document.getElementById('user-menu-btn');
+      if (!menu.classList.contains('hidden') && !btn.contains(e.target) && !menu.contains(e.target)) {
+        menu.classList.add('hidden');
+        btn.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    /* ── Chart.js: Line chart ────────────────────── */
+    document.addEventListener('DOMContentLoaded', function () {
+      const ctx = document.getElementById('casesChart').getContext('2d');
+
+      const labels = [
+        '04.04','05.04','06.04','07.04','08.04','09.04','10.04',
+        '11.04','12.04','13.04','14.04','15.04','16.04','17.04'
+      ];
+      const data = [3, 5, 4, 7, 6, 4, 2, 5, 8, 6, 7, 4, 5, 6];
+
+      /* Gradient fill */
+      const gradient = ctx.createLinearGradient(0, 0, 0, 250);
+      gradient.addColorStop(0,   'rgba(99,102,241,0.18)');
+      gradient.addColorStop(1,   'rgba(99,102,241,0)');
+
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels,
+          datasets: [{
+            label: 'Подано дел',
+            data,
+            borderColor:     'rgb(99,102,241)',
+            backgroundColor: gradient,
+            borderWidth:     2.5,
+            pointRadius:     4,
+            pointHoverRadius: 6,
+            pointBackgroundColor: 'rgb(99,102,241)',
+            pointBorderColor:     '#fff',
+            pointBorderWidth:     2,
+            tension:         0.4,
+            fill:            true,
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: {
+            mode:      'index',
+            intersect: false,
+          },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: '#1e1b4b',
+              titleColor:      '#e0e7ff',
+              bodyColor:       '#c7d2fe',
+              padding:         10,
+              cornerRadius:    8,
+              titleFont:  { size: 12, weight: '600', family: 'Inter' },
+              bodyFont:   { size: 12,                family: 'Inter' },
+              callbacks: {
+                label: ctx => ` ${ctx.parsed.y} дел`
+              }
+            }
+          },
+          scales: {
+            x: {
+              grid:     { display: false },
+              border:   { display: false },
+              ticks: {
+                color:    '#9ca3af',
+                font:     { size: 11, family: 'Inter' },
+                maxRotation: 0,
+              }
+            },
+            y: {
+              grid: {
+                color:     'rgba(0,0,0,0.05)',
+                drawBorder: false,
+              },
+              border: { dash: [4,4], display: false },
+              ticks: {
+                color:      '#9ca3af',
+                font:       { size: 11, family: 'Inter' },
+                stepSize:   2,
+                padding:    8,
+              },
+              suggestedMin: 0,
+              suggestedMax: 10,
+            }
+          }
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
