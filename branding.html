@@ -14,7 +14,7 @@
 </head>
 <body class="font-sans">
 
-  <!-- Mobile hamburger button - place INSIDE main content area, top-left -->
+  <!-- Mobile hamburger -->
   <button id="mobile-menu-btn" class="lg:hidden fixed top-4 left-4 z-50 p-2 rounded-lg bg-white shadow-md">
     <svg class="w-6 h-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
       <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
@@ -26,43 +26,50 @@
 
   <!-- Sidebar -->
   <aside id="sidebar" class="fixed top-0 left-0 h-screen w-64 bg-white border-r border-gray-200 flex flex-col z-40 -translate-x-full lg:translate-x-0 transition-transform duration-200">
-    <!-- Logo area -->
+    <!-- Logo -->
     <div class="px-5 py-5 border-b border-gray-100">
       <span class="text-lg font-bold text-gray-900">Правовой Щит</span>
     </div>
 
-    <!-- Notifications -->
-    <a href="notifications.html" class="mx-3 mt-4 mb-2 flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors">
+    <!-- Notifications — with border and warning color -->
+    <a href="notifications.html" class="mx-3 mt-4 mb-2 flex items-center gap-3 px-3 py-2.5 rounded-lg border border-amber-300 bg-amber-50 text-amber-700 hover:bg-amber-100 transition-colors">
       <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
         <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
       </svg>
-      <span class="text-sm">3 уведомления</span>
+      <span class="text-sm font-medium">3 уведомления</span>
     </a>
 
     <!-- Navigation -->
     <nav class="flex-1 px-3 py-2 space-y-1">
-      <!-- Дашборд -->
+      <!-- Дашборд (4 squares grid) -->
       <a href="dashboard.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors">
         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M4 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1V5zm10 0a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 15a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1v-4zm10 0a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z"/>
         </svg>
         <span class="text-sm">Дашборд</span>
       </a>
-      <!-- Пользователи -->
+      <!-- Пользователи (person) -->
       <a href="users.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors">
         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
         </svg>
         <span class="text-sm">Пользователи</span>
       </a>
-      <!-- Оплата -->
+      <!-- Клиенты (people group) -->
+      <a href="clients.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+        </svg>
+        <span class="text-sm">Клиенты</span>
+      </a>
+      <!-- Оплата (credit card) -->
       <a href="payment.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors">
         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
         </svg>
         <span class="text-sm">Оплата</span>
       </a>
-      <!-- Брендинг -->
+      <!-- Брендинг (paintbrush) — ACTIVE -->
       <a href="branding.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-indigo-50 text-indigo-700 font-medium transition-colors">
         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
@@ -71,10 +78,19 @@
       </a>
     </nav>
 
-    <!-- User info at bottom -->
+    <!-- User info + logout -->
     <div class="px-5 py-4 border-t border-gray-100">
-      <p class="text-sm font-medium text-gray-900">Иван Петров</p>
-      <p class="text-xs text-gray-500">Администратор</p>
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-sm font-medium text-gray-900">Иван Петров</p>
+          <p class="text-xs text-gray-500">Администратор</p>
+        </div>
+        <button class="p-2 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-100 transition-colors" title="Выйти">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+          </svg>
+        </button>
+      </div>
     </div>
   </aside>
 
@@ -198,30 +214,27 @@
       <div class="bg-white rounded-xl shadow-sm p-6">
         <h2 class="text-lg font-semibold text-gray-900">Настройки платформы</h2>
 
-        <!-- Setting 1: Брендированный PDF -->
-        <div class="flex items-start gap-3 mt-4">
-          <input
-            type="checkbox"
-            checked
-            id="setting-pdf"
-            class="w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500 mt-0.5"
-          >
-          <label for="setting-pdf">
+        <!-- Setting 1: Брендированный PDF — toggle ON -->
+        <div class="flex items-center justify-between py-3">
+          <div>
             <p class="text-sm font-medium text-gray-900">Брендированный PDF</p>
             <p class="text-xs text-gray-500">Логотип компании в документах</p>
+          </div>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" class="sr-only peer" checked>
+            <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600"></div>
           </label>
         </div>
 
-        <!-- Setting 2: Скрыть бренд ЮрКлик -->
-        <div class="flex items-start gap-3 mt-4">
-          <input
-            type="checkbox"
-            id="setting-whitelabel"
-            class="w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500 mt-0.5"
-          >
-          <label for="setting-whitelabel">
+        <!-- Setting 2: Скрыть бренд ЮрКлик — toggle OFF -->
+        <div class="flex items-center justify-between py-3">
+          <div>
             <p class="text-sm font-medium text-gray-900">Скрыть бренд ЮрКлик</p>
             <p class="text-xs text-gray-500">White-label режим для клиентов</p>
+          </div>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" class="sr-only peer">
+            <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600"></div>
           </label>
         </div>
 
@@ -271,18 +284,11 @@
   </main>
 
   <script>
-    // ─── Mobile sidebar ───────────────────────────────────────────────────────
     const sidebar = document.getElementById('sidebar');
     const overlay = document.getElementById('sidebar-overlay');
     const menuBtn = document.getElementById('mobile-menu-btn');
-    menuBtn?.addEventListener('click', () => {
-      sidebar.classList.toggle('-translate-x-full');
-      overlay.classList.toggle('hidden');
-    });
-    overlay?.addEventListener('click', () => {
-      sidebar.classList.add('-translate-x-full');
-      overlay.classList.add('hidden');
-    });
+    menuBtn?.addEventListener('click', () => { sidebar.classList.toggle('-translate-x-full'); overlay.classList.toggle('hidden'); });
+    overlay?.addEventListener('click', () => { sidebar.classList.add('-translate-x-full'); overlay.classList.add('hidden'); });
 
     // ─── Color picker ↔ HEX field bidirectional sync ─────────────────────────
     const colorPairs = [
@@ -295,12 +301,10 @@
       const pickerEl = document.getElementById(picker);
       const hexEl    = document.getElementById(hex);
 
-      // Color picker → HEX input
       pickerEl.addEventListener('input', () => {
         hexEl.value = pickerEl.value.toUpperCase();
       });
 
-      // HEX input → color picker
       hexEl.addEventListener('input', () => {
         const val = hexEl.value.trim();
         if (/^#[0-9A-Fa-f]{6}$/.test(val)) {
@@ -308,7 +312,6 @@
         }
       });
 
-      // Normalise on blur: ensure # prefix and uppercase
       hexEl.addEventListener('blur', () => {
         let val = hexEl.value.trim().toUpperCase();
         if (!val.startsWith('#')) val = '#' + val;
@@ -316,7 +319,6 @@
           hexEl.value = val;
           pickerEl.value = val;
         } else {
-          // Reset to current picker value if invalid
           hexEl.value = pickerEl.value.toUpperCase();
         }
       });
@@ -339,21 +341,18 @@
         alert('Файл слишком большой. Максимальный размер — 2 МБ.');
         return;
       }
-      // Success feedback — update drop zone text
       const nameEl = dropZone.querySelector('p.text-sm');
       if (nameEl) nameEl.textContent = file.name;
       const hintEl = dropZone.querySelector('p.text-xs');
       if (hintEl) hintEl.textContent = (file.size / 1024).toFixed(1) + ' КБ';
     }
 
-    // Click → trigger file input
     dropZone.addEventListener('click', () => logoInput.click());
 
     logoInput.addEventListener('change', () => {
       handleFile(logoInput.files[0]);
     });
 
-    // Drag events
     dropZone.addEventListener('dragover', (e) => {
       e.preventDefault();
       dropZone.classList.add('border-indigo-400', 'bg-indigo-50');
