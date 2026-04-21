@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" class="h-full">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Клиенты — ЮрКлик</title>
+  <title>Клиенты — Правовой Щит</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,7 +12,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
 </head>
-<body class="font-sans antialiased">
+<body class="bg-[#fbf9fa] font-sans h-full">
 
 <!-- Mobile hamburger -->
 <button id="mobile-menu-btn" class="lg:hidden fixed top-4 left-4 z-50 p-2 rounded-lg bg-white shadow-md">
@@ -31,7 +31,7 @@
     <span class="text-lg font-bold text-gray-900">Правовой Щит</span>
   </div>
 
-  <!-- Notifications — border + warning color -->
+  <!-- Notifications -->
   <a href="notifications.html" class="mx-3 mt-4 mb-2 flex items-center gap-3 px-3 py-2.5 rounded-lg border border-amber-300 bg-amber-50 text-amber-700 hover:bg-amber-100 transition-colors">
     <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
       <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
@@ -72,12 +72,12 @@
       </a>
     </div>
 
-    <!-- HORIZONTAL DIVIDER — DO NOT IGNORE -->
+    <!-- HORIZONTAL DIVIDER -->
     <div class="border-t border-gray-200 my-3"></div>
 
     <!-- Second menu section -->
     <div class="space-y-1">
-      <!-- Клиенты (active) -->
+      <!-- Клиенты -->
       <a href="clients.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-indigo-50 text-indigo-700 font-medium transition-colors">
         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
@@ -106,503 +106,906 @@
 <!-- Main content -->
 <main class="lg:ml-64 min-h-screen bg-[#fbf9fa] p-6 pt-16 lg:pt-6">
 
-  <!-- ROW 1: Sticky header -->
-  <div class="sticky top-0 z-10 bg-[#fbf9fa] py-4 px-6 -mx-6 -mt-6 lg:-mt-6 mb-4">
-    <div class="flex flex-col sm:flex-row sm:items-center gap-3">
-      <h1 class="text-xl font-bold text-gray-900 mr-auto">Клиенты</h1>
-      <div class="flex flex-col sm:flex-row gap-3">
-        <!-- Search -->
-        <div class="relative">
+  <!-- Sticky Row 1 -->
+  <div class="sticky top-0 z-10 bg-[#fbf9fa] pb-4">
+    <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+      <!-- Page title -->
+      <div class="flex-1">
+        <h1 class="text-2xl font-bold text-gray-900">Клиенты</h1>
+      </div>
+      <!-- Search + filter -->
+      <div class="flex items-center gap-3 w-full sm:w-auto">
+        <div class="relative flex-1 sm:flex-none sm:w-72">
           <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
             <svg class="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
             </svg>
           </div>
-          <input id="search-input" type="text" placeholder="Поиск по клиентам..." class="w-64 pl-9 pr-3 py-2 text-sm bg-white border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:border-indigo-400">
+          <input type="text" id="search-input" placeholder="Поиск по клиентам..." class="w-full pl-9 pr-4 py-2 text-sm bg-white border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
         </div>
-        <!-- Status filter -->
-        <select id="status-filter" class="text-sm bg-white border border-gray-200 rounded-lg px-3 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:border-indigo-400">
-          <option value="">Все статусы</option>
-          <option value="Новое">Новое</option>
-          <option value="Сбор документов">Сбор документов</option>
-          <option value="Анализ документов">Анализ документов</option>
-          <option value="Генерация документов">Генерация документов</option>
-          <option value="Подача в суд">Подача в суд</option>
-          <option value="Остановлено">Остановлено</option>
-          <option value="Завершено">Завершено</option>
-        </select>
+        <!-- Filter dropdown -->
+        <div class="relative">
+          <button id="filter-btn" class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707L13 13.414V19a1 1 0 01-.553.894l-4 2A1 1 0 017 21v-7.586L3.293 6.707A1 1 0 013 6V4z"/>
+            </svg>
+            Фильтр
+          </button>
+          <div id="filter-dropdown" class="hidden absolute right-0 mt-2 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-50 py-1">
+            <p class="px-4 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">Статус дела</p>
+            <button class="filter-status-btn w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" data-status="all">Все</button>
+            <button class="filter-status-btn w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" data-status="Новое">Новое</button>
+            <button class="filter-status-btn w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" data-status="Сбор документов">Сбор документов</button>
+            <button class="filter-status-btn w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" data-status="Анализ документов">Анализ документов</button>
+            <button class="filter-status-btn w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" data-status="Генерация документов">Генерация документов</button>
+            <button class="filter-status-btn w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" data-status="Подача в суд">Подача в суд</button>
+            <button class="filter-status-btn w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" data-status="Остановлено">Остановлено</button>
+            <button class="filter-status-btn w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" data-status="Завершено">Завершено</button>
+          </div>
+        </div>
+        <button class="flex items-center gap-2 px-4 py-2 text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+          </svg>
+          Добавить клиента
+        </button>
       </div>
     </div>
   </div>
 
-  <!-- ROW 2: Table -->
-  <div class="bg-white rounded-xl shadow-sm overflow-x-auto">
-    <table class="w-full text-sm text-left" id="clients-table">
-      <thead class="text-xs text-gray-500 uppercase bg-gray-50 border-b border-gray-100">
-        <tr>
-          <th class="px-4 py-3 w-4">
-            <input type="checkbox" id="select-all" class="w-4 h-4 text-indigo-600 bg-white border-gray-300 rounded focus:ring-indigo-500 cursor-pointer">
-          </th>
-          <th class="px-4 py-3 cursor-pointer select-none whitespace-nowrap" data-col="0">
-            <div class="flex items-center gap-1 hover:text-gray-700">
-              ФИО
-              <span class="sort-icon text-gray-300">↕</span>
-            </div>
-          </th>
-          <th class="px-4 py-3 cursor-pointer select-none whitespace-nowrap" data-col="1">
-            <div class="flex items-center gap-1 hover:text-gray-700">
-              № договора
-              <span class="sort-icon text-gray-300">↕</span>
-            </div>
-          </th>
-          <th class="px-4 py-3 cursor-pointer select-none whitespace-nowrap" data-col="2">
-            <div class="flex items-center gap-1 hover:text-gray-700">
-              № дела
-              <span class="sort-icon text-gray-300">↕</span>
-            </div>
-          </th>
-          <th class="px-4 py-3 cursor-pointer select-none whitespace-nowrap" data-col="3">
-            <div class="flex items-center gap-1 hover:text-gray-700">
-              Статус дела
-              <span class="sort-icon text-gray-300">↕</span>
-            </div>
-          </th>
-          <th class="px-4 py-3 cursor-pointer select-none whitespace-nowrap" data-col="4">
-            <div class="flex items-center gap-1 hover:text-gray-700">
-              Документы
-              <span class="sort-icon text-gray-300">↕</span>
-            </div>
-          </th>
-          <th class="px-4 py-3 cursor-pointer select-none whitespace-nowrap" data-col="5">
-            <div class="flex items-center gap-1 hover:text-gray-700">
-              Обязательные
-              <span class="sort-icon text-gray-300">↕</span>
-            </div>
-          </th>
-          <th class="px-4 py-3 cursor-pointer select-none whitespace-nowrap" data-col="6">
-            <div class="flex items-center gap-1 hover:text-gray-700">
-              Регион
-              <span class="sort-icon text-gray-300">↕</span>
-            </div>
-          </th>
-          <th class="px-4 py-3 whitespace-nowrap">Действия</th>
-        </tr>
-      </thead>
-      <tbody id="table-body" class="divide-y divide-gray-50">
-        <!-- Rows injected by JS -->
-      </tbody>
-    </table>
+  <!-- Table card -->
+  <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm text-left">
+        <thead class="bg-gray-50 border-b border-gray-100">
+          <tr>
+            <th class="px-2 py-3 w-8"></th>
+            <th class="px-4 py-3 w-10">
+              <input id="select-all" type="checkbox" class="w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500">
+            </th>
+            <th class="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider whitespace-nowrap">ФИО</th>
+            <th class="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider whitespace-nowrap">№ договора</th>
+            <th class="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider whitespace-nowrap">№ дела</th>
+            <th class="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider whitespace-nowrap">Статус дела</th>
+            <th class="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider whitespace-nowrap">Документы</th>
+            <th class="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider whitespace-nowrap">Обязательные</th>
+            <th class="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider whitespace-nowrap">Регион</th>
+            <th class="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider whitespace-nowrap">Действия</th>
+          </tr>
+        </thead>
+        <tbody id="clients-tbody" class="divide-y divide-gray-50">
 
-    <!-- Empty state -->
-    <div id="empty-state" class="hidden py-16 text-center">
-      <svg class="mx-auto w-10 h-10 text-gray-300 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
-      </svg>
-      <p class="text-sm text-gray-400">Клиенты не найдены</p>
+          <!-- Row 1 -->
+          <tr class="hover:bg-gray-50 transition-colors" data-name="Иванов Иван Иванович" data-status="Сбор документов">
+            <td class="px-4 py-3"><input type="checkbox" class="row-cb w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500"></td>
+            <td class="px-4 py-3"><a href="client-case.html" class="font-medium text-indigo-600 hover:text-indigo-800 whitespace-nowrap">Иванов Иван Иванович</a></td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Д-2024-0042</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">А40-12345/2026</td>
+            <td class="px-4 py-3"><div class="relative inline-block"><button onclick="toggleStatusDd(this)" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 cursor-pointer hover:opacity-80">Сбор документов</button><div class="status-dd hidden absolute left-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+            <td class="px-4 py-3 text-gray-600">6 / 13</td>
+            <td class="px-4 py-3 text-gray-600">3 / 6</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Москва</td>
+            <td class="px-4 py-3"><div class="relative"><button onclick="toggleActionsDd(this)" class="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg></button><div class="actions-dd hidden absolute right-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+          </tr>
+
+          <!-- Row 2 -->
+          <tr class="hover:bg-gray-50 transition-colors" data-name="Петрова Мария Сергеевна" data-status="Новое">
+            <td class="px-4 py-3"><input type="checkbox" class="row-cb w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500"></td>
+            <td class="px-4 py-3"><a href="client-case.html" class="font-medium text-indigo-600 hover:text-indigo-800 whitespace-nowrap">Петрова Мария Сергеевна</a></td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Д-2024-0078</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">А56-7834/2026</td>
+            <td class="px-4 py-3"><div class="relative inline-block"><button onclick="toggleStatusDd(this)" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 cursor-pointer hover:opacity-80">Новое</button><div class="status-dd hidden absolute left-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+            <td class="px-4 py-3 text-gray-600">2 / 10</td>
+            <td class="px-4 py-3 text-gray-600">1 / 5</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Санкт-Петербург</td>
+            <td class="px-4 py-3"><div class="relative"><button onclick="toggleActionsDd(this)" class="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg></button><div class="actions-dd hidden absolute right-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+          </tr>
+
+          <!-- Row 3 -->
+          <tr class="hover:bg-gray-50 transition-colors" data-name="Сидоров Алексей Николаевич" data-status="Анализ документов">
+            <td class="px-4 py-3"><input type="checkbox" class="row-cb w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500"></td>
+            <td class="px-4 py-3"><a href="client-case.html" class="font-medium text-indigo-600 hover:text-indigo-800 whitespace-nowrap">Сидоров Алексей Николаевич</a></td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Д-2024-0115</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">А60-33421/2026</td>
+            <td class="px-4 py-3"><div class="relative inline-block"><button onclick="toggleStatusDd(this)" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800 cursor-pointer hover:opacity-80">Анализ документов</button><div class="status-dd hidden absolute left-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+            <td class="px-4 py-3 text-gray-600">8 / 12</td>
+            <td class="px-4 py-3 text-gray-600">4 / 6</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Екатеринбург</td>
+            <td class="px-4 py-3"><div class="relative"><button onclick="toggleActionsDd(this)" class="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg></button><div class="actions-dd hidden absolute right-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+          </tr>
+
+          <!-- Row 4 -->
+          <tr class="hover:bg-gray-50 transition-colors" data-name="Козлова Елена Дмитриевна" data-status="Завершено">
+            <td class="px-4 py-3"><input type="checkbox" class="row-cb w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500"></td>
+            <td class="px-4 py-3"><a href="client-case.html" class="font-medium text-indigo-600 hover:text-indigo-800 whitespace-nowrap">Козлова Елена Дмитриевна</a></td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Д-2023-0201</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">А40-88201/2025</td>
+            <td class="px-4 py-3"><div class="relative inline-block"><button onclick="toggleStatusDd(this)" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 cursor-pointer hover:opacity-80">Завершено</button><div class="status-dd hidden absolute left-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+            <td class="px-4 py-3 text-gray-600">13 / 13</td>
+            <td class="px-4 py-3 text-gray-600">6 / 6</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Москва</td>
+            <td class="px-4 py-3"><div class="relative"><button onclick="toggleActionsDd(this)" class="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg></button><div class="actions-dd hidden absolute right-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+          </tr>
+
+          <!-- Row 5 -->
+          <tr class="hover:bg-gray-50 transition-colors" data-name="Новиков Дмитрий Александрович" data-status="Подача в суд">
+            <td class="px-4 py-3"><input type="checkbox" class="row-cb w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500"></td>
+            <td class="px-4 py-3"><a href="client-case.html" class="font-medium text-indigo-600 hover:text-indigo-800 whitespace-nowrap">Новиков Дмитрий Александрович</a></td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Д-2024-0056</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">А27-44567/2026</td>
+            <td class="px-4 py-3"><div class="relative inline-block"><button onclick="toggleStatusDd(this)" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800 cursor-pointer hover:opacity-80">Подача в суд</button><div class="status-dd hidden absolute left-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+            <td class="px-4 py-3 text-gray-600">11 / 14</td>
+            <td class="px-4 py-3 text-gray-600">5 / 6</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Хабаровск</td>
+            <td class="px-4 py-3"><div class="relative"><button onclick="toggleActionsDd(this)" class="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg></button><div class="actions-dd hidden absolute right-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+          </tr>
+
+          <!-- Row 6 -->
+          <tr class="hover:bg-gray-50 transition-colors" data-name="Морозова Ольга Викторовна" data-status="Остановлено">
+            <td class="px-4 py-3"><input type="checkbox" class="row-cb w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500"></td>
+            <td class="px-4 py-3"><a href="client-case.html" class="font-medium text-indigo-600 hover:text-indigo-800 whitespace-nowrap">Морозова Ольга Викторовна</a></td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Д-2024-0089</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">А23-19876/2026</td>
+            <td class="px-4 py-3"><div class="relative inline-block"><button onclick="toggleStatusDd(this)" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800 cursor-pointer hover:opacity-80">Остановлено</button><div class="status-dd hidden absolute left-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+            <td class="px-4 py-3 text-gray-600">4 / 11</td>
+            <td class="px-4 py-3 text-gray-600">2 / 5</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Краснодар</td>
+            <td class="px-4 py-3"><div class="relative"><button onclick="toggleActionsDd(this)" class="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg></button><div class="actions-dd hidden absolute right-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+          </tr>
+
+          <!-- Row 7 -->
+          <tr class="hover:bg-gray-50 transition-colors" data-name="Волков Сергей Петрович" data-status="Генерация документов">
+            <td class="px-4 py-3"><input type="checkbox" class="row-cb w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500"></td>
+            <td class="px-4 py-3"><a href="client-case.html" class="font-medium text-indigo-600 hover:text-indigo-800 whitespace-nowrap">Волков Сергей Петрович</a></td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Д-2024-0134</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">А50-55234/2026</td>
+            <td class="px-4 py-3"><div class="relative inline-block"><button onclick="toggleStatusDd(this)" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-800 cursor-pointer hover:opacity-80">Генерация документов</button><div class="status-dd hidden absolute left-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+            <td class="px-4 py-3 text-gray-600">9 / 12</td>
+            <td class="px-4 py-3 text-gray-600">4 / 5</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Пермь</td>
+            <td class="px-4 py-3"><div class="relative"><button onclick="toggleActionsDd(this)" class="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg></button><div class="actions-dd hidden absolute right-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+          </tr>
+
+          <!-- Row 8 -->
+          <tr class="hover:bg-gray-50 transition-colors" data-name="Лебедева Наталья Борисовна" data-status="Сбор документов">
+            <td class="px-4 py-3"><input type="checkbox" class="row-cb w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500"></td>
+            <td class="px-4 py-3"><a href="client-case.html" class="font-medium text-indigo-600 hover:text-indigo-800 whitespace-nowrap">Лебедева Наталья Борисовна</a></td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Д-2024-0167</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">А40-67890/2026</td>
+            <td class="px-4 py-3"><div class="relative inline-block"><button onclick="toggleStatusDd(this)" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 cursor-pointer hover:opacity-80">Сбор документов</button><div class="status-dd hidden absolute left-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+            <td class="px-4 py-3 text-gray-600">5 / 15</td>
+            <td class="px-4 py-3 text-gray-600">2 / 7</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Москва</td>
+            <td class="px-4 py-3"><div class="relative"><button onclick="toggleActionsDd(this)" class="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg></button><div class="actions-dd hidden absolute right-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+          </tr>
+
+          <!-- Row 9 -->
+          <tr class="hover:bg-gray-50 transition-colors" data-name="Семёнов Андрей Игоревич" data-status="Новое">
+            <td class="px-4 py-3"><input type="checkbox" class="row-cb w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500"></td>
+            <td class="px-4 py-3"><a href="client-case.html" class="font-medium text-indigo-600 hover:text-indigo-800 whitespace-nowrap">Семёнов Андрей Игоревич</a></td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Д-2025-0011</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">А76-10023/2026</td>
+            <td class="px-4 py-3"><div class="relative inline-block"><button onclick="toggleStatusDd(this)" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 cursor-pointer hover:opacity-80">Новое</button><div class="status-dd hidden absolute left-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+            <td class="px-4 py-3 text-gray-600">1 / 9</td>
+            <td class="px-4 py-3 text-gray-600">0 / 4</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Челябинск</td>
+            <td class="px-4 py-3"><div class="relative"><button onclick="toggleActionsDd(this)" class="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg></button><div class="actions-dd hidden absolute right-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+          </tr>
+
+          <!-- Row 10 -->
+          <tr class="hover:bg-gray-50 transition-colors" data-name="Попова Анастасия Владимировна" data-status="Анализ документов">
+            <td class="px-4 py-3"><input type="checkbox" class="row-cb w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500"></td>
+            <td class="px-4 py-3"><a href="client-case.html" class="font-medium text-indigo-600 hover:text-indigo-800 whitespace-nowrap">Попова Анастасия Владимировна</a></td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Д-2024-0198</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">А66-21100/2026</td>
+            <td class="px-4 py-3"><div class="relative inline-block"><button onclick="toggleStatusDd(this)" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800 cursor-pointer hover:opacity-80">Анализ документов</button><div class="status-dd hidden absolute left-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+            <td class="px-4 py-3 text-gray-600">7 / 11</td>
+            <td class="px-4 py-3 text-gray-600">3 / 5</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Тюмень</td>
+            <td class="px-4 py-3"><div class="relative"><button onclick="toggleActionsDd(this)" class="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg></button><div class="actions-dd hidden absolute right-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+          </tr>
+
+          <!-- Row 11 -->
+          <tr class="hover:bg-gray-50 transition-colors" data-name="Фёдоров Максим Олегович" data-status="Подача в суд">
+            <td class="px-4 py-3"><input type="checkbox" class="row-cb w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500"></td>
+            <td class="px-4 py-3"><a href="client-case.html" class="font-medium text-indigo-600 hover:text-indigo-800 whitespace-nowrap">Фёдоров Максим Олегович</a></td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Д-2024-0222</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">А40-30456/2026</td>
+            <td class="px-4 py-3"><div class="relative inline-block"><button onclick="toggleStatusDd(this)" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800 cursor-pointer hover:opacity-80">Подача в суд</button><div class="status-dd hidden absolute left-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+            <td class="px-4 py-3 text-gray-600">12 / 14</td>
+            <td class="px-4 py-3 text-gray-600">5 / 6</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Москва</td>
+            <td class="px-4 py-3"><div class="relative"><button onclick="toggleActionsDd(this)" class="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg></button><div class="actions-dd hidden absolute right-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+          </tr>
+
+          <!-- Row 12 -->
+          <tr class="hover:bg-gray-50 transition-colors" data-name="Орлова Светлана Михайловна" data-status="Завершено">
+            <td class="px-4 py-3"><input type="checkbox" class="row-cb w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500"></td>
+            <td class="px-4 py-3"><a href="client-case.html" class="font-medium text-indigo-600 hover:text-indigo-800 whitespace-nowrap">Орлова Светлана Михайловна</a></td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Д-2023-0345</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">А78-41230/2025</td>
+            <td class="px-4 py-3"><div class="relative inline-block"><button onclick="toggleStatusDd(this)" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 cursor-pointer hover:opacity-80">Завершено</button><div class="status-dd hidden absolute left-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+            <td class="px-4 py-3 text-gray-600">10 / 10</td>
+            <td class="px-4 py-3 text-gray-600">5 / 5</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Санкт-Петербург</td>
+            <td class="px-4 py-3"><div class="relative"><button onclick="toggleActionsDd(this)" class="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg></button><div class="actions-dd hidden absolute right-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+          </tr>
+
+          <!-- Row 13 -->
+          <tr class="hover:bg-gray-50 transition-colors" data-name="Соколов Игорь Анатольевич" data-status="Сбор документов">
+            <td class="px-4 py-3"><input type="checkbox" class="row-cb w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500"></td>
+            <td class="px-4 py-3"><a href="client-case.html" class="font-medium text-indigo-600 hover:text-indigo-800 whitespace-nowrap">Соколов Игорь Анатольевич</a></td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Д-2024-0256</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">А55-18900/2026</td>
+            <td class="px-4 py-3"><div class="relative inline-block"><button onclick="toggleStatusDd(this)" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 cursor-pointer hover:opacity-80">Сбор документов</button><div class="status-dd hidden absolute left-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+            <td class="px-4 py-3 text-gray-600">3 / 12</td>
+            <td class="px-4 py-3 text-gray-600">1 / 6</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Новосибирск</td>
+            <td class="px-4 py-3"><div class="relative"><button onclick="toggleActionsDd(this)" class="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg></button><div class="actions-dd hidden absolute right-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+          </tr>
+
+          <!-- Row 14 -->
+          <tr class="hover:bg-gray-50 transition-colors" data-name="Белова Юлия Константиновна" data-status="Генерация документов">
+            <td class="px-4 py-3"><input type="checkbox" class="row-cb w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500"></td>
+            <td class="px-4 py-3"><a href="client-case.html" class="font-medium text-indigo-600 hover:text-indigo-800 whitespace-nowrap">Белова Юлия Константиновна</a></td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Д-2024-0289</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">А63-29871/2026</td>
+            <td class="px-4 py-3"><div class="relative inline-block"><button onclick="toggleStatusDd(this)" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-800 cursor-pointer hover:opacity-80">Генерация документов</button><div class="status-dd hidden absolute left-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+            <td class="px-4 py-3 text-gray-600">8 / 11</td>
+            <td class="px-4 py-3 text-gray-600">4 / 5</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Самара</td>
+            <td class="px-4 py-3"><div class="relative"><button onclick="toggleActionsDd(this)" class="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg></button><div class="actions-dd hidden absolute right-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+          </tr>
+
+          <!-- Row 15 -->
+          <tr class="hover:bg-gray-50 transition-colors" data-name="Тарасов Вадим Евгеньевич" data-status="Остановлено">
+            <td class="px-4 py-3"><input type="checkbox" class="row-cb w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500"></td>
+            <td class="px-4 py-3"><a href="client-case.html" class="font-medium text-indigo-600 hover:text-indigo-800 whitespace-nowrap">Тарасов Вадим Евгеньевич</a></td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Д-2024-0312</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">А72-37654/2026</td>
+            <td class="px-4 py-3"><div class="relative inline-block"><button onclick="toggleStatusDd(this)" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800 cursor-pointer hover:opacity-80">Остановлено</button><div class="status-dd hidden absolute left-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+            <td class="px-4 py-3 text-gray-600">5 / 13</td>
+            <td class="px-4 py-3 text-gray-600">2 / 6</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Тюмень</td>
+            <td class="px-4 py-3"><div class="relative"><button onclick="toggleActionsDd(this)" class="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg></button><div class="actions-dd hidden absolute right-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+          </tr>
+
+          <!-- Row 16 -->
+          <tr class="hover:bg-gray-50 transition-colors" data-name="Григорьева Ирина Леонидовна" data-status="Анализ документов">
+            <td class="px-4 py-3"><input type="checkbox" class="row-cb w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500"></td>
+            <td class="px-4 py-3"><a href="client-case.html" class="font-medium text-indigo-600 hover:text-indigo-800 whitespace-nowrap">Григорьева Ирина Леонидовна</a></td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Д-2024-0333</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">А40-49100/2026</td>
+            <td class="px-4 py-3"><div class="relative inline-block"><button onclick="toggleStatusDd(this)" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800 cursor-pointer hover:opacity-80">Анализ документов</button><div class="status-dd hidden absolute left-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+            <td class="px-4 py-3 text-gray-600">6 / 10</td>
+            <td class="px-4 py-3 text-gray-600">3 / 5</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Москва</td>
+            <td class="px-4 py-3"><div class="relative"><button onclick="toggleActionsDd(this)" class="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg></button><div class="actions-dd hidden absolute right-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+          </tr>
+
+          <!-- Row 17 -->
+          <tr class="hover:bg-gray-50 transition-colors" data-name="Кузнецов Роман Павлович" data-status="Новое">
+            <td class="px-4 py-3"><input type="checkbox" class="row-cb w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500"></td>
+            <td class="px-4 py-3"><a href="client-case.html" class="font-medium text-indigo-600 hover:text-indigo-800 whitespace-nowrap">Кузнецов Роман Павлович</a></td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Д-2025-0045</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">А81-62300/2026</td>
+            <td class="px-4 py-3"><div class="relative inline-block"><button onclick="toggleStatusDd(this)" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 cursor-pointer hover:opacity-80">Новое</button><div class="status-dd hidden absolute left-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+            <td class="px-4 py-3 text-gray-600">0 / 8</td>
+            <td class="px-4 py-3 text-gray-600">0 / 4</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Ростов-на-Дону</td>
+            <td class="px-4 py-3"><div class="relative"><button onclick="toggleActionsDd(this)" class="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg></button><div class="actions-dd hidden absolute right-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+          </tr>
+
+          <!-- Row 18 -->
+          <tr class="hover:bg-gray-50 transition-colors" data-name="Захарова Вера Александровна" data-status="Подача в суд">
+            <td class="px-4 py-3"><input type="checkbox" class="row-cb w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500"></td>
+            <td class="px-4 py-3"><a href="client-case.html" class="font-medium text-indigo-600 hover:text-indigo-800 whitespace-nowrap">Захарова Вера Александровна</a></td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Д-2024-0367</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">А40-71450/2026</td>
+            <td class="px-4 py-3"><div class="relative inline-block"><button onclick="toggleStatusDd(this)" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800 cursor-pointer hover:opacity-80">Подача в суд</button><div class="status-dd hidden absolute left-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+            <td class="px-4 py-3 text-gray-600">10 / 13</td>
+            <td class="px-4 py-3 text-gray-600">5 / 6</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Москва</td>
+            <td class="px-4 py-3"><div class="relative"><button onclick="toggleActionsDd(this)" class="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg></button><div class="actions-dd hidden absolute right-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+          </tr>
+
+          <!-- Row 19 -->
+          <tr class="hover:bg-gray-50 transition-colors" data-name="Лукьянов Кирилл Фёдорович" data-status="Сбор документов">
+            <td class="px-4 py-3"><input type="checkbox" class="row-cb w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500"></td>
+            <td class="px-4 py-3"><a href="client-case.html" class="font-medium text-indigo-600 hover:text-indigo-800 whitespace-nowrap">Лукьянов Кирилл Фёдорович</a></td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Д-2024-0391</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">А70-82340/2026</td>
+            <td class="px-4 py-3"><div class="relative inline-block"><button onclick="toggleStatusDd(this)" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 cursor-pointer hover:opacity-80">Сбор документов</button><div class="status-dd hidden absolute left-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+            <td class="px-4 py-3 text-gray-600">4 / 14</td>
+            <td class="px-4 py-3 text-gray-600">2 / 7</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Казань</td>
+            <td class="px-4 py-3"><div class="relative"><button onclick="toggleActionsDd(this)" class="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg></button><div class="actions-dd hidden absolute right-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+          </tr>
+
+          <!-- Row 20 -->
+          <tr class="hover:bg-gray-50 transition-colors" data-name="Воробьёва Тамара Николаевна" data-status="Завершено">
+            <td class="px-4 py-3"><input type="checkbox" class="row-cb w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500"></td>
+            <td class="px-4 py-3"><a href="client-case.html" class="font-medium text-indigo-600 hover:text-indigo-800 whitespace-nowrap">Воробьёва Тамара Николаевна</a></td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Д-2023-0412</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">А40-90123/2025</td>
+            <td class="px-4 py-3"><div class="relative inline-block"><button onclick="toggleStatusDd(this)" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 cursor-pointer hover:opacity-80">Завершено</button><div class="status-dd hidden absolute left-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+            <td class="px-4 py-3 text-gray-600">11 / 11</td>
+            <td class="px-4 py-3 text-gray-600">6 / 6</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Уфа</td>
+            <td class="px-4 py-3"><div class="relative"><button onclick="toggleActionsDd(this)" class="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg></button><div class="actions-dd hidden absolute right-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+          </tr>
+
+          <!-- Row 21 -->
+          <tr class="hover:bg-gray-50 transition-colors" data-name="Степанов Геннадий Юрьевич" data-status="Генерация документов">
+            <td class="px-4 py-3"><input type="checkbox" class="row-cb w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500"></td>
+            <td class="px-4 py-3"><a href="client-case.html" class="font-medium text-indigo-600 hover:text-indigo-800 whitespace-nowrap">Степанов Геннадий Юрьевич</a></td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Д-2024-0438</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">А64-12876/2026</td>
+            <td class="px-4 py-3"><div class="relative inline-block"><button onclick="toggleStatusDd(this)" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-800 cursor-pointer hover:opacity-80">Генерация документов</button><div class="status-dd hidden absolute left-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+            <td class="px-4 py-3 text-gray-600">7 / 10</td>
+            <td class="px-4 py-3 text-gray-600">3 / 5</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Воронеж</td>
+            <td class="px-4 py-3"><div class="relative"><button onclick="toggleActionsDd(this)" class="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg></button><div class="actions-dd hidden absolute right-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+          </tr>
+
+          <!-- Row 22 -->
+          <tr class="hover:bg-gray-50 transition-colors" data-name="Никитина Диана Романовна" data-status="Новое">
+            <td class="px-4 py-3"><input type="checkbox" class="row-cb w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500"></td>
+            <td class="px-4 py-3"><a href="client-case.html" class="font-medium text-indigo-600 hover:text-indigo-800 whitespace-nowrap">Никитина Диана Романовна</a></td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Д-2025-0062</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">А73-23456/2026</td>
+            <td class="px-4 py-3"><div class="relative inline-block"><button onclick="toggleStatusDd(this)" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 cursor-pointer hover:opacity-80">Новое</button><div class="status-dd hidden absolute left-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+            <td class="px-4 py-3 text-gray-600">1 / 10</td>
+            <td class="px-4 py-3 text-gray-600">0 / 5</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Омск</td>
+            <td class="px-4 py-3"><div class="relative"><button onclick="toggleActionsDd(this)" class="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg></button><div class="actions-dd hidden absolute right-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+          </tr>
+
+          <!-- Row 23 -->
+          <tr class="hover:bg-gray-50 transition-colors" data-name="Борисов Антон Геннадьевич" data-status="Анализ документов">
+            <td class="px-4 py-3"><input type="checkbox" class="row-cb w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500"></td>
+            <td class="px-4 py-3"><a href="client-case.html" class="font-medium text-indigo-600 hover:text-indigo-800 whitespace-nowrap">Борисов Антон Геннадьевич</a></td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Д-2024-0462</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">А40-34567/2026</td>
+            <td class="px-4 py-3"><div class="relative inline-block"><button onclick="toggleStatusDd(this)" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800 cursor-pointer hover:opacity-80">Анализ документов</button><div class="status-dd hidden absolute left-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+            <td class="px-4 py-3 text-gray-600">5 / 9</td>
+            <td class="px-4 py-3 text-gray-600">3 / 5</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Краснодар</td>
+            <td class="px-4 py-3"><div class="relative"><button onclick="toggleActionsDd(this)" class="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg></button><div class="actions-dd hidden absolute right-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+          </tr>
+
+          <!-- Row 24 -->
+          <tr class="hover:bg-gray-50 transition-colors" data-name="Яковлева Анна Дмитриевна" data-status="Подача в суд">
+            <td class="px-4 py-3"><input type="checkbox" class="row-cb w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500"></td>
+            <td class="px-4 py-3"><a href="client-case.html" class="font-medium text-indigo-600 hover:text-indigo-800 whitespace-nowrap">Яковлева Анна Дмитриевна</a></td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Д-2024-0489</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">А40-45678/2026</td>
+            <td class="px-4 py-3"><div class="relative inline-block"><button onclick="toggleStatusDd(this)" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800 cursor-pointer hover:opacity-80">Подача в суд</button><div class="status-dd hidden absolute left-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+            <td class="px-4 py-3 text-gray-600">9 / 12</td>
+            <td class="px-4 py-3 text-gray-600">4 / 6</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Москва</td>
+            <td class="px-4 py-3"><div class="relative"><button onclick="toggleActionsDd(this)" class="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg></button><div class="actions-dd hidden absolute right-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+          </tr>
+
+          <!-- Row 25 -->
+          <tr class="hover:bg-gray-50 transition-colors" data-name="Матвеев Виктор Станиславович" data-status="Остановлено">
+            <td class="px-4 py-3"><input type="checkbox" class="row-cb w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500"></td>
+            <td class="px-4 py-3"><a href="client-case.html" class="font-medium text-indigo-600 hover:text-indigo-800 whitespace-nowrap">Матвеев Виктор Станиславович</a></td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Д-2024-0511</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">А58-56789/2026</td>
+            <td class="px-4 py-3"><div class="relative inline-block"><button onclick="toggleStatusDd(this)" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800 cursor-pointer hover:opacity-80">Остановлено</button><div class="status-dd hidden absolute left-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+            <td class="px-4 py-3 text-gray-600">3 / 11</td>
+            <td class="px-4 py-3 text-gray-600">1 / 5</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Нижний Новгород</td>
+            <td class="px-4 py-3"><div class="relative"><button onclick="toggleActionsDd(this)" class="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg></button><div class="actions-dd hidden absolute right-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+          </tr>
+
+          <!-- Row 26 -->
+          <tr class="hover:bg-gray-50 transition-colors" data-name="Давыдова Оксана Ивановна" data-status="Сбор документов">
+            <td class="px-4 py-3"><input type="checkbox" class="row-cb w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500"></td>
+            <td class="px-4 py-3"><a href="client-case.html" class="font-medium text-indigo-600 hover:text-indigo-800 whitespace-nowrap">Давыдова Оксана Ивановна</a></td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Д-2024-0543</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">А40-67890/2026</td>
+            <td class="px-4 py-3"><div class="relative inline-block"><button onclick="toggleStatusDd(this)" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 cursor-pointer hover:opacity-80">Сбор документов</button><div class="status-dd hidden absolute left-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+            <td class="px-4 py-3 text-gray-600">2 / 13</td>
+            <td class="px-4 py-3 text-gray-600">1 / 6</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Санкт-Петербург</td>
+            <td class="px-4 py-3"><div class="relative"><button onclick="toggleActionsDd(this)" class="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg></button><div class="actions-dd hidden absolute right-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+          </tr>
+
+          <!-- Row 27 -->
+          <tr class="hover:bg-gray-50 transition-colors" data-name="Жуков Павел Аркадьевич" data-status="Анализ документов">
+            <td class="px-4 py-3"><input type="checkbox" class="row-cb w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500"></td>
+            <td class="px-4 py-3"><a href="client-case.html" class="font-medium text-indigo-600 hover:text-indigo-800 whitespace-nowrap">Жуков Павел Аркадьевич</a></td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Д-2024-0578</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">А23-78901/2026</td>
+            <td class="px-4 py-3"><div class="relative inline-block"><button onclick="toggleStatusDd(this)" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800 cursor-pointer hover:opacity-80">Анализ документов</button><div class="status-dd hidden absolute left-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+            <td class="px-4 py-3 text-gray-600">6 / 9</td>
+            <td class="px-4 py-3 text-gray-600">3 / 4</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Красноярск</td>
+            <td class="px-4 py-3"><div class="relative"><button onclick="toggleActionsDd(this)" class="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg></button><div class="actions-dd hidden absolute right-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+          </tr>
+
+          <!-- Row 28 -->
+          <tr class="hover:bg-gray-50 transition-colors" data-name="Смирнова Людмила Сергеевна" data-status="Завершено">
+            <td class="px-4 py-3"><input type="checkbox" class="row-cb w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500"></td>
+            <td class="px-4 py-3"><a href="client-case.html" class="font-medium text-indigo-600 hover:text-indigo-800 whitespace-nowrap">Смирнова Людмила Сергеевна</a></td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Д-2023-0590</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">А40-89012/2025</td>
+            <td class="px-4 py-3"><div class="relative inline-block"><button onclick="toggleStatusDd(this)" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 cursor-pointer hover:opacity-80">Завершено</button><div class="status-dd hidden absolute left-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+            <td class="px-4 py-3 text-gray-600">14 / 14</td>
+            <td class="px-4 py-3 text-gray-600">7 / 7</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Москва</td>
+            <td class="px-4 py-3"><div class="relative"><button onclick="toggleActionsDd(this)" class="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg></button><div class="actions-dd hidden absolute right-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+          </tr>
+
+          <!-- Row 29 -->
+          <tr class="hover:bg-gray-50 transition-colors" data-name="Горбунов Николай Тимурович" data-status="Генерация документов">
+            <td class="px-4 py-3"><input type="checkbox" class="row-cb w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500"></td>
+            <td class="px-4 py-3"><a href="client-case.html" class="font-medium text-indigo-600 hover:text-indigo-800 whitespace-nowrap">Горбунов Николай Тимурович</a></td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Д-2024-0612</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">А65-90123/2026</td>
+            <td class="px-4 py-3"><div class="relative inline-block"><button onclick="toggleStatusDd(this)" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-800 cursor-pointer hover:opacity-80">Генерация документов</button><div class="status-dd hidden absolute left-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+            <td class="px-4 py-3 text-gray-600">8 / 12</td>
+            <td class="px-4 py-3 text-gray-600">4 / 6</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Новосибирск</td>
+            <td class="px-4 py-3"><div class="relative"><button onclick="toggleActionsDd(this)" class="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg></button><div class="actions-dd hidden absolute right-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+          </tr>
+
+          <!-- Row 30 -->
+          <tr class="hover:bg-gray-50 transition-colors" data-name="Романова Елизавета Павловна" data-status="Новое">
+            <td class="px-4 py-3"><input type="checkbox" class="row-cb w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500"></td>
+            <td class="px-4 py-3"><a href="client-case.html" class="font-medium text-indigo-600 hover:text-indigo-800 whitespace-nowrap">Романова Елизавета Павловна</a></td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Д-2025-0084</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">А40-01234/2026</td>
+            <td class="px-4 py-3"><div class="relative inline-block"><button onclick="toggleStatusDd(this)" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 cursor-pointer hover:opacity-80">Новое</button><div class="status-dd hidden absolute left-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+            <td class="px-4 py-3 text-gray-600">0 / 7</td>
+            <td class="px-4 py-3 text-gray-600">0 / 3</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Москва</td>
+            <td class="px-4 py-3"><div class="relative"><button onclick="toggleActionsDd(this)" class="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg></button><div class="actions-dd hidden absolute right-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+          </tr>
+
+          <!-- Row 31 -->
+          <tr class="hover:bg-gray-50 transition-colors" data-name="Соловьёв Станислав Юрьевич" data-status="Подача в суд">
+            <td class="px-4 py-3"><input type="checkbox" class="row-cb w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500"></td>
+            <td class="px-4 py-3"><a href="client-case.html" class="font-medium text-indigo-600 hover:text-indigo-800 whitespace-nowrap">Соловьёв Станислав Юрьевич</a></td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Д-2024-0634</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">А74-11234/2026</td>
+            <td class="px-4 py-3"><div class="relative inline-block"><button onclick="toggleStatusDd(this)" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800 cursor-pointer hover:opacity-80">Подача в суд</button><div class="status-dd hidden absolute left-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+            <td class="px-4 py-3 text-gray-600">11 / 13</td>
+            <td class="px-4 py-3 text-gray-600">5 / 6</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Екатеринбург</td>
+            <td class="px-4 py-3"><div class="relative"><button onclick="toggleActionsDd(this)" class="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg></button><div class="actions-dd hidden absolute right-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+          </tr>
+
+          <!-- Row 32 -->
+          <tr class="hover:bg-gray-50 transition-colors" data-name="Медведева Кристина Борисовна" data-status="Сбор документов">
+            <td class="px-4 py-3"><input type="checkbox" class="row-cb w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500"></td>
+            <td class="px-4 py-3"><a href="client-case.html" class="font-medium text-indigo-600 hover:text-indigo-800 whitespace-nowrap">Медведева Кристина Борисовна</a></td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Д-2024-0658</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">А40-22345/2026</td>
+            <td class="px-4 py-3"><div class="relative inline-block"><button onclick="toggleStatusDd(this)" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 cursor-pointer hover:opacity-80">Сбор документов</button><div class="status-dd hidden absolute left-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+            <td class="px-4 py-3 text-gray-600">4 / 11</td>
+            <td class="px-4 py-3 text-gray-600">2 / 5</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Саратов</td>
+            <td class="px-4 py-3"><div class="relative"><button onclick="toggleActionsDd(this)" class="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg></button><div class="actions-dd hidden absolute right-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+          </tr>
+
+          <!-- Row 33 -->
+          <tr class="hover:bg-gray-50 transition-colors" data-name="Карпов Олег Вячеславович" data-status="Остановлено">
+            <td class="px-4 py-3"><input type="checkbox" class="row-cb w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500"></td>
+            <td class="px-4 py-3"><a href="client-case.html" class="font-medium text-indigo-600 hover:text-indigo-800 whitespace-nowrap">Карпов Олег Вячеславович</a></td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Д-2024-0677</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">А54-33456/2026</td>
+            <td class="px-4 py-3"><div class="relative inline-block"><button onclick="toggleStatusDd(this)" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800 cursor-pointer hover:opacity-80">Остановлено</button><div class="status-dd hidden absolute left-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+            <td class="px-4 py-3 text-gray-600">5 / 14</td>
+            <td class="px-4 py-3 text-gray-600">2 / 7</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Новосибирск</td>
+            <td class="px-4 py-3"><div class="relative"><button onclick="toggleActionsDd(this)" class="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg></button><div class="actions-dd hidden absolute right-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+          </tr>
+
+          <!-- Row 34 -->
+          <tr class="hover:bg-gray-50 transition-colors" data-name="Зиновьева Наталья Юрьевна" data-status="Анализ документов">
+            <td class="px-4 py-3"><input type="checkbox" class="row-cb w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500"></td>
+            <td class="px-4 py-3"><a href="client-case.html" class="font-medium text-indigo-600 hover:text-indigo-800 whitespace-nowrap">Зиновьева Наталья Юрьевна</a></td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Д-2024-0700</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">А40-44567/2026</td>
+            <td class="px-4 py-3"><div class="relative inline-block"><button onclick="toggleStatusDd(this)" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800 cursor-pointer hover:opacity-80">Анализ документов</button><div class="status-dd hidden absolute left-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+            <td class="px-4 py-3 text-gray-600">7 / 12</td>
+            <td class="px-4 py-3 text-gray-600">3 / 6</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Москва</td>
+            <td class="px-4 py-3"><div class="relative"><button onclick="toggleActionsDd(this)" class="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg></button><div class="actions-dd hidden absolute right-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+          </tr>
+
+          <!-- Row 35 -->
+          <tr class="hover:bg-gray-50 transition-colors" data-name="Ефимов Артём Денисович" data-status="Завершено">
+            <td class="px-4 py-3"><input type="checkbox" class="row-cb w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500"></td>
+            <td class="px-4 py-3"><a href="client-case.html" class="font-medium text-indigo-600 hover:text-indigo-800 whitespace-nowrap">Ефимов Артём Денисович</a></td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Д-2023-0723</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">А47-55678/2025</td>
+            <td class="px-4 py-3"><div class="relative inline-block"><button onclick="toggleStatusDd(this)" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 cursor-pointer hover:opacity-80">Завершено</button><div class="status-dd hidden absolute left-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+            <td class="px-4 py-3 text-gray-600">9 / 9</td>
+            <td class="px-4 py-3 text-gray-600">4 / 4</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Ростов-на-Дону</td>
+            <td class="px-4 py-3"><div class="relative"><button onclick="toggleActionsDd(this)" class="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg></button><div class="actions-dd hidden absolute right-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+          </tr>
+
+          <!-- Row 36 -->
+          <tr class="hover:bg-gray-50 transition-colors" data-name="Панова Валерия Евгеньевна" data-status="Генерация документов">
+            <td class="px-4 py-3"><input type="checkbox" class="row-cb w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500"></td>
+            <td class="px-4 py-3"><a href="client-case.html" class="font-medium text-indigo-600 hover:text-indigo-800 whitespace-nowrap">Панова Валерия Евгеньевна</a></td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Д-2024-0751</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">А75-66789/2026</td>
+            <td class="px-4 py-3"><div class="relative inline-block"><button onclick="toggleStatusDd(this)" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-800 cursor-pointer hover:opacity-80">Генерация документов</button><div class="status-dd hidden absolute left-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+            <td class="px-4 py-3 text-gray-600">6 / 10</td>
+            <td class="px-4 py-3 text-gray-600">3 / 5</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Иркутск</td>
+            <td class="px-4 py-3"><div class="relative"><button onclick="toggleActionsDd(this)" class="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg></button><div class="actions-dd hidden absolute right-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+          </tr>
+
+          <!-- Row 37 -->
+          <tr class="hover:bg-gray-50 transition-colors" data-name="Кириллов Денис Максимович" data-status="Подача в суд">
+            <td class="px-4 py-3"><input type="checkbox" class="row-cb w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500"></td>
+            <td class="px-4 py-3"><a href="client-case.html" class="font-medium text-indigo-600 hover:text-indigo-800 whitespace-nowrap">Кириллов Денис Максимович</a></td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Д-2024-0789</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">А40-77890/2026</td>
+            <td class="px-4 py-3"><div class="relative inline-block"><button onclick="toggleStatusDd(this)" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800 cursor-pointer hover:opacity-80">Подача в суд</button><div class="status-dd hidden absolute left-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+            <td class="px-4 py-3 text-gray-600">10 / 12</td>
+            <td class="px-4 py-3 text-gray-600">5 / 6</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Казань</td>
+            <td class="px-4 py-3"><div class="relative"><button onclick="toggleActionsDd(this)" class="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg></button><div class="actions-dd hidden absolute right-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+          </tr>
+
+          <!-- Row 38 -->
+          <tr class="hover:bg-gray-50 transition-colors" data-name="Архипова Татьяна Сергеевна" data-status="Сбор документов">
+            <td class="px-4 py-3"><input type="checkbox" class="row-cb w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500"></td>
+            <td class="px-4 py-3"><a href="client-case.html" class="font-medium text-indigo-600 hover:text-indigo-800 whitespace-nowrap">Архипова Татьяна Сергеевна</a></td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Д-2024-0812</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">А61-88901/2026</td>
+            <td class="px-4 py-3"><div class="relative inline-block"><button onclick="toggleStatusDd(this)" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 cursor-pointer hover:opacity-80">Сбор документов</button><div class="status-dd hidden absolute left-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+            <td class="px-4 py-3 text-gray-600">3 / 10</td>
+            <td class="px-4 py-3 text-gray-600">1 / 5</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Самара</td>
+            <td class="px-4 py-3"><div class="relative"><button onclick="toggleActionsDd(this)" class="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg></button><div class="actions-dd hidden absolute right-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+          </tr>
+
+          <!-- Row 39 -->
+          <tr class="hover:bg-gray-50 transition-colors" data-name="Шестаков Алексей Константинович" data-status="Новое">
+            <td class="px-4 py-3"><input type="checkbox" class="row-cb w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500"></td>
+            <td class="px-4 py-3"><a href="client-case.html" class="font-medium text-indigo-600 hover:text-indigo-800 whitespace-nowrap">Шестаков Алексей Константинович</a></td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Д-2025-0100</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">А40-99012/2026</td>
+            <td class="px-4 py-3"><div class="relative inline-block"><button onclick="toggleStatusDd(this)" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 cursor-pointer hover:opacity-80">Новое</button><div class="status-dd hidden absolute left-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+            <td class="px-4 py-3 text-gray-600">1 / 8</td>
+            <td class="px-4 py-3 text-gray-600">0 / 4</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Москва</td>
+            <td class="px-4 py-3"><div class="relative"><button onclick="toggleActionsDd(this)" class="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg></button><div class="actions-dd hidden absolute right-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+          </tr>
+
+          <!-- Row 40 -->
+          <tr class="hover:bg-gray-50 transition-colors" data-name="Рыбакова Екатерина Андреевна" data-status="Остановлено">
+            <td class="px-4 py-3"><input type="checkbox" class="row-cb w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500"></td>
+            <td class="px-4 py-3"><a href="client-case.html" class="font-medium text-indigo-600 hover:text-indigo-800 whitespace-nowrap">Рыбакова Екатерина Андреевна</a></td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Д-2024-0850</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">А67-10123/2026</td>
+            <td class="px-4 py-3"><div class="relative inline-block"><button onclick="toggleStatusDd(this)" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800 cursor-pointer hover:opacity-80">Остановлено</button><div class="status-dd hidden absolute left-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+            <td class="px-4 py-3 text-gray-600">6 / 15</td>
+            <td class="px-4 py-3 text-gray-600">3 / 7</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">Воронеж</td>
+            <td class="px-4 py-3"><div class="relative"><button onclick="toggleActionsDd(this)" class="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg></button><div class="actions-dd hidden absolute right-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 z-30 py-1"></div></div></td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Footer -->
+    <div class="px-4 py-3 border-t border-gray-100 flex items-center justify-between text-sm text-gray-500">
+      <span id="count-label">Показано 40 клиентов</span>
+      <div class="flex items-center gap-2">
+        <button class="px-3 py-1.5 rounded-lg border border-gray-200 hover:bg-gray-50 disabled:opacity-40">Назад</button>
+        <span class="px-3 py-1.5 rounded-lg bg-indigo-600 text-white text-sm font-medium">1</span>
+        <button class="px-3 py-1.5 rounded-lg border border-gray-200 hover:bg-gray-50">Вперёд</button>
+      </div>
     </div>
   </div>
 
 </main>
 
+<!-- Mobile JS -->
 <script>
-// ─── DATA ───────────────────────────────────────────────────────────────────
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebar-overlay');
+  const menuBtn = document.getElementById('mobile-menu-btn');
+  menuBtn?.addEventListener('click', () => { sidebar.classList.toggle('-translate-x-full'); overlay.classList.toggle('hidden'); });
+  overlay?.addEventListener('click', () => { sidebar.classList.add('-translate-x-full'); overlay.classList.add('hidden'); });
+</script>
 
-const STATUSES = [
-  { label: 'Новое',                classes: 'bg-blue-100 text-blue-700'   },
-  { label: 'Сбор документов',      classes: 'bg-yellow-100 text-yellow-700' },
-  { label: 'Анализ документов',    classes: 'bg-purple-100 text-purple-700' },
-  { label: 'Генерация документов', classes: 'bg-cyan-100 text-cyan-700'   },
-  { label: 'Подача в суд',         classes: 'bg-orange-100 text-orange-700' },
-  { label: 'Остановлено',          classes: 'bg-red-100 text-red-700'     },
-  { label: 'Завершено',            classes: 'bg-green-100 text-green-700' },
-];
+<script>
+  // Status dropdown data
+  const statuses = [
+    { label: 'Новое', bg: 'bg-blue-100', text: 'text-blue-800' },
+    { label: 'Сбор документов', bg: 'bg-yellow-100', text: 'text-yellow-800' },
+    { label: 'Анализ документов', bg: 'bg-purple-100', text: 'text-purple-800' },
+    { label: 'Генерация документов', bg: 'bg-orange-100', text: 'text-orange-800' },
+    { label: 'Подача в суд', bg: 'bg-indigo-100', text: 'text-indigo-800' },
+    { label: 'Остановлено', bg: 'bg-red-100', text: 'text-red-800' },
+    { label: 'Завершено', bg: 'bg-green-100', text: 'text-green-800' },
+  ];
 
-const REGIONS = [
-  'Москва', 'Санкт-Петербург', 'Новосибирск', 'Екатеринбург',
-  'Казань', 'Нижний Новгород', 'Самара', 'Ростов-на-Дону',
-  'Краснодар', 'Воронеж'
-];
+  // Actions dropdown HTML
+  const actionsHtml = `
+    <button class="flex items-center gap-2 w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+      <svg class="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+      Редактировать
+    </button>
+    <button class="flex items-center gap-2 w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+      <svg class="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+      Обновить документы
+    </button>
+    <button class="flex items-center gap-2 w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+      <svg class="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+      Посмотреть ошибки
+    </button>
+    <div class="border-t border-gray-100 my-1"></div>
+    <button class="flex items-center gap-2 w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50">
+      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+      Удалить
+    </button>
+  `;
 
-const COURT_CODES = ['А40', 'А78', 'А54', 'А60', 'А16', 'А45', 'А66', 'А43', 'А55', 'А23'];
-
-const NAMES = [
-  'Смирнов Алексей Игоревич',      'Кузнецова Мария Дмитриевна',
-  'Попов Дмитрий Александрович',   'Васильева Елена Сергеевна',
-  'Новиков Сергей Владимирович',   'Федорова Ольга Николаевна',
-  'Морозов Андрей Петрович',       'Волкова Наталья Юрьевна',
-  'Алексеев Михаил Константинович','Лебедева Татьяна Викторовна',
-  'Семёнов Илья Борисович',        'Козлова Ирина Геннадьевна',
-  'Егоров Павел Михайлович',       'Никитина Светлана Андреевна',
-  'Соколов Роман Евгеньевич',      'Титова Анастасия Олеговна',
-  'Михайлов Евгений Васильевич',   'Захарова Юлия Алексеевна',
-  'Орлов Николай Фёдорович',       'Виноградова Ксения Романовна',
-  'Степанов Артём Игоревич',       'Зайцева Диана Сергеевна',
-  'Яковлев Владимир Павлович',     'Павлова Анна Михайловна',
-  'Громов Станислав Юрьевич',      'Ефимова Валентина Николаевна',
-  'Беляев Денис Андреевич',        'Тарасова Алиса Владимировна',
-  'Крылов Антон Дмитриевич',       'Борисова Жанна Петровна',
-  'Щербаков Максим Олегович',      'Медведева Полина Александровна',
-  'Фролов Кирилл Сергеевич',       'Суворова Наталья Борисовна',
-  'Комаров Глеб Витальевич',       'Белова Екатерина Ивановна',
-  'Пономарёв Артём Евгеньевич',    'Гусева Марина Дмитриевна',
-  'Чернов Олег Станиславович',     'Дмитриева Вероника Алексеевна',
-];
-
-// Deterministic pseudo-random (seeded)
-function seededRand(seed) {
-  let s = seed;
-  return function() {
-    s = (s * 1664525 + 1013904223) & 0xffffffff;
-    return (s >>> 0) / 0xffffffff;
-  };
-}
-
-function buildRows() {
-  const rows = [];
-  const statusDist = [0,0,1,1,2,2,3,3,4,4,5,5,6,6,0,1,2,3,4,5,6,0,1,2,3,4,5,6,0,1,2,3,4,5,6,0,1,2,5,6];
-  for (let i = 0; i < 40; i++) {
-    const rng = seededRand(i * 137 + 42);
-    const statusIdx = statusDist[i];
-    const docsTotal = 10 + Math.floor(rng() * 6);   // 10–15
-    let docsLoaded;
-    if (i < 5) docsLoaded = 0;
-    else if (i < 12) docsLoaded = Math.floor(rng() * 4) + 1;
-    else if (i > 34) docsLoaded = docsTotal;
-    else docsLoaded = Math.floor(rng() * (docsTotal + 1));
-
-    const reqTotal = 4 + Math.floor(rng() * 5);     // 4–8
-    let reqLoaded;
-    if (i < 5) reqLoaded = 0;
-    else if (i > 34) reqLoaded = reqTotal;
-    else reqLoaded = Math.floor(rng() * (reqTotal + 1));
-
-    const courtCode = COURT_CODES[i % COURT_CODES.length];
-    const caseNum = String(10000 + Math.floor(rng() * 89999)).padStart(5, '0');
-
-    rows.push({
-      id: i,
-      name: NAMES[i],
-      contract: `Д-2024/${String(i + 1).padStart(3, '0')}`,
-      caseNum: `${courtCode}-${caseNum}/2026`,
-      status: STATUSES[statusIdx].label,
-      docsLoaded,
-      docsTotal,
-      reqLoaded,
-      reqTotal,
-      region: REGIONS[i % REGIONS.length],
+  // Populate status dropdowns
+  document.querySelectorAll('.status-dd').forEach(dd => {
+    statuses.forEach(s => {
+      const btn = document.createElement('button');
+      btn.className = 'w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2';
+      btn.innerHTML = `<span class="inline-block w-2 h-2 rounded-full ${s.bg.replace('100','500')}"></span>${s.label}`;
+      btn.addEventListener('click', () => {
+        // Update badge
+        const badge = dd.previousElementSibling;
+        badge.className = `inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${s.bg} ${s.text} cursor-pointer hover:opacity-80`;
+        badge.textContent = s.label;
+        // Update row data attribute
+        dd.closest('tr').dataset.status = s.label;
+        dd.classList.add('hidden');
+      });
+      dd.appendChild(btn);
     });
+  });
+
+  // Populate actions dropdowns
+  document.querySelectorAll('.actions-dd').forEach(dd => {
+    dd.innerHTML = actionsHtml;
+  });
+
+  // Toggle status dropdown
+  function toggleStatusDd(btn) {
+    const dd = btn.nextElementSibling;
+    const isHidden = dd.classList.contains('hidden');
+    // Close all
+    document.querySelectorAll('.status-dd, .actions-dd').forEach(d => d.classList.add('hidden'));
+    if (isHidden) dd.classList.remove('hidden');
   }
-  return rows;
-}
 
-let allRows = buildRows();
-let sortCol = -1;
-let sortAsc = true;
-let searchTerm = '';
-let statusFilter = '';
-
-// ─── STATUS HELPERS ─────────────────────────────────────────────────────────
-
-function getStatusClasses(label) {
-  const s = STATUSES.find(x => x.label === label);
-  return s ? s.classes : 'bg-gray-100 text-gray-700';
-}
-
-// ─── RENDER ─────────────────────────────────────────────────────────────────
-
-function getFilteredRows() {
-  let rows = [...allRows];
-  if (searchTerm) {
-    const q = searchTerm.toLowerCase();
-    rows = rows.filter(r => r.name.toLowerCase().includes(q));
+  // Toggle actions dropdown
+  function toggleActionsDd(btn) {
+    const dd = btn.nextElementSibling;
+    const isHidden = dd.classList.contains('hidden');
+    document.querySelectorAll('.status-dd, .actions-dd').forEach(d => d.classList.add('hidden'));
+    if (isHidden) dd.classList.remove('hidden');
   }
-  if (statusFilter) {
-    rows = rows.filter(r => r.status === statusFilter);
-  }
-  if (sortCol >= 0) {
-    rows.sort((a, b) => {
-      let va, vb;
-      switch(sortCol) {
-        case 0: va = a.name; vb = b.name; break;
-        case 1: va = a.contract; vb = b.contract; break;
-        case 2: va = a.caseNum; vb = b.caseNum; break;
-        case 3: va = a.status; vb = b.status; break;
-        case 4: va = a.docsLoaded / a.docsTotal; vb = b.docsLoaded / b.docsTotal; break;
-        case 5: va = a.reqLoaded / a.reqTotal; vb = b.reqLoaded / b.reqTotal; break;
-        case 6: va = a.region; vb = b.region; break;
-        default: return 0;
-      }
-      if (va < vb) return sortAsc ? -1 : 1;
-      if (va > vb) return sortAsc ? 1 : -1;
-      return 0;
-    });
-  }
-  return rows;
-}
 
-function render() {
-  const tbody = document.getElementById('table-body');
-  const emptyState = document.getElementById('empty-state');
-  const rows = getFilteredRows();
-
-  if (rows.length === 0) {
-    tbody.innerHTML = '';
-    emptyState.classList.remove('hidden');
-    return;
-  }
-  emptyState.classList.add('hidden');
-
-  tbody.innerHTML = rows.map(row => {
-    const statusClasses = getStatusClasses(row.status);
-    const docsColor = row.docsLoaded === 0
-      ? 'text-red-500 font-medium'
-      : row.docsLoaded === row.docsTotal
-        ? 'text-green-600 font-medium'
-        : 'text-gray-700';
-    const reqColor = row.reqLoaded === 0
-      ? 'text-red-500 font-medium'
-      : row.reqLoaded === row.reqTotal
-        ? 'text-green-600 font-medium'
-        : 'text-gray-700';
-
-    return `
-    <tr class="hover:bg-gray-50 transition-colors row-item" data-id="${row.id}">
-      <td class="px-4 py-3">
-        <input type="checkbox" class="row-checkbox w-4 h-4 text-indigo-600 bg-white border-gray-300 rounded focus:ring-indigo-500 cursor-pointer" data-id="${row.id}">
-      </td>
-      <td class="px-4 py-3 whitespace-nowrap">
-        <a href="client-case.html" class="text-indigo-600 hover:text-indigo-800 hover:underline font-medium">${row.name}</a>
-      </td>
-      <td class="px-4 py-3 whitespace-nowrap text-gray-600">${row.contract}</td>
-      <td class="px-4 py-3 whitespace-nowrap text-gray-600">${row.caseNum}</td>
-      <td class="px-4 py-3 whitespace-nowrap">
-        <div class="relative inline-block status-dropdown-wrapper">
-          <button class="status-btn inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium ${statusClasses} cursor-pointer hover:opacity-80 transition-opacity" data-id="${row.id}">
-            ${row.status}
-            <svg class="w-3 h-3 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
-            </svg>
-          </button>
-          <div class="status-menu hidden absolute left-0 top-full mt-1 w-52 bg-white rounded-lg shadow-lg border border-gray-100 z-30 py-1">
-            ${STATUSES.map(s => `
-              <button class="status-option w-full text-left px-3 py-2 text-sm hover:bg-gray-50 flex items-center gap-2" data-id="${row.id}" data-status="${s.label}">
-                <span class="inline-block px-2 py-0.5 rounded-full text-xs font-medium ${s.classes}">${s.label}</span>
-              </button>
-            `).join('')}
-          </div>
-        </div>
-      </td>
-      <td class="px-4 py-3 whitespace-nowrap">
-        <span class="${docsColor}">${row.docsLoaded} / ${row.docsTotal}</span>
-      </td>
-      <td class="px-4 py-3 whitespace-nowrap">
-        <span class="${reqColor}">${row.reqLoaded} / ${row.reqTotal}</span>
-      </td>
-      <td class="px-4 py-3 whitespace-nowrap text-gray-600">${row.region}</td>
-      <td class="px-4 py-3 whitespace-nowrap">
-        <div class="relative inline-block actions-dropdown-wrapper">
-          <button class="actions-btn p-1.5 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors" data-id="${row.id}">
-            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"/>
-            </svg>
-          </button>
-          <div class="actions-menu hidden absolute right-0 top-full mt-1 w-52 bg-white rounded-lg shadow-lg border border-gray-100 z-30 py-1">
-            <button class="w-full text-left px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-3">
-              <svg class="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-              </svg>
-              Редактировать
-            </button>
-            <button class="w-full text-left px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-3">
-              <svg class="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
-              </svg>
-              Обновить документы
-            </button>
-            <button class="w-full text-left px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-3">
-              <svg class="w-4 h-4 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
-              </svg>
-              Посмотреть ошибки
-            </button>
-            <div class="border-t border-gray-100 my-1"></div>
-            <button class="w-full text-left px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 flex items-center gap-3">
-              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-              </svg>
-              Удалить
-            </button>
-          </div>
-        </div>
-      </td>
-    </tr>`;
-  }).join('');
-
-  // Restore checkbox states
-  document.querySelectorAll('.row-checkbox').forEach(cb => {
-    const id = parseInt(cb.dataset.id);
-    if (selectedIds.has(id)) {
-      cb.checked = true;
-      cb.closest('tr').classList.add('bg-indigo-50');
-      cb.closest('tr').classList.remove('hover:bg-gray-50');
+  // Close dropdowns when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.relative')) {
+      document.querySelectorAll('.status-dd, .actions-dd').forEach(d => d.classList.add('hidden'));
     }
   });
 
-  attachRowEvents();
-}
+  // Filter dropdown toggle
+  document.getElementById('filter-btn').addEventListener('click', (e) => {
+    e.stopPropagation();
+    document.getElementById('filter-dropdown').classList.toggle('hidden');
+  });
+  document.addEventListener('click', () => {
+    document.getElementById('filter-dropdown').classList.add('hidden');
+  });
 
-// ─── SELECTION ───────────────────────────────────────────────────────────────
+  // Filter by status
+  document.querySelectorAll('.filter-status-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const status = btn.dataset.status;
+      const rows = document.querySelectorAll('#clients-tbody tr[data-name]');
+      let visible = 0;
+      rows.forEach(row => {
+        const exp = row.nextElementSibling && row.nextElementSibling.classList.contains('expansion-row') ? row.nextElementSibling : null;
+        if (status === 'all' || row.dataset.status === status) {
+          row.classList.remove('hidden');
+          visible++;
+        } else {
+          row.classList.add('hidden');
+          if (exp) exp.classList.add('hidden');
+        }
+      });
+      document.getElementById('count-label').textContent = `Показано ${visible} клиентов`;
+      document.getElementById('filter-dropdown').classList.add('hidden');
+    });
+  });
 
-const selectedIds = new Set();
-
-function attachRowEvents() {
-  // Row checkboxes
-  document.querySelectorAll('.row-checkbox').forEach(cb => {
-    cb.addEventListener('change', function() {
-      const id = parseInt(this.dataset.id);
-      const tr = this.closest('tr');
-      if (this.checked) {
-        selectedIds.add(id);
-        tr.classList.add('bg-indigo-50');
-        tr.classList.remove('hover:bg-gray-50');
+  // Search
+  document.getElementById('search-input').addEventListener('input', function() {
+    const q = this.value.toLowerCase();
+    const rows = document.querySelectorAll('#clients-tbody tr[data-name]');
+    let visible = 0;
+    rows.forEach(row => {
+      const name = row.dataset.name.toLowerCase();
+      const exp = row.nextElementSibling && row.nextElementSibling.classList.contains('expansion-row') ? row.nextElementSibling : null;
+      if (name.includes(q)) {
+        row.classList.remove('hidden');
+        visible++;
       } else {
-        selectedIds.delete(id);
-        tr.classList.remove('bg-indigo-50');
-        tr.classList.add('hover:bg-gray-50');
+        row.classList.add('hidden');
+        if (exp) exp.classList.add('hidden');
       }
-      updateSelectAll();
     });
+    document.getElementById('count-label').textContent = `Показано ${visible} клиентов`;
   });
 
-  // Status dropdowns
-  document.querySelectorAll('.status-btn').forEach(btn => {
-    btn.addEventListener('click', function(e) {
-      e.stopPropagation();
-      const wrapper = this.closest('.status-dropdown-wrapper');
-      const menu = wrapper.querySelector('.status-menu');
-      // Close all others
-      closeAllDropdowns();
-      menu.classList.toggle('hidden');
-    });
-  });
-
-  document.querySelectorAll('.status-option').forEach(opt => {
-    opt.addEventListener('click', function(e) {
-      e.stopPropagation();
-      const id = parseInt(this.dataset.id);
-      const newStatus = this.dataset.status;
-      const row = allRows.find(r => r.id === id);
-      if (row) {
-        row.status = newStatus;
-        render();
+  // Select all checkbox
+  document.getElementById('select-all').addEventListener('change', function() {
+    document.querySelectorAll('.row-cb').forEach(cb => {
+      cb.checked = this.checked;
+      const row = cb.closest('tr');
+      if (this.checked) {
+        row.classList.add('bg-indigo-50');
+        row.classList.remove('hover:bg-gray-50');
+      } else {
+        row.classList.remove('bg-indigo-50');
+        row.classList.add('hover:bg-gray-50');
       }
     });
   });
 
-  // Actions dropdowns
-  document.querySelectorAll('.actions-btn').forEach(btn => {
-    btn.addEventListener('click', function(e) {
-      e.stopPropagation();
-      const wrapper = this.closest('.actions-dropdown-wrapper');
-      const menu = wrapper.querySelector('.actions-menu');
-      closeAllDropdowns();
-      menu.classList.toggle('hidden');
+  // Row checkbox highlighting
+  document.querySelectorAll('.row-cb').forEach(cb => {
+    cb.addEventListener('change', function() {
+      const row = this.closest('tr');
+      if (this.checked) {
+        row.classList.add('bg-indigo-50');
+        row.classList.remove('hover:bg-gray-50');
+      } else {
+        row.classList.remove('bg-indigo-50');
+        row.classList.add('hover:bg-gray-50');
+      }
     });
   });
-}
 
-function updateSelectAll() {
-  const selectAll = document.getElementById('select-all');
-  const visibleRows = getFilteredRows();
-  if (visibleRows.length === 0) {
-    selectAll.checked = false;
-    selectAll.indeterminate = false;
-    return;
-  }
-  const allSelected = visibleRows.every(r => selectedIds.has(r.id));
-  const someSelected = visibleRows.some(r => selectedIds.has(r.id));
-  selectAll.checked = allSelected;
-  selectAll.indeterminate = !allSelected && someSelected;
-}
+  // ---------- Expandable rows with drag & drop ----------
+  (function initExpandableRows() {
+    const tbody = document.getElementById('clients-tbody');
+    const rows = Array.from(tbody.querySelectorAll('tr[data-name]'));
 
-function closeAllDropdowns() {
-  document.querySelectorAll('.status-menu, .actions-menu').forEach(m => m.classList.add('hidden'));
-}
+    rows.forEach((row, idx) => {
+      const name = row.dataset.name || '';
+      const contract = row.children[2]?.textContent.trim() || '';
+      const caseNo = row.children[3]?.textContent.trim() || '';
+      const statusBtn = row.querySelector('.status-dd')?.previousElementSibling;
+      const status = statusBtn?.textContent.trim() || '';
+      const docs = row.children[5]?.textContent.trim() || '';
+      const required = row.children[6]?.textContent.trim() || '';
+      const region = row.children[7]?.textContent.trim() || '';
 
-// ─── SELECT ALL ──────────────────────────────────────────────────────────────
+      // Prepend expand button cell
+      const expandTd = document.createElement('td');
+      expandTd.className = 'px-2 py-3 w-8';
+      expandTd.innerHTML = `
+        <button type="button" class="expand-btn p-1 text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 rounded transition-colors" aria-expanded="false" title="Подробнее">
+          <svg class="w-4 h-4 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+          </svg>
+        </button>`;
+      row.insertBefore(expandTd, row.firstChild);
 
-document.getElementById('select-all').addEventListener('change', function() {
-  const visibleRows = getFilteredRows();
-  if (this.checked) {
-    visibleRows.forEach(r => selectedIds.add(r.id));
-  } else {
-    visibleRows.forEach(r => selectedIds.delete(r.id));
-  }
-  render();
-});
+      // Create hidden expansion row
+      const expRow = document.createElement('tr');
+      expRow.className = 'expansion-row hidden bg-gray-50/60';
+      expRow.dataset.parentIdx = idx;
+      expRow.innerHTML = `
+        <td></td>
+        <td colspan="9" class="px-6 py-5">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+            <!-- Brief info -->
+            <div class="bg-white rounded-xl border border-gray-100 p-4">
+              <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Краткая информация</p>
+              <dl class="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
+                <dt class="text-gray-500">Клиент</dt>
+                <dd class="font-medium text-gray-900">${name}</dd>
+                <dt class="text-gray-500">№ договора</dt>
+                <dd class="text-gray-700">${contract}</dd>
+                <dt class="text-gray-500">№ дела</dt>
+                <dd class="text-gray-700">${caseNo}</dd>
+                <dt class="text-gray-500">Статус</dt>
+                <dd class="text-gray-700">${status}</dd>
+                <dt class="text-gray-500">Документы</dt>
+                <dd class="text-gray-700">${docs} · обяз. ${required}</dd>
+                <dt class="text-gray-500">Регион</dt>
+                <dd class="text-gray-700">${region}</dd>
+              </dl>
+              <a href="client-case.html" class="mt-4 inline-flex items-center gap-1 text-sm font-medium text-indigo-600 hover:text-indigo-800">
+                Открыть дело клиента
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+              </a>
+            </div>
+            <!-- Drag & drop -->
+            <div class="bg-white rounded-xl border border-gray-100 p-4">
+              <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Быстрая загрузка документов</p>
+              <label class="dropzone flex flex-col items-center justify-center w-full h-40 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-indigo-400 hover:bg-indigo-50/40 transition-colors">
+                <svg class="w-8 h-8 text-gray-400 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.9A5 5 0 0115.9 7h.1a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                </svg>
+                <p class="text-sm text-gray-600"><span class="font-medium text-indigo-600">Нажмите</span> или перетащите файлы</p>
+                <p class="text-xs text-gray-500 mt-1">PDF, JPG, PNG — до 10 МБ</p>
+                <input type="file" class="hidden" multiple accept=".pdf,.jpg,.jpeg,.png">
+              </label>
+              <ul class="dz-list mt-3 space-y-1.5 text-sm"></ul>
+            </div>
+          </div>
+        </td>`;
+      row.parentNode.insertBefore(expRow, row.nextSibling);
 
-// ─── SORT ────────────────────────────────────────────────────────────────────
+      // Expand toggle
+      const btn = expandTd.querySelector('.expand-btn');
+      const chev = btn.querySelector('svg');
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const open = !expRow.classList.contains('hidden');
+        if (open) {
+          expRow.classList.add('hidden');
+          chev.classList.remove('rotate-90');
+          btn.setAttribute('aria-expanded', 'false');
+        } else {
+          expRow.classList.remove('hidden');
+          chev.classList.add('rotate-90');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
 
-document.querySelectorAll('th[data-col]').forEach(th => {
-  th.addEventListener('click', function() {
-    const col = parseInt(this.dataset.col);
-    if (sortCol === col) {
-      sortAsc = !sortAsc;
-    } else {
-      sortCol = col;
-      sortAsc = true;
-    }
-    // Update sort icons
-    document.querySelectorAll('th[data-col] .sort-icon').forEach(icon => {
-      icon.textContent = '↕';
-      icon.classList.add('text-gray-300');
-      icon.classList.remove('text-indigo-500');
+      // Drag & drop wiring
+      const dz = expRow.querySelector('.dropzone');
+      const input = dz.querySelector('input[type="file"]');
+      const list = expRow.querySelector('.dz-list');
+      const addFiles = (files) => {
+        Array.from(files).forEach(f => {
+          const li = document.createElement('li');
+          li.className = 'flex items-center justify-between px-3 py-2 bg-gray-50 rounded-lg';
+          const size = (f.size / 1024).toFixed(1) + ' КБ';
+          li.innerHTML = `
+            <span class="flex items-center gap-2 text-gray-700">
+              <svg class="w-4 h-4 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+              <span class="truncate max-w-[220px]">${f.name}</span>
+              <span class="text-xs text-gray-500">${size}</span>
+            </span>
+            <span class="inline-flex items-center gap-1 text-xs font-medium text-green-600">
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              Загружен
+            </span>`;
+          list.appendChild(li);
+        });
+      };
+      input.addEventListener('change', e => addFiles(e.target.files));
+      ['dragenter','dragover'].forEach(ev => dz.addEventListener(ev, e => {
+        e.preventDefault(); e.stopPropagation();
+        dz.classList.add('border-indigo-500','bg-indigo-50');
+      }));
+      ['dragleave','drop'].forEach(ev => dz.addEventListener(ev, e => {
+        e.preventDefault(); e.stopPropagation();
+        dz.classList.remove('border-indigo-500','bg-indigo-50');
+      }));
+      dz.addEventListener('drop', e => {
+        if (e.dataTransfer?.files?.length) addFiles(e.dataTransfer.files);
+      });
     });
-    const icon = this.querySelector('.sort-icon');
-    icon.textContent = sortAsc ? '↑' : '↓';
-    icon.classList.remove('text-gray-300');
-    icon.classList.add('text-indigo-500');
-    render();
-  });
-});
-
-// ─── SEARCH ──────────────────────────────────────────────────────────────────
-
-document.getElementById('search-input').addEventListener('input', function() {
-  searchTerm = this.value.trim();
-  render();
-});
-
-// ─── STATUS FILTER ───────────────────────────────────────────────────────────
-
-document.getElementById('status-filter').addEventListener('change', function() {
-  statusFilter = this.value;
-  render();
-});
-
-// ─── CLOSE DROPDOWNS ON OUTSIDE CLICK ───────────────────────────────────────
-
-document.addEventListener('click', function() {
-  closeAllDropdowns();
-});
-
-// ─── MOBILE SIDEBAR ──────────────────────────────────────────────────────────
-
-const sidebar = document.getElementById('sidebar');
-const overlay = document.getElementById('sidebar-overlay');
-const menuBtn = document.getElementById('mobile-menu-btn');
-menuBtn?.addEventListener('click', () => {
-  sidebar.classList.toggle('-translate-x-full');
-  overlay.classList.toggle('hidden');
-});
-overlay?.addEventListener('click', () => {
-  sidebar.classList.add('-translate-x-full');
-  overlay.classList.add('hidden');
-});
-
-// ─── INIT ────────────────────────────────────────────────────────────────────
-
-render();
+  })();
 </script>
 
 </body>
