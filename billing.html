@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ЮрКлик — Оплата</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = { theme: { extend: { fontFamily: { sans: ["Inter", "ui-sans-serif", "system-ui"] } } } };
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.2/flowbite.min.css" />
+  </head>
+  <body class="bg-gray-50 font-sans text-gray-900 antialiased">
+    <div id="app-shell" data-page="billing" data-title="Оплата"></div>
+
+    <div id="page-source">
+      <!-- Вкладки -->
+      <div class="border-b border-gray-200 mb-6">
+        <nav class="flex gap-6 text-sm" id="tabs">
+          <button type="button" data-tab="plans" class="tab -mb-px border-b-2 border-indigo-600 text-indigo-700 py-3">Тарифы</button>
+          <button type="button" data-tab="invoices" class="tab -mb-px border-b-2 border-transparent text-gray-600 hover:text-gray-900 py-3">Счета</button>
+          <button type="button" data-tab="entities" class="tab -mb-px border-b-2 border-transparent text-gray-600 hover:text-gray-900 py-3">Юридические лица</button>
+        </nav>
+      </div>
+
+      <!-- Tab: Тарифы -->
+      <section id="tab-plans" class="tab-panel">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <!-- 100 -->
+          <div class="bg-white rounded-xl border border-gray-200 p-6 flex flex-col">
+            <div class="text-sm tracking-wider uppercase text-gray-500">ПАКЕТ 100</div>
+            <div class="mt-3 text-3xl text-gray-900">9 900 ₽</div>
+            <ul class="mt-5 space-y-2.5 text-sm text-gray-700 flex-1">
+              <li class="flex items-start gap-2"><svg class="w-4 h-4 text-emerald-500 mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></svg>До 100 поданных дел</li>
+              <li class="flex items-start gap-2"><svg class="w-4 h-4 text-emerald-500 mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></svg>Личный кабинет клиента</li>
+              <li class="flex items-start gap-2"><svg class="w-4 h-4 text-emerald-500 mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></svg>Аналитика</li>
+              <li class="flex items-start gap-2"><svg class="w-4 h-4 text-emerald-500 mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></svg>Брендирование</li>
+            </ul>
+            <button type="button" class="pick-plan mt-6 h-10 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm inline-flex items-center justify-center gap-1" data-plan="ПАКЕТ 100" data-price="9 900 ₽">
+              Выбрать
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+
+          <!-- 500 -->
+          <div class="bg-white rounded-xl border-2 border-indigo-500 p-6 flex flex-col relative">
+            <span class="absolute -top-2.5 left-1/2 -translate-x-1/2 inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-indigo-600 text-white text-xs">
+              <span class="w-1.5 h-1.5 rounded-full bg-white"></span>Самый популярный
+            </span>
+            <div class="text-sm tracking-wider uppercase text-gray-500">ПАКЕТ 500</div>
+            <div class="mt-3 text-3xl text-gray-900">39 990 ₽</div>
+            <ul class="mt-5 space-y-2.5 text-sm text-gray-700 flex-1">
+              <li class="flex items-start gap-2"><svg class="w-4 h-4 text-emerald-500 mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></svg>До 500 поданных дел</li>
+              <li class="flex items-start gap-2"><svg class="w-4 h-4 text-emerald-500 mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></svg>Личный кабинет клиента</li>
+              <li class="flex items-start gap-2"><svg class="w-4 h-4 text-emerald-500 mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></svg>Аналитика</li>
+              <li class="flex items-start gap-2"><svg class="w-4 h-4 text-emerald-500 mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></svg>Брендирование</li>
+            </ul>
+            <button type="button" class="pick-plan mt-6 h-10 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm inline-flex items-center justify-center gap-1" data-plan="ПАКЕТ 500" data-price="39 990 ₽">
+              Выбрать
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+
+          <!-- 1000 -->
+          <div class="bg-white rounded-xl border border-gray-200 p-6 flex flex-col relative">
+            <span class="absolute -top-2.5 left-1/2 -translate-x-1/2 inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-600 text-white text-xs">
+              <span class="w-1.5 h-1.5 rounded-full bg-white"></span>Самый выгодный
+            </span>
+            <div class="text-sm tracking-wider uppercase text-gray-500">ПАКЕТ 1000</div>
+            <div class="mt-3 text-3xl text-gray-900">69 900 ₽</div>
+            <ul class="mt-5 space-y-2.5 text-sm text-gray-700 flex-1">
+              <li class="flex items-start gap-2"><svg class="w-4 h-4 text-emerald-500 mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></svg>До 1000 поданных дел</li>
+              <li class="flex items-start gap-2"><svg class="w-4 h-4 text-emerald-500 mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></svg>Личный кабинет клиента</li>
+              <li class="flex items-start gap-2"><svg class="w-4 h-4 text-emerald-500 mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></svg>Аналитика</li>
+              <li class="flex items-start gap-2"><svg class="w-4 h-4 text-emerald-500 mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></svg>Брендирование</li>
+            </ul>
+            <button type="button" class="pick-plan mt-6 h-10 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm inline-flex items-center justify-center gap-1" data-plan="ПАКЕТ 1000" data-price="69 900 ₽">
+              Выбрать
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tab: Счета -->
+      <section id="tab-invoices" class="tab-panel hidden">
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-5">
+          <div class="flex items-center gap-2 flex-wrap">
+            <div class="relative">
+              <svg class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+              <input type="text" placeholder="Поиск по счетам" class="h-10 w-64 pl-9 pr-3 rounded-lg border border-gray-200 bg-white text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-200" />
+            </div>
+            <select class="h-10 px-3 rounded-lg border border-gray-200 bg-white text-sm text-gray-700">
+              <option>Все статусы</option>
+              <option>Ожидает оплаты</option>
+              <option>Оплачен</option>
+              <option>Просрочен</option>
+            </select>
+          </div>
+          <button type="button" class="inline-flex items-center gap-2 h-10 px-4 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+            Создать счёт
+          </button>
+        </div>
+
+        <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="min-w-full text-sm">
+              <thead class="bg-[#f3f4f6] text-gray-600">
+                <tr>
+                  <th class="px-4 py-3 text-left">№ счёта</th>
+                  <th class="px-4 py-3 text-left">Юридическое лицо</th>
+                  <th class="px-4 py-3 text-left">Сумма</th>
+                  <th class="px-4 py-3 text-left">Дата создания</th>
+                  <th class="px-4 py-3 text-left">Срок оплаты</th>
+                  <th class="px-4 py-3 text-left">Статус</th>
+                  <th class="px-4 py-3 text-right">Действия</th>
+                </tr>
+              </thead>
+              <tbody id="invoices-tbody" class="divide-y divide-gray-100"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tab: Юр. лица -->
+      <section id="tab-entities" class="tab-panel hidden">
+        <div class="flex items-center justify-end mb-5">
+          <button type="button" class="inline-flex items-center gap-2 h-10 px-4 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+            Создать юр. лицо
+          </button>
+        </div>
+        <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="min-w-full text-sm">
+              <thead class="bg-[#f3f4f6] text-gray-600">
+                <tr>
+                  <th class="px-4 py-3 text-left">Название</th>
+                  <th class="px-4 py-3 text-left">ИНН</th>
+                  <th class="px-4 py-3 text-left">Телефон</th>
+                  <th class="px-4 py-3 text-left">Email</th>
+                  <th class="px-4 py-3 text-right">Действия</th>
+                </tr>
+              </thead>
+              <tbody id="entities-tbody" class="divide-y divide-gray-100"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Панель создания счёта -->
+    <div id="invoice-overlay" class="hidden fixed inset-0 z-40 bg-gray-900/40"></div>
+    <aside id="invoice-panel" class="fixed top-0 right-0 z-50 h-full w-full max-w-md bg-white border-l border-gray-200 translate-x-full transition-transform flex flex-col">
+      <div class="flex items-center justify-between p-5 border-b border-gray-200">
+        <div>
+          <h2 class="text-base text-gray-900">Выставить счёт</h2>
+          <p class="text-sm text-gray-500" id="invoice-plan-name">—</p>
+        </div>
+        <button id="invoice-close" type="button" class="w-9 h-9 inline-flex items-center justify-center rounded-lg text-gray-500 hover:bg-gray-100">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12"/><path d="M18 6l-12 12"/></svg>
+        </button>
+      </div>
+      <div class="flex-1 overflow-y-auto p-5 space-y-5">
+        <div>
+          <label class="block text-sm text-gray-700 mb-1.5">Юридическое лицо</label>
+          <select class="h-10 w-full px-3 rounded-lg border border-gray-200 bg-white text-sm">
+            <option>ООО «Правовая группа»</option>
+            <option>ИП Иванов И. И.</option>
+            <option>ООО «Закон и порядок»</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm text-gray-700 mb-1.5">Тариф</label>
+          <input type="text" id="invoice-plan-input" readonly class="h-10 w-full px-3 rounded-lg border border-gray-200 bg-gray-50 text-sm text-gray-700" />
+        </div>
+        <div>
+          <label class="block text-sm text-gray-700 mb-1.5">Сумма</label>
+          <input type="text" id="invoice-price-input" readonly class="h-10 w-full px-3 rounded-lg border border-gray-200 bg-gray-50 text-sm text-gray-700" />
+        </div>
+        <div>
+          <label class="block text-sm text-gray-700 mb-1.5">Комментарий</label>
+          <textarea rows="3" class="w-full p-3 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-200"></textarea>
+        </div>
+      </div>
+      <div class="p-5 border-t border-gray-200 flex items-center justify-end gap-2">
+        <button type="button" id="invoice-cancel" class="h-10 px-4 rounded-lg border border-gray-200 text-sm text-gray-700 hover:bg-gray-50">Отмена</button>
+        <button type="button" class="h-10 px-4 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm">Создать счёт</button>
+      </div>
+    </aside>
+
+    <script src="assets/layout.js"></script>
+    <script>
+      const INVOICES = [
+        { n: "INV-2026-0142", entity: "ООО «Правовая группа»", sum: "39 990 ₽", created: "12.04.2026", due: "22.04.2026", status: "pending" },
+        { n: "INV-2026-0141", entity: "ИП Иванов И. И.", sum: "9 900 ₽", created: "08.04.2026", due: "18.04.2026", status: "paid" },
+        { n: "INV-2026-0140", entity: "ООО «Закон и порядок»", sum: "69 900 ₽", created: "28.03.2026", due: "07.04.2026", status: "overdue" },
+        { n: "INV-2026-0139", entity: "ООО «Правовая группа»", sum: "39 990 ₽", created: "18.03.2026", due: "28.03.2026", status: "paid" },
+        { n: "INV-2026-0138", entity: "ООО «Юрист-Консалт»", sum: "9 900 ₽", created: "10.03.2026", due: "20.03.2026", status: "paid" },
+      ];
+      const INVOICE_STATUS = {
+        pending: { label: "Ожидает оплаты", dot: "bg-amber-500", bg: "bg-amber-50", text: "text-amber-700" },
+        paid: { label: "Оплачен", dot: "bg-emerald-500", bg: "bg-emerald-50", text: "text-emerald-700" },
+        overdue: { label: "Просрочен", dot: "bg-rose-500", bg: "bg-rose-50", text: "text-rose-700" },
+      };
+
+      const ENTITIES = [
+        { name: "ООО «Правовая группа»", inn: "7706123456", phone: "+7 (495) 123-45-67", email: "info@pravgroup.ru" },
+        { name: "ИП Иванов И. И.", inn: "770612345678", phone: "+7 (916) 555-12-34", email: "ivanov@mail.ru" },
+        { name: "ООО «Закон и порядок»", inn: "7701987654", phone: "+7 (499) 765-43-21", email: "contact@zakonp.ru" },
+        { name: "ООО «Юрист-Консалт»", inn: "7704567890", phone: "+7 (495) 888-11-22", email: "hi@uk.ru" },
+      ];
+
+      document.addEventListener("layout:ready", () => {
+        // Табы
+        const tabs = document.querySelectorAll("#tabs .tab");
+        const panels = document.querySelectorAll(".tab-panel");
+        tabs.forEach((t) =>
+          t.addEventListener("click", () => {
+            tabs.forEach((x) => {
+              x.classList.remove("border-indigo-600", "text-indigo-700");
+              x.classList.add("border-transparent", "text-gray-600");
+            });
+            t.classList.add("border-indigo-600", "text-indigo-700");
+            t.classList.remove("border-transparent", "text-gray-600");
+            panels.forEach((p) => p.classList.add("hidden"));
+            document.getElementById("tab-" + t.dataset.tab).classList.remove("hidden");
+          })
+        );
+
+        // Счета
+        const invBody = document.getElementById("invoices-tbody");
+        invBody.innerHTML = INVOICES.map((inv) => {
+          const s = INVOICE_STATUS[inv.status];
+          return `
+            <tr class="hover:bg-gray-50">
+              <td class="px-4 py-3 text-gray-900">${inv.n}</td>
+              <td class="px-4 py-3 text-gray-700">${inv.entity}</td>
+              <td class="px-4 py-3 text-gray-900">${inv.sum}</td>
+              <td class="px-4 py-3 text-gray-700">${inv.created}</td>
+              <td class="px-4 py-3 text-gray-700">${inv.due}</td>
+              <td class="px-4 py-3">
+                <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs ${s.bg} ${s.text}">
+                  <span class="w-1.5 h-1.5 rounded-full ${s.dot}"></span>${s.label}
+                </span>
+              </td>
+              <td class="px-4 py-3 text-right">
+                <div class="inline-flex items-center gap-1">
+                  <button type="button" class="w-8 h-8 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-indigo-600" title="Скачать счёт">
+                    <svg class="w-4 h-4 mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12"/><path d="M7 11l5 5 5-5"/><path d="M5 20h14"/></svg>
+                  </button>
+                  <button type="button" class="w-8 h-8 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-gray-900" title="Действия">
+                    <svg class="w-4 h-4 mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="19" cy="12" r="1.2"/></svg>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }).join("");
+
+        // Юрлица
+        const entBody = document.getElementById("entities-tbody");
+        entBody.innerHTML = ENTITIES.map(
+          (e) => `
+          <tr class="hover:bg-gray-50">
+            <td class="px-4 py-3 text-gray-900">${e.name}</td>
+            <td class="px-4 py-3 text-gray-700">${e.inn}</td>
+            <td class="px-4 py-3 text-gray-700">${e.phone}</td>
+            <td class="px-4 py-3 text-gray-700">${e.email}</td>
+            <td class="px-4 py-3 text-right">
+              <div class="inline-flex items-center gap-1">
+                <button type="button" class="w-8 h-8 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-indigo-600" title="Редактировать">
+                  <svg class="w-4 h-4 mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4l10-10-4-4L4 16v4z"/><path d="M13.5 6.5l4 4"/></svg>
+                </button>
+                <button type="button" class="w-8 h-8 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-rose-600" title="Удалить">
+                  <svg class="w-4 h-4 mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M6 7l1 13a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-13"/><path d="M9 7V4h6v3"/></svg>
+                </button>
+              </div>
+            </td>
+          </tr>`
+        ).join("");
+
+        // Панель создания счёта
+        const overlay = document.getElementById("invoice-overlay");
+        const panel = document.getElementById("invoice-panel");
+        const planName = document.getElementById("invoice-plan-name");
+        const planInput = document.getElementById("invoice-plan-input");
+        const priceInput = document.getElementById("invoice-price-input");
+
+        const open = (plan, price) => {
+          planName.textContent = plan;
+          planInput.value = plan;
+          priceInput.value = price;
+          overlay.classList.remove("hidden");
+          requestAnimationFrame(() => panel.classList.remove("translate-x-full"));
+        };
+        const close = () => {
+          panel.classList.add("translate-x-full");
+          setTimeout(() => overlay.classList.add("hidden"), 300);
+        };
+
+        document.querySelectorAll(".pick-plan").forEach((b) =>
+          b.addEventListener("click", () => open(b.dataset.plan, b.dataset.price))
+        );
+        document.getElementById("invoice-close").addEventListener("click", close);
+        document.getElementById("invoice-cancel").addEventListener("click", close);
+        overlay.addEventListener("click", close);
+      });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.2/flowbite.min.js"></script>
+  </body>
+</html>
