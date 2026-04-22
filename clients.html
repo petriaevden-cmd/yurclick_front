@@ -116,6 +116,140 @@
         { name: "Рябов Дмитрий Александрович", caseNo: "А46-70122/2026", status: "analysis", progress: 100, docs: [14, 22], region: "Омская область", debts: "2 980 000 ₽", creditors: 7, property: "Авто, земля", taxes: "31 500 ₽", deals: 2 },
       ];
 
+      // ==== Генераторы детализации по клиенту (долги / кредиторы / имущество / сделки / налоги) ====
+      const CREDITOR_BANKS = [
+        "ПАО Сбербанк", "АО «Тинькофф Банк»", "ВТБ (ПАО)", "АО «Альфа-Банк»",
+        "ПАО «Росбанк»", "АО «Почта Банк»", "ООО МФК «Быстроденьги»",
+        "АО «Газпромбанк»", "ПАО «Совкомбанк»", "АО «Райффайзенбанк»",
+        "ООО МКК «Займер»", "ФНС России", "ПАО «Банк Открытие»",
+      ];
+      const DEBT_TYPES = [
+        { t: "Потребительский кредит", c: "text-rose-700", d: "bg-rose-500" },
+        { t: "Ипотека", c: "text-amber-700", d: "bg-amber-500" },
+        { t: "Автокредит", c: "text-sky-700", d: "bg-sky-500" },
+        { t: "Кредитная карта", c: "text-violet-700", d: "bg-violet-500" },
+        { t: "Микрозайм", c: "text-rose-700", d: "bg-rose-500" },
+        { t: "Налоговая задолженность", c: "text-gray-600", d: "bg-gray-400" },
+      ];
+      const PROPERTY_TYPES = [
+        "Квартира, 54 м²", "Квартира, 72 м²", "Жилой дом, 180 м²",
+        "Земельный участок, 12 соток", "Автомобиль Kia Rio, 2019",
+        "Автомобиль Toyota Camry, 2021", "Гараж, 24 м²", "Доля 1/2 в квартире",
+      ];
+      const DEAL_TYPES = [
+        "Купля-продажа автомобиля", "Дарение квартиры", "Купля-продажа доли",
+        "Перевод денежных средств", "Продажа земельного участка", "Переуступка прав",
+      ];
+      const TAX_TYPES = [
+        { t: "Транспортный налог", a: "ФНС России" },
+        { t: "Налог на имущество физлиц", a: "ФНС России" },
+        { t: "Земельный налог", a: "ФНС России" },
+        { t: "НДФЛ (задолженность)", a: "ФНС России" },
+        { t: "Страховые взносы ИП", a: "ФНС России" },
+        { t: "Пени по транспортному налогу", a: "ФНС России" },
+        { t: "Пени по налогу на имущество", a: "ФНС России" },
+      ];
+      // Простой детерминированный ГПСЧ, чтобы цифры не плясали между рендерами
+      function rng(seed) {
+        let s = seed % 2147483647;
+        if (s <= 0) s += 2147483646;
+        return () => (s = (s * 16807) % 2147483647) / 2147483647;
+      }
+      function money(n) {
+        return n.toLocaleString("ru-RU") + " ₽";
+      }
+      function fmtDate(d) {
+        return d.toLocaleDateString("ru-RU");
+      }
+      function pick(arr, r) { return arr[Math.floor(r() * arr.length)]; }
+      function hashSeed(s) { let h = 0; for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0; return h || 1; }
+
+      function buildDebtor(c) {
+        const r = rng(hashSeed(c.caseNo));
+        // Кредиторы
+        const credCount = c.creditors;
+        const creditors = [];
+        const usedBanks = new Set();
+        for (let i = 0; i < credCount; i++) {
+          let bank; do { bank = pick(CREDITOR_BANKS, r); } while (usedBanks.has(bank) && usedBanks.size < CREDITOR_BANKS.length);
+          usedBanks.add(bank);
+          const amount = Math.round((50000 + r() * 1200000) / 1000) * 1000;
+          const y = 2019 + Math.floor(r() * 6);
+          const m = 1 + Math.floor(r() * 12);
+          const d = 1 + Math.floor(r() * 28);
+          creditors.push({
+            bank,
+            contract: `№ ${Math.floor(100000 + r() * 899999)}`,
+            date: fmtDate(new Date(y, m - 1, d)),
+            amount,
+            overdue: Math.floor(r() * 540),
+            inRegistry: r() > 0.35,
+          });
+        }
+        // Долги по типам
+        const debtCount = Math.min(6, 2 + Math.floor(r() * 4));
+        const debts = [];
+        const usedTypes = new Set();
+        for (let i = 0; i < debtCount; i++) {
+          let dt; do { dt = pick(DEBT_TYPES, r); } while (usedTypes.has(dt.t) && usedTypes.size < DEBT_TYPES.length);
+          usedTypes.add(dt.t);
+          const principal = Math.round((80000 + r() * 800000) / 1000) * 1000;
+          const interest = Math.round(principal * (0.05 + r() * 0.3) / 1000) * 1000;
+          const penalty = Math.round(principal * (0.02 + r() * 0.12) / 1000) * 1000;
+          debts.push({
+            type: dt,
+            creditor: pick(CREDITOR_BANKS, r),
+            principal, interest, penalty,
+            total: principal + interest + penalty,
+          });
+        }
+        // Имущество
+        const propCount = c.property === "—" ? 0 : Math.max(1, Math.min(4, 1 + Math.floor(r() * 3)));
+        const property = [];
+        for (let i = 0; i < propCount; i++) {
+          const value = Math.round((150000 + r() * 6000000) / 1000) * 1000;
+          property.push({
+            type: pick(PROPERTY_TYPES, r),
+            registered: fmtDate(new Date(2010 + Math.floor(r() * 15), Math.floor(r() * 12), 1 + Math.floor(r() * 27))),
+            value,
+            status: r() > 0.6 ? "Единственное жильё" : (r() > 0.5 ? "В залоге" : "Подлежит реализации"),
+          });
+        }
+        // Сделки
+        const deals = [];
+        for (let i = 0; i < c.deals; i++) {
+          const y = 2023 + Math.floor(r() * 3);
+          deals.push({
+            type: pick(DEAL_TYPES, r),
+            counterparty: `Физлицо ${Math.floor(100 + r() * 899)}`,
+            date: fmtDate(new Date(y, Math.floor(r() * 12), 1 + Math.floor(r() * 27))),
+            amount: Math.round((80000 + r() * 2500000) / 1000) * 1000,
+            risk: r() > 0.7 ? "Высокий" : (r() > 0.4 ? "Средний" : "Низкий"),
+          });
+        }
+        // Налоги и сборы
+        const taxCount = 3 + Math.floor(r() * 3);
+        const taxes = [];
+        const usedTax = new Set();
+        for (let i = 0; i < taxCount; i++) {
+          let tt; do { tt = pick(TAX_TYPES, r); } while (usedTax.has(tt.t) && usedTax.size < TAX_TYPES.length);
+          usedTax.add(tt.t);
+          const base = Math.round((500 + r() * 45000) / 100) * 100;
+          const penalty = Math.round(base * (0.03 + r() * 0.18) / 100) * 100;
+          const y = 2022 + Math.floor(r() * 4);
+          taxes.push({
+            type: tt.t,
+            authority: tt.a,
+            period: `${y} г.`,
+            base, penalty,
+            total: base + penalty,
+            status: r() > 0.55 ? "К оплате" : (r() > 0.4 ? "В реестре требований" : "Частично оплачен"),
+          });
+        }
+        return { creditors, debts, property, deals, taxes };
+      }
+      CLIENTS.forEach((c) => { c.detail = buildDebtor(c); });
+
       const DOC_NAMES = [
         "Паспорт (скан)", "ИНН", "СНИЛС", "Справка из ПФР",
         "Выписка ЕГРН", "Выписка из БКИ", "Справка о доходах 2-НДФЛ",
@@ -174,30 +308,207 @@
               </label>
             </td>
           </tr>
-          <!-- Expand: краткая информация -->
+          <!-- Expand: краткая информация (вкладки) -->
           <tr class="expand-row expand-name-row hidden bg-gray-50/70">
             <td></td>
             <td colspan="6" class="px-4 py-4">
-              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-                <div class="rounded-lg bg-white border border-gray-200 p-3">
-                  <div class="text-xs text-gray-500">Общая сумма долгов</div>
-                  <div class="mt-1 text-gray-900">${c.debts}</div>
+              <div class="client-tabs bg-white border border-gray-200 rounded-xl">
+                <!-- Вкладки -->
+                <div class="border-b border-gray-200 px-3 overflow-x-auto">
+                  <nav class="flex items-center gap-6 text-sm">
+                    <button type="button" data-ct="debts" class="ct-tab -mb-px border-b-2 border-indigo-600 text-indigo-700 py-3 whitespace-nowrap">Долги <span class="text-gray-400">· ${c.detail.debts.length}</span></button>
+                    <button type="button" data-ct="creditors" class="ct-tab -mb-px border-b-2 border-transparent text-gray-600 hover:text-gray-900 py-3 whitespace-nowrap">Кредиторы <span class="text-gray-400">· ${c.detail.creditors.length}</span></button>
+                    <button type="button" data-ct="property" class="ct-tab -mb-px border-b-2 border-transparent text-gray-600 hover:text-gray-900 py-3 whitespace-nowrap">Имущество <span class="text-gray-400">· ${c.detail.property.length}</span></button>
+                    <button type="button" data-ct="deals" class="ct-tab -mb-px border-b-2 border-transparent text-gray-600 hover:text-gray-900 py-3 whitespace-nowrap">Сделки <span class="text-gray-400">· ${c.detail.deals.length}</span></button>
+                    <button type="button" data-ct="taxes" class="ct-tab -mb-px border-b-2 border-transparent text-gray-600 hover:text-gray-900 py-3 whitespace-nowrap">Налоги и сборы <span class="text-gray-400">· ${c.detail.taxes.length}</span></button>
+                  </nav>
                 </div>
-                <div class="rounded-lg bg-white border border-gray-200 p-3">
-                  <div class="text-xs text-gray-500">Кредиторов</div>
-                  <div class="mt-1 text-gray-900">${c.creditors}</div>
+
+                <!-- Панель: Долги -->
+                <div class="ct-panel" data-ct-panel="debts">
+                  <div class="overflow-x-auto">
+                    <table class="min-w-full text-sm">
+                      <thead class="bg-[#f3f4f6] text-gray-600">
+                        <tr>
+                          <th class="px-4 py-2.5 text-left">Тип обязательства</th>
+                          <th class="px-4 py-2.5 text-left">Кредитор</th>
+                          <th class="px-4 py-2.5 text-right">Основной долг</th>
+                          <th class="px-4 py-2.5 text-right">Проценты</th>
+                          <th class="px-4 py-2.5 text-right">Пени</th>
+                          <th class="px-4 py-2.5 text-right">Итого</th>
+                        </tr>
+                      </thead>
+                      <tbody class="divide-y divide-gray-100">
+                        ${c.detail.debts.map((d) => `
+                          <tr class="hover:bg-gray-50">
+                            <td class="px-4 py-2.5">
+                              <span class="inline-flex items-center gap-1.5 text-xs ${d.type.c}">
+                                <span class="w-1.5 h-1.5 rounded-full ${d.type.d}"></span>${d.type.t}
+                              </span>
+                            </td>
+                            <td class="px-4 py-2.5 text-gray-900">${d.creditor}</td>
+                            <td class="px-4 py-2.5 text-right text-gray-900">${money(d.principal)}</td>
+                            <td class="px-4 py-2.5 text-right text-gray-700">${money(d.interest)}</td>
+                            <td class="px-4 py-2.5 text-right text-gray-700">${money(d.penalty)}</td>
+                            <td class="px-4 py-2.5 text-right text-gray-900">${money(d.total)}</td>
+                          </tr>`).join("")}
+                      </tbody>
+                      <tfoot>
+                        <tr class="bg-gray-50">
+                          <td class="px-4 py-2.5 text-gray-600" colspan="5">Итого по долгам</td>
+                          <td class="px-4 py-2.5 text-right text-gray-900">${money(c.detail.debts.reduce((s, d) => s + d.total, 0))}</td>
+                        </tr>
+                      </tfoot>
+                    </table>
+                  </div>
                 </div>
-                <div class="rounded-lg bg-white border border-gray-200 p-3">
-                  <div class="text-xs text-gray-500">Имущество</div>
-                  <div class="mt-1 text-gray-900">${c.property}</div>
+
+                <!-- Панель: Кредиторы -->
+                <div class="ct-panel hidden" data-ct-panel="creditors">
+                  <div class="overflow-x-auto">
+                    <table class="min-w-full text-sm">
+                      <thead class="bg-[#f3f4f6] text-gray-600">
+                        <tr>
+                          <th class="px-4 py-2.5 text-left">Кредитор</th>
+                          <th class="px-4 py-2.5 text-left">Договор</th>
+                          <th class="px-4 py-2.5 text-left">Дата</th>
+                          <th class="px-4 py-2.5 text-right">Сумма требования</th>
+                          <th class="px-4 py-2.5 text-right">Просрочка, дн.</th>
+                          <th class="px-4 py-2.5 text-left">В реестре</th>
+                        </tr>
+                      </thead>
+                      <tbody class="divide-y divide-gray-100">
+                        ${c.detail.creditors.map((cr) => `
+                          <tr class="hover:bg-gray-50">
+                            <td class="px-4 py-2.5 text-gray-900">${cr.bank}</td>
+                            <td class="px-4 py-2.5 text-gray-700">${cr.contract}</td>
+                            <td class="px-4 py-2.5 text-gray-700">${cr.date}</td>
+                            <td class="px-4 py-2.5 text-right text-gray-900">${money(cr.amount)}</td>
+                            <td class="px-4 py-2.5 text-right ${cr.overdue > 180 ? "text-rose-700" : (cr.overdue > 60 ? "text-amber-700" : "text-gray-700")}">${cr.overdue}</td>
+                            <td class="px-4 py-2.5">
+                              <span class="inline-flex items-center gap-1.5 text-xs ${cr.inRegistry ? "text-emerald-700" : "text-gray-600"}">
+                                <span class="w-1.5 h-1.5 rounded-full ${cr.inRegistry ? "bg-emerald-500" : "bg-gray-400"}"></span>
+                                ${cr.inRegistry ? "Включён" : "Не включён"}
+                              </span>
+                            </td>
+                          </tr>`).join("")}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
-                <div class="rounded-lg bg-white border border-gray-200 p-3">
-                  <div class="text-xs text-gray-500">Налоги и сборы</div>
-                  <div class="mt-1 text-gray-900">${c.taxes}</div>
+
+                <!-- Панель: Имущество -->
+                <div class="ct-panel hidden" data-ct-panel="property">
+                  <div class="overflow-x-auto">
+                    <table class="min-w-full text-sm">
+                      <thead class="bg-[#f3f4f6] text-gray-600">
+                        <tr>
+                          <th class="px-4 py-2.5 text-left">Объект</th>
+                          <th class="px-4 py-2.5 text-left">Дата регистрации</th>
+                          <th class="px-4 py-2.5 text-right">Оценочная стоимость</th>
+                          <th class="px-4 py-2.5 text-left">Статус</th>
+                        </tr>
+                      </thead>
+                      <tbody class="divide-y divide-gray-100">
+                        ${c.detail.property.length ? c.detail.property.map((p) => {
+                          const statusColor = p.status === "Единственное жильё" ? "text-emerald-700" : (p.status === "В залоге" ? "text-amber-700" : "text-indigo-700");
+                          const statusDot = p.status === "Единственное жильё" ? "bg-emerald-500" : (p.status === "В залоге" ? "bg-amber-500" : "bg-indigo-500");
+                          return `
+                          <tr class="hover:bg-gray-50">
+                            <td class="px-4 py-2.5 text-gray-900">${p.type}</td>
+                            <td class="px-4 py-2.5 text-gray-700">${p.registered}</td>
+                            <td class="px-4 py-2.5 text-right text-gray-900">${money(p.value)}</td>
+                            <td class="px-4 py-2.5">
+                              <span class="inline-flex items-center gap-1.5 text-xs ${statusColor}">
+                                <span class="w-1.5 h-1.5 rounded-full ${statusDot}"></span>${p.status}
+                              </span>
+                            </td>
+                          </tr>`;
+                        }).join("") : `<tr><td colspan="4" class="px-4 py-4 text-center text-gray-400">Имущество не зарегистрировано</td></tr>`}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
-                <div class="rounded-lg bg-white border border-gray-200 p-3 sm:col-span-2 lg:col-span-4">
-                  <div class="text-xs text-gray-500">Сделки</div>
-                  <div class="mt-1 text-gray-900">${c.deals} за последние 3 года</div>
+
+                <!-- Панель: Сделки -->
+                <div class="ct-panel hidden" data-ct-panel="deals">
+                  <div class="overflow-x-auto">
+                    <table class="min-w-full text-sm">
+                      <thead class="bg-[#f3f4f6] text-gray-600">
+                        <tr>
+                          <th class="px-4 py-2.5 text-left">Тип сделки</th>
+                          <th class="px-4 py-2.5 text-left">Контрагент</th>
+                          <th class="px-4 py-2.5 text-left">Дата</th>
+                          <th class="px-4 py-2.5 text-right">Сумма</th>
+                          <th class="px-4 py-2.5 text-left">Риск оспаривания</th>
+                        </tr>
+                      </thead>
+                      <tbody class="divide-y divide-gray-100">
+                        ${c.detail.deals.length ? c.detail.deals.map((dl) => {
+                          const riskColor = dl.risk === "Высокий" ? "text-rose-700" : (dl.risk === "Средний" ? "text-amber-700" : "text-emerald-700");
+                          const riskDot = dl.risk === "Высокий" ? "bg-rose-500" : (dl.risk === "Средний" ? "bg-amber-500" : "bg-emerald-500");
+                          return `
+                          <tr class="hover:bg-gray-50">
+                            <td class="px-4 py-2.5 text-gray-900">${dl.type}</td>
+                            <td class="px-4 py-2.5 text-gray-700">${dl.counterparty}</td>
+                            <td class="px-4 py-2.5 text-gray-700">${dl.date}</td>
+                            <td class="px-4 py-2.5 text-right text-gray-900">${money(dl.amount)}</td>
+                            <td class="px-4 py-2.5">
+                              <span class="inline-flex items-center gap-1.5 text-xs ${riskColor}">
+                                <span class="w-1.5 h-1.5 rounded-full ${riskDot}"></span>${dl.risk}
+                              </span>
+                            </td>
+                          </tr>`;
+                        }).join("") : `<tr><td colspan="5" class="px-4 py-4 text-center text-gray-400">Сделок за 3 года не зафиксировано</td></tr>`}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <!-- Панель: Налоги и сборы -->
+                <div class="ct-panel hidden" data-ct-panel="taxes">
+                  <div class="overflow-x-auto">
+                    <table class="min-w-full text-sm">
+                      <thead class="bg-[#f3f4f6] text-gray-600">
+                        <tr>
+                          <th class="px-4 py-2.5 text-left">Вид налога / сбора</th>
+                          <th class="px-4 py-2.5 text-left">Орган</th>
+                          <th class="px-4 py-2.5 text-left">Период</th>
+                          <th class="px-4 py-2.5 text-right">Основная сумма</th>
+                          <th class="px-4 py-2.5 text-right">Пени</th>
+                          <th class="px-4 py-2.5 text-right">Итого</th>
+                          <th class="px-4 py-2.5 text-left">Статус</th>
+                        </tr>
+                      </thead>
+                      <tbody class="divide-y divide-gray-100">
+                        ${c.detail.taxes.map((t) => {
+                          const stColor = t.status === "К оплате" ? "text-rose-700" : (t.status === "В реестре требований" ? "text-indigo-700" : "text-amber-700");
+                          const stDot = t.status === "К оплате" ? "bg-rose-500" : (t.status === "В реестре требований" ? "bg-indigo-500" : "bg-amber-500");
+                          return `
+                          <tr class="hover:bg-gray-50">
+                            <td class="px-4 py-2.5 text-gray-900">${t.type}</td>
+                            <td class="px-4 py-2.5 text-gray-700">${t.authority}</td>
+                            <td class="px-4 py-2.5 text-gray-700">${t.period}</td>
+                            <td class="px-4 py-2.5 text-right text-gray-900">${money(t.base)}</td>
+                            <td class="px-4 py-2.5 text-right text-gray-700">${money(t.penalty)}</td>
+                            <td class="px-4 py-2.5 text-right text-gray-900">${money(t.total)}</td>
+                            <td class="px-4 py-2.5">
+                              <span class="inline-flex items-center gap-1.5 text-xs ${stColor}">
+                                <span class="w-1.5 h-1.5 rounded-full ${stDot}"></span>${t.status}
+                              </span>
+                            </td>
+                          </tr>`;
+                        }).join("")}
+                      </tbody>
+                      <tfoot>
+                        <tr class="bg-gray-50">
+                          <td class="px-4 py-2.5 text-gray-600" colspan="5">Итого по налогам и сборам</td>
+                          <td class="px-4 py-2.5 text-right text-gray-900">${money(c.detail.taxes.reduce((s, t) => s + t.total, 0))}</td>
+                          <td></td>
+                        </tr>
+                      </tfoot>
+                    </table>
+                  </div>
                 </div>
               </div>
             </td>
@@ -259,6 +570,27 @@
               if (!next) return;
               next.classList.toggle("hidden");
               ch.classList.toggle("rotate-90");
+            });
+          });
+
+          // Переключение вкладок в раскрытии клиента
+          tbody.querySelectorAll(".client-tabs").forEach((wrap) => {
+            const tabs = wrap.querySelectorAll(".ct-tab");
+            const panels = wrap.querySelectorAll(".ct-panel");
+            tabs.forEach((tab) => {
+              tab.addEventListener("click", () => {
+                const key = tab.dataset.ct;
+                tabs.forEach((t) => {
+                  const active = t === tab;
+                  t.classList.toggle("border-indigo-600", active);
+                  t.classList.toggle("text-indigo-700", active);
+                  t.classList.toggle("border-transparent", !active);
+                  t.classList.toggle("text-gray-600", !active);
+                });
+                panels.forEach((p) => {
+                  p.classList.toggle("hidden", p.dataset.ctPanel !== key);
+                });
+              });
             });
           });
 
