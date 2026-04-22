@@ -203,9 +203,9 @@
         { n: "INV-2026-0138", entity: "ООО «Юрист-Консалт»", sum: "9 900 ₽", created: "10.03.2026", due: "20.03.2026", status: "paid" },
       ];
       const INVOICE_STATUS = {
-        pending: { label: "Ожидает оплаты", dot: "bg-amber-500", bg: "bg-amber-50", text: "text-amber-700" },
-        paid: { label: "Оплачен", dot: "bg-emerald-500", bg: "bg-emerald-50", text: "text-emerald-700" },
-        overdue: { label: "Просрочен", dot: "bg-rose-500", bg: "bg-rose-50", text: "text-rose-700" },
+        pending: { label: "Ожидает оплаты", dot: "bg-amber-500", text: "text-amber-700" },
+        paid: { label: "Оплачен", dot: "bg-emerald-500", text: "text-emerald-700" },
+        overdue: { label: "Просрочен", dot: "bg-rose-500", text: "text-rose-700" },
       };
 
       const ENTITIES = [
@@ -244,7 +244,7 @@
               <td class="px-4 py-3 text-gray-700">${inv.created}</td>
               <td class="px-4 py-3 text-gray-700">${inv.due}</td>
               <td class="px-4 py-3">
-                <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs ${s.bg} ${s.text}">
+                <span class="inline-flex items-center gap-1.5 text-xs ${s.text}">
                   <span class="w-1.5 h-1.5 rounded-full ${s.dot}"></span>${s.label}
                 </span>
               </td>
