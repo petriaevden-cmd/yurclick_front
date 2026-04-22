@@ -314,8 +314,8 @@
             <td colspan="6" class="px-4 py-4">
               <div class="client-tabs bg-white border border-gray-200 rounded-xl">
                 <!-- Вкладки -->
-                <div class="border-b border-gray-200 px-3 overflow-x-auto">
-                  <nav class="flex items-center gap-6 text-sm">
+                <div class="border-b border-gray-200 px-3">
+                  <nav class="flex flex-wrap items-center gap-x-6 gap-y-1 text-sm">
                     <button type="button" data-ct="debts" class="ct-tab -mb-px border-b-2 border-indigo-600 text-indigo-700 py-3 whitespace-nowrap">Долги <span class="text-gray-400">· ${c.detail.debts.length}</span></button>
                     <button type="button" data-ct="creditors" class="ct-tab -mb-px border-b-2 border-transparent text-gray-600 hover:text-gray-900 py-3 whitespace-nowrap">Кредиторы <span class="text-gray-400">· ${c.detail.creditors.length}</span></button>
                     <button type="button" data-ct="property" class="ct-tab -mb-px border-b-2 border-transparent text-gray-600 hover:text-gray-900 py-3 whitespace-nowrap">Имущество <span class="text-gray-400">· ${c.detail.property.length}</span></button>
@@ -326,7 +326,7 @@
 
                 <!-- Панель: Долги -->
                 <div class="ct-panel" data-ct-panel="debts">
-                  <div class="overflow-x-auto">
+                  <div>
                     <table class="min-w-full text-sm">
                       <thead class="bg-[#f3f4f6] text-gray-600">
                         <tr>
@@ -365,7 +365,7 @@
 
                 <!-- Панель: Кредиторы -->
                 <div class="ct-panel hidden" data-ct-panel="creditors">
-                  <div class="overflow-x-auto">
+                  <div>
                     <table class="min-w-full text-sm">
                       <thead class="bg-[#f3f4f6] text-gray-600">
                         <tr>
@@ -399,7 +399,7 @@
 
                 <!-- Панель: Имущество -->
                 <div class="ct-panel hidden" data-ct-panel="property">
-                  <div class="overflow-x-auto">
+                  <div>
                     <table class="min-w-full text-sm">
                       <thead class="bg-[#f3f4f6] text-gray-600">
                         <tr>
@@ -432,7 +432,7 @@
 
                 <!-- Панель: Сделки -->
                 <div class="ct-panel hidden" data-ct-panel="deals">
-                  <div class="overflow-x-auto">
+                  <div>
                     <table class="min-w-full text-sm">
                       <thead class="bg-[#f3f4f6] text-gray-600">
                         <tr>
@@ -467,7 +467,7 @@
 
                 <!-- Панель: Налоги и сборы -->
                 <div class="ct-panel hidden" data-ct-panel="taxes">
-                  <div class="overflow-x-auto">
+                  <div>
                     <table class="min-w-full text-sm">
                       <thead class="bg-[#f3f4f6] text-gray-600">
                         <tr>
