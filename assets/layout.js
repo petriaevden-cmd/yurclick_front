@@ -2,38 +2,29 @@
 // Вставляется на все страницы через <div id="app-shell" data-page="..."></div>
 
 (function () {
+  // Иконки: Lucide (https://lucide.dev) — стабильные, не менять без необходимости.
+  // Общие атрибуты SVG вынесены в svgAttrs, в icon — только содержимое (paths).
+  const svgAttrs = 'class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"';
+  const ICONS = {
+    // lucide: layout-grid (4 квадрата)
+    dashboard: `<svg ${svgAttrs}><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>`,
+    // lucide: user (один человечек)
+    user: `<svg ${svgAttrs}><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`,
+    // lucide: credit-card (банковская карта)
+    creditCard: `<svg ${svgAttrs}><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>`,
+    // lucide: paintbrush (кисть с щетиной)
+    paintbrush: `<svg ${svgAttrs}><path d="M18.37 2.63 14 7l-1.59-1.59a2 2 0 0 0-2.82 0L8 7l9 9 1.59-1.59a2 2 0 0 0 0-2.82L17 10l4.37-4.37a2.12 2.12 0 1 0-3-3Z"/><path d="M9 8c-2 3-4 3.5-7 4l8 10c2-1 6-5 6-7"/><path d="M14.5 17.5 4.5 15"/></svg>`,
+    // lucide: users (два человечка)
+    users: `<svg ${svgAttrs}><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+  };
+
   const NAV_ITEMS = [
-    {
-      key: "dashboard",
-      href: "dashboard.html",
-      label: "Дашборд",
-      icon: `<svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg>`,
-    },
-    {
-      key: "users",
-      href: "users.html",
-      label: "Пользователи",
-      icon: `<svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>`,
-    },
-    {
-      key: "billing",
-      href: "billing.html",
-      label: "Оплата",
-      icon: `<svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5.5" width="19" height="13" rx="2"/><path d="M2.5 10h19"/><path d="M6 15h4"/></svg>`,
-    },
-    {
-      key: "branding",
-      href: "branding.html",
-      label: "Брендинг",
-      icon: `<svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21c2.5-1 3.5-3 3.5-5.5C6.5 14 8 12.5 9.5 14s0 3-1.5 3.5"/><path d="M14 3l7 7-8 8-3-3 4-12z"/></svg>`,
-    },
+    { key: "dashboard", href: "dashboard.html", label: "Дашборд",       icon: ICONS.dashboard  },
+    { key: "users",     href: "users.html",     label: "Пользователи",  icon: ICONS.user       },
+    { key: "billing",   href: "billing.html",   label: "Оплата",        icon: ICONS.creditCard },
+    { key: "branding",  href: "branding.html",  label: "Брендинг",      icon: ICONS.paintbrush },
     { divider: true },
-    {
-      key: "clients",
-      href: "clients.html",
-      label: "Клиенты",
-      icon: `<svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><circle cx="17" cy="10" r="2.5"/><path d="M2.5 21c0-3.6 2.9-6.5 6.5-6.5s6.5 2.9 6.5 6.5"/><path d="M15.5 21c0-2.6 2-4.8 4.5-5"/></svg>`,
-    },
+    { key: "clients",   href: "clients.html",   label: "Клиенты",       icon: ICONS.users      },
   ];
 
   const PAGE_TITLES = {
