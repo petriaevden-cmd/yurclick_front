@@ -313,15 +313,40 @@
             <td></td>
             <td colspan="6" class="px-2 md:px-3 lg:px-4 py-3">
               <div class="client-tabs bg-white border border-gray-200 rounded-xl">
-                <!-- Вкладки -->
-                <div class="border-b border-gray-200 px-2 md:px-3">
-                  <nav class="flex flex-wrap items-center gap-x-3 md:gap-x-5 lg:gap-x-6 gap-y-1 text-sm">
-                    <button type="button" data-ct="debts" class="ct-tab -mb-px border-b-2 border-indigo-600 text-indigo-700 py-3 whitespace-nowrap">Долги <span class="text-gray-400">· ${c.detail.debts.length}</span></button>
-                    <button type="button" data-ct="creditors" class="ct-tab -mb-px border-b-2 border-transparent text-gray-600 hover:text-gray-900 py-3 whitespace-nowrap">Кредиторы <span class="text-gray-400">· ${c.detail.creditors.length}</span></button>
-                    <button type="button" data-ct="property" class="ct-tab -mb-px border-b-2 border-transparent text-gray-600 hover:text-gray-900 py-3 whitespace-nowrap">Имущество <span class="text-gray-400">· ${c.detail.property.length}</span></button>
-                    <button type="button" data-ct="deals" class="ct-tab -mb-px border-b-2 border-transparent text-gray-600 hover:text-gray-900 py-3 whitespace-nowrap">Сделки <span class="text-gray-400">· ${c.detail.deals.length}</span></button>
-                    <button type="button" data-ct="taxes" class="ct-tab -mb-px border-b-2 border-transparent text-gray-600 hover:text-gray-900 py-3 whitespace-nowrap">Налоги и сборы <span class="text-gray-400">· ${c.detail.taxes.length}</span></button>
-                  </nav>
+                <!-- Вкладки (Flowbite: Tabs with underline) -->
+                <div class="border-b border-gray-200">
+                  <ul class="flex flex-wrap -mb-px text-sm font-medium text-center text-gray-500">
+                    <li class="mr-2">
+                      <button type="button" data-ct="debts" class="ct-tab group inline-flex items-center gap-2 p-4 border-b-2 border-indigo-600 text-indigo-600 rounded-t-lg whitespace-nowrap">
+                        <svg class="w-4 h-4 text-indigo-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+                        Долги <span class="text-gray-400 font-normal">· ${c.detail.debts.length}</span>
+                      </button>
+                    </li>
+                    <li class="mr-2">
+                      <button type="button" data-ct="creditors" class="ct-tab group inline-flex items-center gap-2 p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 whitespace-nowrap">
+                        <svg class="w-4 h-4 text-gray-400 group-hover:text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V10l7-5 7 5v11"/><path d="M9 21v-6h6v6"/></svg>
+                        Кредиторы <span class="text-gray-400 font-normal">· ${c.detail.creditors.length}</span>
+                      </button>
+                    </li>
+                    <li class="mr-2">
+                      <button type="button" data-ct="property" class="ct-tab group inline-flex items-center gap-2 p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 whitespace-nowrap">
+                        <svg class="w-4 h-4 text-gray-400 group-hover:text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg>
+                        Имущество <span class="text-gray-400 font-normal">· ${c.detail.property.length}</span>
+                      </button>
+                    </li>
+                    <li class="mr-2">
+                      <button type="button" data-ct="deals" class="ct-tab group inline-flex items-center gap-2 p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 whitespace-nowrap">
+                        <svg class="w-4 h-4 text-gray-400 group-hover:text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3l5 5-5 5"/><path d="M21 8H8"/><path d="M8 21l-5-5 5-5"/><path d="M3 16h13"/></svg>
+                        Сделки <span class="text-gray-400 font-normal">· ${c.detail.deals.length}</span>
+                      </button>
+                    </li>
+                    <li class="mr-2">
+                      <button type="button" data-ct="taxes" class="ct-tab group inline-flex items-center gap-2 p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 whitespace-nowrap">
+                        <svg class="w-4 h-4 text-gray-400 group-hover:text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8"/><path d="M8 11h8"/><path d="M8 15h5"/></svg>
+                        Налоги и сборы <span class="text-gray-400 font-normal">· ${c.detail.taxes.length}</span>
+                      </button>
+                    </li>
+                  </ul>
                 </div>
 
                 <!-- Панель: Долги -->
@@ -573,7 +598,7 @@
             });
           });
 
-          // Переключение вкладок в раскрытии клиента
+          // Переключение вкладок (Flowbite: Tabs with underline)
           tbody.querySelectorAll(".client-tabs").forEach((wrap) => {
             const tabs = wrap.querySelectorAll(".ct-tab");
             const panels = wrap.querySelectorAll(".ct-panel");
@@ -582,10 +607,19 @@
                 const key = tab.dataset.ct;
                 tabs.forEach((t) => {
                   const active = t === tab;
+                  // сама вкладка
                   t.classList.toggle("border-indigo-600", active);
-                  t.classList.toggle("text-indigo-700", active);
+                  t.classList.toggle("text-indigo-600", active);
                   t.classList.toggle("border-transparent", !active);
-                  t.classList.toggle("text-gray-600", !active);
+                  t.classList.toggle("hover:text-gray-600", !active);
+                  t.classList.toggle("hover:border-gray-300", !active);
+                  // иконка внутри
+                  const svg = t.querySelector("svg");
+                  if (svg) {
+                    svg.classList.toggle("text-indigo-600", active);
+                    svg.classList.toggle("text-gray-400", !active);
+                    svg.classList.toggle("group-hover:text-gray-500", !active);
+                  }
                 });
                 panels.forEach((p) => {
                   p.classList.toggle("hidden", p.dataset.ctPanel !== key);
