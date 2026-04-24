@@ -311,37 +311,37 @@
           <!-- Expand: краткая информация (вкладки) -->
           <tr class="expand-row expand-name-row hidden bg-white">
             <td></td>
-            <td colspan="6" class="px-2 md:px-3 lg:px-4 py-3">
-              <div class="client-tabs bg-white border border-gray-200 rounded-xl">
+            <td colspan="6" class="px-1 md:px-2 py-2">
+              <div class="client-tabs bg-white border border-gray-200 rounded-xl overflow-hidden">
                 <!-- Вкладки (Flowbite: Tabs with underline) -->
                 <div class="border-b border-gray-200">
                   <ul class="flex flex-wrap -mb-px text-sm font-medium text-center text-gray-500">
                     <li class="mr-2">
-                      <button type="button" data-ct="debts" class="ct-tab group inline-flex items-center gap-2 p-4 border-b-2 border-indigo-600 text-indigo-600 rounded-t-lg whitespace-nowrap">
+                      <button type="button" data-ct="debts" class="ct-tab group inline-flex items-center gap-1.5 md:gap-2 px-2 py-2.5 md:px-3 md:py-3 lg:p-4 border-b-2 border-indigo-600 text-indigo-600 rounded-t-lg whitespace-nowrap">
                         <svg class="w-4 h-4 text-indigo-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
                         Долги <span class="text-gray-400 font-normal">· ${c.detail.debts.length}</span>
                       </button>
                     </li>
                     <li class="mr-2">
-                      <button type="button" data-ct="creditors" class="ct-tab group inline-flex items-center gap-2 p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 whitespace-nowrap">
+                      <button type="button" data-ct="creditors" class="ct-tab group inline-flex items-center gap-1.5 md:gap-2 px-2 py-2.5 md:px-3 md:py-3 lg:p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 whitespace-nowrap">
                         <svg class="w-4 h-4 text-gray-400 group-hover:text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V10l7-5 7 5v11"/><path d="M9 21v-6h6v6"/></svg>
                         Кредиторы <span class="text-gray-400 font-normal">· ${c.detail.creditors.length}</span>
                       </button>
                     </li>
                     <li class="mr-2">
-                      <button type="button" data-ct="property" class="ct-tab group inline-flex items-center gap-2 p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 whitespace-nowrap">
+                      <button type="button" data-ct="property" class="ct-tab group inline-flex items-center gap-1.5 md:gap-2 px-2 py-2.5 md:px-3 md:py-3 lg:p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 whitespace-nowrap">
                         <svg class="w-4 h-4 text-gray-400 group-hover:text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg>
                         Имущество <span class="text-gray-400 font-normal">· ${c.detail.property.length}</span>
                       </button>
                     </li>
                     <li class="mr-2">
-                      <button type="button" data-ct="deals" class="ct-tab group inline-flex items-center gap-2 p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 whitespace-nowrap">
+                      <button type="button" data-ct="deals" class="ct-tab group inline-flex items-center gap-1.5 md:gap-2 px-2 py-2.5 md:px-3 md:py-3 lg:p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 whitespace-nowrap">
                         <svg class="w-4 h-4 text-gray-400 group-hover:text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3l5 5-5 5"/><path d="M21 8H8"/><path d="M8 21l-5-5 5-5"/><path d="M3 16h13"/></svg>
                         Сделки <span class="text-gray-400 font-normal">· ${c.detail.deals.length}</span>
                       </button>
                     </li>
                     <li class="mr-2">
-                      <button type="button" data-ct="taxes" class="ct-tab group inline-flex items-center gap-2 p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 whitespace-nowrap">
+                      <button type="button" data-ct="taxes" class="ct-tab group inline-flex items-center gap-1.5 md:gap-2 px-2 py-2.5 md:px-3 md:py-3 lg:p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 whitespace-nowrap">
                         <svg class="w-4 h-4 text-gray-400 group-hover:text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8"/><path d="M8 11h8"/><path d="M8 15h5"/></svg>
                         Налоги и сборы <span class="text-gray-400 font-normal">· ${c.detail.taxes.length}</span>
                       </button>
@@ -352,36 +352,36 @@
                 <!-- Панель: Долги -->
                 <div class="ct-panel" data-ct-panel="debts">
                   <div>
-                    <table class="min-w-full text-sm">
+                    <table class="min-w-full text-xs md:text-sm">
                       <thead class="bg-[#f3f4f6] text-gray-600">
                         <tr>
-                          <th class="px-2 md:px-3 lg:px-4 py-2 text-left">Тип обязательства</th>
-                          <th class="px-2 md:px-3 lg:px-4 py-2 text-left">Кредитор</th>
-                          <th class="px-2 md:px-3 lg:px-4 py-2 text-right">Основной долг</th>
-                          <th class="px-2 md:px-3 lg:px-4 py-2 text-right">Проценты</th>
-                          <th class="px-2 md:px-3 lg:px-4 py-2 text-right">Пени</th>
-                          <th class="px-2 md:px-3 lg:px-4 py-2 text-right">Итого</th>
+                          <th class="px-1.5 md:px-2 py-1.5 text-left">Тип обязательства</th>
+                          <th class="px-1.5 md:px-2 py-1.5 text-left">Кредитор</th>
+                          <th class="px-1.5 md:px-2 py-1.5 text-right">Основной долг</th>
+                          <th class="px-1.5 md:px-2 py-1.5 text-right">Проценты</th>
+                          <th class="px-1.5 md:px-2 py-1.5 text-right">Пени</th>
+                          <th class="px-1.5 md:px-2 py-1.5 text-right">Итого</th>
                         </tr>
                       </thead>
                       <tbody class="divide-y divide-gray-100">
                         ${c.detail.debts.map((d) => `
                           <tr class="hover:bg-gray-50">
-                            <td class="px-2 md:px-3 lg:px-4 py-2">
+                            <td class="px-1.5 md:px-2 py-1.5">
                               <span class="inline-flex items-center gap-1.5 text-xs ${d.type.c}">
                                 <span class="w-1.5 h-1.5 rounded-full ${d.type.d}"></span>${d.type.t}
                               </span>
                             </td>
-                            <td class="px-2 md:px-3 lg:px-4 py-2 text-gray-900">${d.creditor}</td>
-                            <td class="px-2 md:px-3 lg:px-4 py-2 text-right text-gray-900">${money(d.principal)}</td>
-                            <td class="px-2 md:px-3 lg:px-4 py-2 text-right text-gray-700">${money(d.interest)}</td>
-                            <td class="px-2 md:px-3 lg:px-4 py-2 text-right text-gray-700">${money(d.penalty)}</td>
-                            <td class="px-2 md:px-3 lg:px-4 py-2 text-right text-gray-900">${money(d.total)}</td>
+                            <td class="px-1.5 md:px-2 py-1.5 text-gray-900">${d.creditor}</td>
+                            <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-900">${money(d.principal)}</td>
+                            <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-700">${money(d.interest)}</td>
+                            <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-700">${money(d.penalty)}</td>
+                            <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-900">${money(d.total)}</td>
                           </tr>`).join("")}
                       </tbody>
                       <tfoot>
                         <tr class="bg-gray-50">
-                          <td class="px-2 md:px-3 lg:px-4 py-2 text-gray-600" colspan="5">Итого по долгам</td>
-                          <td class="px-2 md:px-3 lg:px-4 py-2 text-right text-gray-900">${money(c.detail.debts.reduce((s, d) => s + d.total, 0))}</td>
+                          <td class="px-1.5 md:px-2 py-1.5 text-gray-600" colspan="5">Итого по долгам</td>
+                          <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-900">${money(c.detail.debts.reduce((s, d) => s + d.total, 0))}</td>
                         </tr>
                       </tfoot>
                     </table>
@@ -391,26 +391,26 @@
                 <!-- Панель: Кредиторы -->
                 <div class="ct-panel hidden" data-ct-panel="creditors">
                   <div>
-                    <table class="min-w-full text-sm">
+                    <table class="min-w-full text-xs md:text-sm">
                       <thead class="bg-[#f3f4f6] text-gray-600">
                         <tr>
-                          <th class="px-2 md:px-3 lg:px-4 py-2 text-left">Кредитор</th>
-                          <th class="px-2 md:px-3 lg:px-4 py-2 text-left">Договор</th>
-                          <th class="px-2 md:px-3 lg:px-4 py-2 text-left">Дата</th>
-                          <th class="px-2 md:px-3 lg:px-4 py-2 text-right">Сумма требования</th>
-                          <th class="px-2 md:px-3 lg:px-4 py-2 text-right">Просрочка, дн.</th>
-                          <th class="px-2 md:px-3 lg:px-4 py-2 text-left">В реестре</th>
+                          <th class="px-1.5 md:px-2 py-1.5 text-left">Кредитор</th>
+                          <th class="px-1.5 md:px-2 py-1.5 text-left">Договор</th>
+                          <th class="px-1.5 md:px-2 py-1.5 text-left">Дата</th>
+                          <th class="px-1.5 md:px-2 py-1.5 text-right">Сумма требования</th>
+                          <th class="px-1.5 md:px-2 py-1.5 text-right">Просрочка, дн.</th>
+                          <th class="px-1.5 md:px-2 py-1.5 text-left">В реестре</th>
                         </tr>
                       </thead>
                       <tbody class="divide-y divide-gray-100">
                         ${c.detail.creditors.map((cr) => `
                           <tr class="hover:bg-gray-50">
-                            <td class="px-2 md:px-3 lg:px-4 py-2 text-gray-900">${cr.bank}</td>
-                            <td class="px-2 md:px-3 lg:px-4 py-2 text-gray-700">${cr.contract}</td>
-                            <td class="px-2 md:px-3 lg:px-4 py-2 text-gray-700">${cr.date}</td>
-                            <td class="px-2 md:px-3 lg:px-4 py-2 text-right text-gray-900">${money(cr.amount)}</td>
-                            <td class="px-2 md:px-3 lg:px-4 py-2 text-right ${cr.overdue > 180 ? "text-rose-700" : (cr.overdue > 60 ? "text-amber-700" : "text-gray-700")}">${cr.overdue}</td>
-                            <td class="px-2 md:px-3 lg:px-4 py-2">
+                            <td class="px-1.5 md:px-2 py-1.5 text-gray-900">${cr.bank}</td>
+                            <td class="px-1.5 md:px-2 py-1.5 text-gray-700">${cr.contract}</td>
+                            <td class="px-1.5 md:px-2 py-1.5 text-gray-700">${cr.date}</td>
+                            <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-900">${money(cr.amount)}</td>
+                            <td class="px-1.5 md:px-2 py-1.5 text-right ${cr.overdue > 180 ? "text-rose-700" : (cr.overdue > 60 ? "text-amber-700" : "text-gray-700")}">${cr.overdue}</td>
+                            <td class="px-1.5 md:px-2 py-1.5">
                               <span class="inline-flex items-center gap-1.5 text-xs ${cr.inRegistry ? "text-emerald-700" : "text-gray-600"}">
                                 <span class="w-1.5 h-1.5 rounded-full ${cr.inRegistry ? "bg-emerald-500" : "bg-gray-400"}"></span>
                                 ${cr.inRegistry ? "Включён" : "Не включён"}
@@ -425,13 +425,13 @@
                 <!-- Панель: Имущество -->
                 <div class="ct-panel hidden" data-ct-panel="property">
                   <div>
-                    <table class="min-w-full text-sm">
+                    <table class="min-w-full text-xs md:text-sm">
                       <thead class="bg-[#f3f4f6] text-gray-600">
                         <tr>
-                          <th class="px-2 md:px-3 lg:px-4 py-2 text-left">Объект</th>
-                          <th class="px-2 md:px-3 lg:px-4 py-2 text-left">Дата регистрации</th>
-                          <th class="px-2 md:px-3 lg:px-4 py-2 text-right">Оценочная стоимость</th>
-                          <th class="px-2 md:px-3 lg:px-4 py-2 text-left">Статус</th>
+                          <th class="px-1.5 md:px-2 py-1.5 text-left">Объект</th>
+                          <th class="px-1.5 md:px-2 py-1.5 text-left">Дата регистрации</th>
+                          <th class="px-1.5 md:px-2 py-1.5 text-right">Оценочная стоимость</th>
+                          <th class="px-1.5 md:px-2 py-1.5 text-left">Статус</th>
                         </tr>
                       </thead>
                       <tbody class="divide-y divide-gray-100">
@@ -440,10 +440,10 @@
                           const statusDot = p.status === "Единственное жильё" ? "bg-emerald-500" : (p.status === "В залоге" ? "bg-amber-500" : "bg-indigo-500");
                           return `
                           <tr class="hover:bg-gray-50">
-                            <td class="px-2 md:px-3 lg:px-4 py-2 text-gray-900">${p.type}</td>
-                            <td class="px-2 md:px-3 lg:px-4 py-2 text-gray-700">${p.registered}</td>
-                            <td class="px-2 md:px-3 lg:px-4 py-2 text-right text-gray-900">${money(p.value)}</td>
-                            <td class="px-2 md:px-3 lg:px-4 py-2">
+                            <td class="px-1.5 md:px-2 py-1.5 text-gray-900">${p.type}</td>
+                            <td class="px-1.5 md:px-2 py-1.5 text-gray-700">${p.registered}</td>
+                            <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-900">${money(p.value)}</td>
+                            <td class="px-1.5 md:px-2 py-1.5">
                               <span class="inline-flex items-center gap-1.5 text-xs ${statusColor}">
                                 <span class="w-1.5 h-1.5 rounded-full ${statusDot}"></span>${p.status}
                               </span>
@@ -458,14 +458,14 @@
                 <!-- Панель: Сделки -->
                 <div class="ct-panel hidden" data-ct-panel="deals">
                   <div>
-                    <table class="min-w-full text-sm">
+                    <table class="min-w-full text-xs md:text-sm">
                       <thead class="bg-[#f3f4f6] text-gray-600">
                         <tr>
-                          <th class="px-2 md:px-3 lg:px-4 py-2 text-left">Тип сделки</th>
-                          <th class="px-2 md:px-3 lg:px-4 py-2 text-left">Контрагент</th>
-                          <th class="px-2 md:px-3 lg:px-4 py-2 text-left">Дата</th>
-                          <th class="px-2 md:px-3 lg:px-4 py-2 text-right">Сумма</th>
-                          <th class="px-2 md:px-3 lg:px-4 py-2 text-left">Риск оспаривания</th>
+                          <th class="px-1.5 md:px-2 py-1.5 text-left">Тип сделки</th>
+                          <th class="px-1.5 md:px-2 py-1.5 text-left">Контрагент</th>
+                          <th class="px-1.5 md:px-2 py-1.5 text-left">Дата</th>
+                          <th class="px-1.5 md:px-2 py-1.5 text-right">Сумма</th>
+                          <th class="px-1.5 md:px-2 py-1.5 text-left">Риск оспаривания</th>
                         </tr>
                       </thead>
                       <tbody class="divide-y divide-gray-100">
@@ -474,11 +474,11 @@
                           const riskDot = dl.risk === "Высокий" ? "bg-rose-500" : (dl.risk === "Средний" ? "bg-amber-500" : "bg-emerald-500");
                           return `
                           <tr class="hover:bg-gray-50">
-                            <td class="px-2 md:px-3 lg:px-4 py-2 text-gray-900">${dl.type}</td>
-                            <td class="px-2 md:px-3 lg:px-4 py-2 text-gray-700">${dl.counterparty}</td>
-                            <td class="px-2 md:px-3 lg:px-4 py-2 text-gray-700">${dl.date}</td>
-                            <td class="px-2 md:px-3 lg:px-4 py-2 text-right text-gray-900">${money(dl.amount)}</td>
-                            <td class="px-2 md:px-3 lg:px-4 py-2">
+                            <td class="px-1.5 md:px-2 py-1.5 text-gray-900">${dl.type}</td>
+                            <td class="px-1.5 md:px-2 py-1.5 text-gray-700">${dl.counterparty}</td>
+                            <td class="px-1.5 md:px-2 py-1.5 text-gray-700">${dl.date}</td>
+                            <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-900">${money(dl.amount)}</td>
+                            <td class="px-1.5 md:px-2 py-1.5">
                               <span class="inline-flex items-center gap-1.5 text-xs ${riskColor}">
                                 <span class="w-1.5 h-1.5 rounded-full ${riskDot}"></span>${dl.risk}
                               </span>
@@ -493,16 +493,16 @@
                 <!-- Панель: Налоги и сборы -->
                 <div class="ct-panel hidden" data-ct-panel="taxes">
                   <div>
-                    <table class="min-w-full text-sm">
+                    <table class="min-w-full text-xs md:text-sm">
                       <thead class="bg-[#f3f4f6] text-gray-600">
                         <tr>
-                          <th class="px-2 md:px-3 lg:px-4 py-2 text-left">Вид налога / сбора</th>
-                          <th class="px-2 md:px-3 lg:px-4 py-2 text-left">Орган</th>
-                          <th class="px-2 md:px-3 lg:px-4 py-2 text-left">Период</th>
-                          <th class="px-2 md:px-3 lg:px-4 py-2 text-right">Основная сумма</th>
-                          <th class="px-2 md:px-3 lg:px-4 py-2 text-right">Пени</th>
-                          <th class="px-2 md:px-3 lg:px-4 py-2 text-right">Итого</th>
-                          <th class="px-2 md:px-3 lg:px-4 py-2 text-left">Статус</th>
+                          <th class="px-1.5 md:px-2 py-1.5 text-left">Вид налога / сбора</th>
+                          <th class="px-1.5 md:px-2 py-1.5 text-left">Орган</th>
+                          <th class="px-1.5 md:px-2 py-1.5 text-left">Период</th>
+                          <th class="px-1.5 md:px-2 py-1.5 text-right">Основная сумма</th>
+                          <th class="px-1.5 md:px-2 py-1.5 text-right">Пени</th>
+                          <th class="px-1.5 md:px-2 py-1.5 text-right">Итого</th>
+                          <th class="px-1.5 md:px-2 py-1.5 text-left">Статус</th>
                         </tr>
                       </thead>
                       <tbody class="divide-y divide-gray-100">
@@ -511,13 +511,13 @@
                           const stDot = t.status === "К оплате" ? "bg-rose-500" : (t.status === "В реестре требований" ? "bg-indigo-500" : "bg-amber-500");
                           return `
                           <tr class="hover:bg-gray-50">
-                            <td class="px-2 md:px-3 lg:px-4 py-2 text-gray-900">${t.type}</td>
-                            <td class="px-2 md:px-3 lg:px-4 py-2 text-gray-700">${t.authority}</td>
-                            <td class="px-2 md:px-3 lg:px-4 py-2 text-gray-700">${t.period}</td>
-                            <td class="px-2 md:px-3 lg:px-4 py-2 text-right text-gray-900">${money(t.base)}</td>
-                            <td class="px-2 md:px-3 lg:px-4 py-2 text-right text-gray-700">${money(t.penalty)}</td>
-                            <td class="px-2 md:px-3 lg:px-4 py-2 text-right text-gray-900">${money(t.total)}</td>
-                            <td class="px-2 md:px-3 lg:px-4 py-2">
+                            <td class="px-1.5 md:px-2 py-1.5 text-gray-900">${t.type}</td>
+                            <td class="px-1.5 md:px-2 py-1.5 text-gray-700">${t.authority}</td>
+                            <td class="px-1.5 md:px-2 py-1.5 text-gray-700">${t.period}</td>
+                            <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-900">${money(t.base)}</td>
+                            <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-700">${money(t.penalty)}</td>
+                            <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-900">${money(t.total)}</td>
+                            <td class="px-1.5 md:px-2 py-1.5">
                               <span class="inline-flex items-center gap-1.5 text-xs ${stColor}">
                                 <span class="w-1.5 h-1.5 rounded-full ${stDot}"></span>${t.status}
                               </span>
@@ -527,8 +527,8 @@
                       </tbody>
                       <tfoot>
                         <tr class="bg-gray-50">
-                          <td class="px-2 md:px-3 lg:px-4 py-2 text-gray-600" colspan="5">Итого по налогам и сборам</td>
-                          <td class="px-2 md:px-3 lg:px-4 py-2 text-right text-gray-900">${money(c.detail.taxes.reduce((s, t) => s + t.total, 0))}</td>
+                          <td class="px-1.5 md:px-2 py-1.5 text-gray-600" colspan="5">Итого по налогам и сборам</td>
+                          <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-900">${money(c.detail.taxes.reduce((s, t) => s + t.total, 0))}</td>
                           <td></td>
                         </tr>
                       </tfoot>
