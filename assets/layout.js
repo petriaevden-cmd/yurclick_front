@@ -35,6 +35,7 @@
     billing: "Оплата",
     branding: "Брендинг",
     clients: "Клиенты",
+    notifications: "Уведомления",
   };
 
   function navItemHtml(item, activeKey) {
@@ -68,7 +69,7 @@
 
       <!-- Уведомления -->
       <div class="px-4 pt-4">
-        <a href="#" class="flex items-center gap-2 px-3 py-2.5 rounded-lg border border-yellow-300 bg-yellow-50 text-yellow-800 hover:bg-yellow-100 transition-colors">
+        <a href="notifications.html" class="flex items-center gap-2 px-3 py-2.5 rounded-lg border border-yellow-300 bg-yellow-50 text-yellow-800 hover:bg-yellow-100 transition-colors">
           ${ICONS.bell}
           <span class="text-sm">7 уведомлений</span>
         </a>
