@@ -11,12 +11,13 @@
 
 ## Текущая активная версия
 
-**v4.11.9** — Новая страница «Уведомления»: 6 категорий + Flowbite Tabs with underline
+**v4.11.10** — Уведомления: убраны тех. термины (OCR/распознавание → «обработка»), вкладки без скроллинга
 
 ## История версий
 
 | Версия | Дата | Коммит | Описание | URL |
 |---|---|---|---|---|
+| v4.11.10 | 2026-04-27 | `2088f04` | OCR→«обработка» всюду; вкладки уведомлений — flex-wrap вместо скролла | [iurklik-v4-11-10](https://www.perplexity.ai/computer/a/iurklik-v4-11-10-_bbpm95ST0Cu1mqxInGN3A) |
 | v4.11.9 | 2026-04-27 | `ce30159` | Страница уведомлений с 6 категориями и вкладками | [iurklik-v4-11-9](https://www.perplexity.ai/computer/a/iurklik-v4-11-9-_bbpm95ST0Cu1mqxInGN3A) |
 | v4.11.8 | 2026-04-27 | `055ba88` | Тип обязательства — простой текст без точки и цвета | [iurklik-v4-11-8](https://www.perplexity.ai/computer/a/iurklik-v4-11-8-_bbpm95ST0Cu1mqxInGN3A) |
 | v4.11.7 | 2026-04-24 | `a188225` | Унифицированные компактные отступы во всех вкладках клиента | [iurklik-previu-kabineta-...](https://www.perplexity.ai/computer/a/iurklik-previu-kabineta-_bbpm95ST0Cu1mqxInGN3A) |

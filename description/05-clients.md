@@ -285,10 +285,10 @@
 ```
 
 **Статусы документа:**
-- `Загружен` (neutral) — загружен, но не отправлен в OCR
-- `Распознан` (success) — OCR завершён, поля извлечены
-- `Нужна проверка` (warning) — OCR извлёк поля с низкой уверенностью
-- `Ошибка распознавания` (danger) — OCR не смог прочитать
+- `Загружен` (neutral) — загружен, но не отправлен в обработку
+- `Обработан` (success) — обработка завершена, поля извлечены
+- `Нужна проверка` (warning) — не все поля извлечены — нужна проверка
+- `Ошибка обработки` (danger) — не удалось обработать
 - `Не загружен` (neutral) — карточка-плейсхолдер для обязательного документа, без `<input>`-а
 
 **Drag & drop** работает прямо на карточке:
@@ -338,7 +338,7 @@ card.addEventListener('drop', e => { e.preventDefault(); uploadFiles(e.dataTrans
 
 | # | Статус | Отображение | Семантика / точка + цвет текста |
 | --- | --- | --- | --- |
-| 1 | `{N}% обработано` | процент от обработанных OCR документов | Process (`bg-sky-500` + `text-sky-700`) |
+| 1 | `{N}% обработано` | процент обработанных документов | Process (`bg-sky-500` + `text-sky-700`) |
 | 2 | `Анализ документов` | после обработки — извлечение полей и распределение по модели дела | Analysis (`bg-violet-500` + `text-violet-700`) |
 | 3 | `Сбор документов` | анализ завершён, но не все документы загружены. При добавлении файла возвращает на стадию 1 | Warning (`bg-amber-500` + `text-amber-700`) |
 | 4 | `Генерация документов` | сгенерированы заявления и вспомогательные документы | Info (`bg-indigo-500` + `text-indigo-700`) |
@@ -374,7 +374,7 @@ card.addEventListener('drop', e => { e.preventDefault(); uploadFiles(e.dataTrans
 - `Case` (`apps/cases`) — `case_number`, `client` (FK → User), `organization`, `status`, `progress_pct`, `region` (FK → Region), `submitted_at`, `completed_at`.
 - `User` (`apps/users`, role=`client`) — ФИО, телефон, email.
 - `Document` (`apps/documents`) — `case`, `doc_type` (FK → DocType), `status`, `file`, `extracted_data` (JSON), `uploaded_at`.
-- `DocType` — `name`, `slug`, `required`, `extractable_fields` (JSON с полями для OCR).
+- `DocType` — `name`, `slug`, `required`, `extractable_fields` (JSON с полями для извлечения).
 - `Creditor`, `Debt`, `Property`, `Deal`, `Tax` — вложенные сущности дела (для вкладок).
 
 ### Структура `detail` для вкладок
@@ -400,7 +400,7 @@ card.addEventListener('drop', e => { e.preventDefault(); uploadFiles(e.dataTrans
 | Ошибка загрузки | Карточка с ошибкой + `Повторить` |
 | Загрузка документа | Прогресс-бар в карточке документа + disable клика |
 | Ошибка загрузки документа | Карточка — `ring-1 ring-rose-400`, бейдж `Ошибка` + tooltip с причиной |
-| OCR в процессе | Бейдж `В обработке` (process) + спиннер (`animate-spin`) |
+| Файл в обработке | Бейдж `В обработке` (process) + спиннер (`animate-spin`) |
 
 ## 8. Интерактив
 
