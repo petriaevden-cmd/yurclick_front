@@ -96,6 +96,45 @@
         done: { label: () => "Завершено", dot: "bg-emerald-500", text: "text-emerald-700" },
       };
 
+      // Статусы документов (жизненный цикл)
+      // dot/text — индикатор и цвет лейбла
+      // border — рамка карточки для проблемных статусов
+      // icon — цвет svg-иконки файла
+      // hint — подпись под названием (пояснение проблемы или действие)
+      // action — текст кнопки
+      // pulse — анимация для processing
+      const DOC_STATUSES = {
+        pending:    { label: "Ожидает",         dot: "bg-gray-300",    text: "text-gray-500",    border: "border-gray-200",    icon: "text-gray-400",   hint: "Не загружен",                          action: "Загрузить" },
+        uploaded:   { label: "Загружен",        dot: "bg-sky-500",      text: "text-sky-700",      border: "border-gray-200",    icon: "text-sky-500",    hint: "Файл принят системой",                action: "Заменить" },
+        processing: { label: "Обработка",       dot: "bg-indigo-500",   text: "text-indigo-700",   border: "border-gray-200",    icon: "text-indigo-500", hint: "Извлекаем данные из документа",        action: "Ожидайте", pulse: true },
+        verifying:  { label: "На проверке",     dot: "bg-violet-500",   text: "text-violet-700",   border: "border-gray-200",    icon: "text-violet-500", hint: "Юрист проверяет данные",                action: "Открыть" },
+        ready:      { label: "Готов",            dot: "bg-emerald-500",  text: "text-emerald-700",  border: "border-gray-200",    icon: "text-emerald-500",hint: "Данные извлечены и приняты",          action: "Просмотр" },
+        unreadable: { label: "Нечитаемый файл", dot: "bg-rose-500",     text: "text-rose-700",     border: "border-rose-200",    icon: "text-rose-500",   hint: "Не удалось разобрать часть страниц", action: "Исправить" },
+        corrupted:  { label: "Файл повреждён", dot: "bg-rose-500",     text: "text-rose-700",     border: "border-rose-200",    icon: "text-rose-500",   hint: "PDF не открывается · повторная загрузка", action: "Перезагрузить" },
+        mismatch:   { label: "Данные не совпадают", dot: "bg-amber-500", text: "text-amber-700",  border: "border-amber-200",   icon: "text-amber-500",  hint: "ФИО/ИНН расходятся с делом",       action: "Сверить" },
+        expired:    { label: "Истёк срок",      dot: "bg-amber-500",    text: "text-amber-700",    border: "border-amber-200",   icon: "text-amber-500",  hint: "Справке более 30 дней · нужна новая", action: "Обновить" },
+        wrong_type: { label: "Неверный тип",     dot: "bg-rose-500",     text: "text-rose-700",     border: "border-rose-200",    icon: "text-rose-500",   hint: "Загружен не тот документ",            action: "Заменить" },
+      };
+
+      // Детерминированный подбор статуса по (clientIdx, docIdx).
+      // Для загруженных документов выбираем из валидных и проблемных состояний.
+      // Для незагруженных — всегда pending.
+      // Ордер представляет жизненный цикл: в начале больше ready, дальше вырастает разнообразие стадий.
+      const UPLOADED_STATUS_POOL = [
+        "ready", "ready", "ready", "ready",            // большинство готовы
+        "verifying", "verifying",                       // юрист проверяет
+        "processing",                                    // в обработке
+        "uploaded",                                      // ждёт обработки
+        "unreadable", "corrupted", "mismatch",          // проблемы
+        "expired", "wrong_type",
+      ];
+      function pickDocStatus(clientIdx, docIdx, uploaded) {
+        if (!uploaded) return "pending";
+        // хэш из индексов
+        const h = (clientIdx * 13 + docIdx * 7 + 11) % UPLOADED_STATUS_POOL.length;
+        return UPLOADED_STATUS_POOL[h];
+      }
+
       const REGIONS = [
         "Москва", "Санкт-Петербург", "Новосибирская область", "Свердловская область",
         "Республика Татарстан", "Краснодарский край", "Нижегородская область", "Челябинская область",
@@ -544,26 +583,39 @@
                     ${Array.from({ length: c.docs[1] }).map((_, i) => {
                       const uploaded = i < c.docs[0];
                       const name = DOC_NAMES[i % DOC_NAMES.length] + (i >= DOC_NAMES.length ? ` · доп. ${i - DOC_NAMES.length + 1}` : "");
+                      const stKey = pickDocStatus(idx, i, uploaded);
+                      const st = DOC_STATUSES[stKey];
+                      const isProblem = ["unreadable", "corrupted", "mismatch", "expired", "wrong_type"].includes(stKey);
+                      const isPending = stKey === "pending";
+                      const isProcessing = stKey === "processing";
+                      // Иконка файла либо спиннер для processing
+                      const fileIcon = isProcessing
+                        ? `<svg class="w-4 h-4 shrink-0 ${st.icon} animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>`
+                        : `<svg class="w-4 h-4 shrink-0 ${st.icon}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5z"/><path d="M14 3v5h5"/></svg>`;
+                      const dotPulse = isProcessing ? " animate-pulse" : "";
                       return `
                         <li>
-                          <label class="doc-card group relative flex items-center justify-between gap-2 rounded-lg bg-white border border-gray-200 px-3 py-2 cursor-pointer hover:border-indigo-300" data-name="${name}">
-                            <div class="flex items-center gap-2 min-w-0">
-                              <svg class="w-4 h-4 shrink-0 ${uploaded ? "text-emerald-500" : "text-gray-400"}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5z"/>
-                                <path d="M14 3v5h5"/>
-                              </svg>
-                              <span class="text-sm text-gray-900 truncate">${name}</span>
+                          <label class="doc-card group relative flex flex-col gap-1 rounded-lg bg-white border ${st.border} px-3 py-2 cursor-pointer hover:border-indigo-300" data-name="${name}" data-status="${stKey}">
+                            <div class="flex items-center justify-between gap-2 min-w-0">
+                              <div class="flex items-center gap-2 min-w-0">
+                                ${fileIcon}
+                                <span class="text-sm text-gray-900 truncate">${name}</span>
+                              </div>
+                              <span class="inline-flex items-center gap-1 text-xs shrink-0 ${st.text}">
+                                <span class="w-1.5 h-1.5 rounded-full ${st.dot}${dotPulse}"></span>
+                                ${st.label}
+                              </span>
                             </div>
-                            <span class="inline-flex items-center gap-1 text-xs shrink-0 ${uploaded ? "text-emerald-600" : "text-gray-400"}">
-                              <span class="w-1.5 h-1.5 rounded-full ${uploaded ? "bg-emerald-500" : "bg-gray-300"}"></span>
-                              ${uploaded ? "Загружен" : "Ожидает"}
-                            </span>
+                            <div class="flex items-center justify-between gap-2 pl-6">
+                              <span class="text-xs text-gray-500 truncate">${st.hint}</span>
+                              <button type="button" class="text-xs ${isProblem ? "text-rose-600" : isPending ? "text-indigo-600" : "text-gray-500"} hover:underline shrink-0">${st.action}</button>
+                            </div>
                             <!-- Drop-overlay на hover и drag -->
                             <span class="doc-dropzone pointer-events-none absolute inset-0 rounded-lg border-2 border-dashed border-indigo-400 bg-indigo-50/95 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 px-3">
                               <svg class="w-4 h-4 text-indigo-600 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M12 15V3"/><path d="M7 8l5-5 5 5"/><rect x="3" y="15" width="18" height="6" rx="2"/>
                               </svg>
-                              <span class="text-xs text-indigo-700 truncate">${uploaded ? "Заменить файл" : "Перетащите или выберите"}</span>
+                              <span class="text-xs text-indigo-700 truncate">${isPending ? "Перетащите или выберите" : "Заменить файл"}</span>
                             </span>
                             <input type="file" class="sr-only doc-input" />
                           </label>

@@ -30,10 +30,10 @@
           <div>
             <div class="flex items-center gap-2 text-sm text-gray-500">
               <span>Всего уведомлений</span>
-              <span class="text-gray-900 font-medium">42</span>
+              <span class="text-gray-900 font-medium">39</span>
               <span class="text-gray-300">·</span>
               <span class="text-gray-500">непрочитано</span>
-              <span class="text-indigo-700 font-medium">7</span>
+              <span class="text-indigo-700 font-medium">6</span>
             </div>
             <p class="mt-1 text-xs text-gray-500">Все системные события платформы за последние 30 дней</p>
           </div>
@@ -83,7 +83,7 @@
                 id="tab-all" data-tabs-target="#panel-all" role="tab" aria-controls="panel-all" aria-selected="true">
                 <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
                 Все
-                <span class="inline-flex items-center justify-center px-2 text-xs font-medium text-indigo-700 bg-indigo-100 rounded-full">42</span>
+                <span class="inline-flex items-center justify-center px-2 text-xs font-medium text-indigo-700 bg-indigo-100 rounded-full">39</span>
               </button>
             </li>
             <li class="shrink-0" role="presentation">
@@ -108,14 +108,6 @@
                 <svg class="w-4 h-4 text-gray-400 group-hover:text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg>
                 Обработка файлов
                 <span class="inline-flex items-center justify-center px-2 text-xs font-medium text-gray-600 bg-gray-100 rounded-full">9</span>
-              </button>
-            </li>
-            <li class="shrink-0" role="presentation">
-              <button type="button" class="group inline-flex items-center gap-2 px-3 md:px-4 py-3 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 whitespace-nowrap"
-                id="tab-errors" data-tabs-target="#panel-errors" role="tab" aria-controls="panel-errors" aria-selected="false">
-                <svg class="w-4 h-4 text-gray-400 group-hover:text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-                Ошибки считывания
-                <span class="inline-flex items-center justify-center px-2 text-xs font-medium text-rose-700 bg-rose-100 rounded-full">3</span>
               </button>
             </li>
             <li class="shrink-0" role="presentation">
@@ -192,7 +184,7 @@
                     <p class="text-sm text-gray-900">Обработка документов по делу <a href="#" class="text-indigo-600 hover:underline">А56-09871/2026</a> завершена · 18 из 18</p>
                     <span class="shrink-0 inline-flex w-2 h-2 rounded-full bg-indigo-500 mt-1.5" aria-label="Не прочитано"></span>
                   </div>
-                  <p class="mt-0.5 text-xs text-gray-500">Белова Ирина Павловна · все поля распознаны успешно, готово к проверке юристом</p>
+                  <p class="mt-0.5 text-xs text-gray-500">Белова Ирина Павловна · данные извлечены из всех файлов, готово к проверке юристом</p>
                   <div class="mt-1 flex items-center gap-3 text-xs text-gray-400">
                     <span>2 часа назад</span>
                     <span class="text-gray-300">·</span>
@@ -201,24 +193,6 @@
                 </div>
               </li>
 
-              <!-- Ошибка -->
-              <li class="py-3 flex items-start gap-3 hover:bg-gray-50 rounded-lg px-2 -mx-2">
-                <span class="shrink-0 inline-flex items-center justify-center w-9 h-9 rounded-lg bg-rose-100 text-rose-600">
-                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-                </span>
-                <div class="flex-1 min-w-0">
-                  <div class="flex items-start justify-between gap-2">
-                    <p class="text-sm text-gray-900">Ошибка считывания: «Справка о доходах 2-НДФЛ» · нечитаемое поле ИНН</p>
-                    <span class="shrink-0 inline-flex w-2 h-2 rounded-full bg-indigo-500 mt-1.5" aria-label="Не прочитано"></span>
-                  </div>
-                  <p class="mt-0.5 text-xs text-gray-500">Дело <a href="#" class="text-indigo-600 hover:underline">А60-33721/2026</a> · Григорьев Николай Сергеевич · требуется ручной ввод</p>
-                  <div class="mt-1 flex items-center gap-3 text-xs text-gray-400">
-                    <span>3 часа назад</span>
-                    <span class="text-gray-300">·</span>
-                    <a href="#" class="text-rose-600 hover:underline">Исправить вручную</a>
-                  </div>
-                </div>
-              </li>
 
               <!-- Срок -->
               <li class="py-3 flex items-start gap-3 hover:bg-gray-50 rounded-lg px-2 -mx-2">
@@ -365,7 +339,7 @@
                 </span>
                 <div class="flex-1 min-w-0">
                   <p class="text-sm text-gray-900">Обработка по делу <a href="#" class="text-indigo-600 hover:underline">А56-09871/2026</a> завершена · 18 / 18</p>
-                  <p class="mt-0.5 text-xs text-gray-500">Белова Ирина Павловна · все поля распознаны, готово к проверке</p>
+                  <p class="mt-0.5 text-xs text-gray-500">Белова Ирина Павловна · данные извлечены, готово к проверке</p>
                   <div class="mt-1 flex items-center gap-3 text-xs text-gray-400">
                     <span>2 часа назад</span>
                   </div>
@@ -397,55 +371,6 @@
               </li>
             </ul>
           </div>
-
-          <!-- Ошибки -->
-          <div id="panel-errors" class="hidden p-3 md:p-4" role="tabpanel" aria-labelledby="tab-errors">
-            <ul class="divide-y divide-gray-100">
-              <li class="py-3 flex items-start gap-3 hover:bg-gray-50 rounded-lg px-2 -mx-2">
-                <span class="shrink-0 inline-flex items-center justify-center w-9 h-9 rounded-lg bg-rose-100 text-rose-600">
-                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-                </span>
-                <div class="flex-1 min-w-0">
-                  <p class="text-sm text-gray-900">Ошибка считывания: «Справка 2-НДФЛ» · нечитаемое поле ИНН</p>
-                  <p class="mt-0.5 text-xs text-gray-500">Дело <a href="#" class="text-indigo-600 hover:underline">А60-33721/2026</a> · Григорьев Н.С.</p>
-                  <div class="mt-1 flex items-center gap-3 text-xs text-gray-400">
-                    <span>3 часа назад</span>
-                    <span class="text-gray-300">·</span>
-                    <a href="#" class="text-rose-600 hover:underline">Исправить вручную</a>
-                  </div>
-                </div>
-              </li>
-              <li class="py-3 flex items-start gap-3 hover:bg-gray-50 rounded-lg px-2 -mx-2">
-                <span class="shrink-0 inline-flex items-center justify-center w-9 h-9 rounded-lg bg-rose-100 text-rose-600">
-                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
-                </span>
-                <div class="flex-1 min-w-0">
-                  <p class="text-sm text-gray-900">Документ повреждён: «Договор кредита.pdf» не открывается</p>
-                  <p class="mt-0.5 text-xs text-gray-500">Дело <a href="#" class="text-indigo-600 hover:underline">А76-20034/2026</a> · Макаров В.И. · нужна повторная загрузка</p>
-                  <div class="mt-1 flex items-center gap-3 text-xs text-gray-400">
-                    <span>вчера в 22:11</span>
-                    <span class="text-gray-300">·</span>
-                    <a href="#" class="text-rose-600 hover:underline">Загрузить снова</a>
-                  </div>
-                </div>
-              </li>
-              <li class="py-3 flex items-start gap-3 hover:bg-gray-50 rounded-lg px-2 -mx-2">
-                <span class="shrink-0 inline-flex items-center justify-center w-9 h-9 rounded-lg bg-rose-100 text-rose-600">
-                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-                </span>
-                <div class="flex-1 min-w-0">
-                  <p class="text-sm text-gray-900">Не удалось распознать 3 страницы паспорта</p>
-                  <p class="mt-0.5 text-xs text-gray-500">Дело <a href="#" class="text-indigo-600 hover:underline">А55-61230/2026</a> · Зайцева Н.О. · рекомендуется ручная проверка</p>
-                  <div class="mt-1 flex items-center gap-3 text-xs text-gray-400">
-                    <span>сегодня в 08:30</span>
-                    <span class="text-gray-300">·</span>
-                    <a href="#" class="text-rose-600 hover:underline">Проверить</a>
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </div>
-
           <!-- Сроки -->
           <div id="panel-deadlines" class="hidden p-3 md:p-4" role="tabpanel" aria-labelledby="tab-deadlines">
             <ul class="divide-y divide-gray-100">
