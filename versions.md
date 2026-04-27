@@ -11,12 +11,13 @@
 
 ## Текущая активная версия
 
-**v4.11.7** — Унифицированные компактные отступы во всех вкладках клиента
+**v4.11.8** — Столбец «Тип обязательства» во вкладке Долги: убраны точка-статус и разноцветный текст
 
 ## История версий
 
 | Версия | Дата | Коммит | Описание | URL |
 |---|---|---|---|---|
+| v4.11.8 | 2026-04-27 | `055ba88` | Тип обязательства — простой текст без точки и цвета | [iurklik-v4-11-8](https://www.perplexity.ai/computer/a/iurklik-v4-11-8-_bbpm95ST0Cu1mqxInGN3A) |
 | v4.11.7 | 2026-04-24 | `a188225` | Унифицированные компактные отступы во всех вкладках клиента | [iurklik-previu-kabineta-...](https://www.perplexity.ai/computer/a/iurklik-previu-kabineta-_bbpm95ST0Cu1mqxInGN3A) |
 | v4.11.6 | 2026-04-24 | `bb51f77` | Tighten inner tables and tab padding for small screens | (общий URL до фиксации) |
 | v4.11.5 | 2026-04-24 | `e18c384` | Region cell aligned to the left | (общий URL до фиксации) |

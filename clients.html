@@ -366,11 +366,7 @@
                       <tbody class="divide-y divide-gray-100">
                         ${c.detail.debts.map((d) => `
                           <tr class="hover:bg-gray-50">
-                            <td class="px-1.5 md:px-2 py-1.5">
-                              <span class="inline-flex items-center gap-1.5 text-xs ${d.type.c}">
-                                <span class="w-1.5 h-1.5 rounded-full ${d.type.d}"></span>${d.type.t}
-                              </span>
-                            </td>
+                            <td class="px-1.5 md:px-2 py-1.5 text-gray-900">${d.type.t}</td>
                             <td class="px-1.5 md:px-2 py-1.5 text-gray-900">${d.creditor}</td>
                             <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-900">${money(d.principal)}</td>
                             <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-700">${money(d.interest)}</td>
