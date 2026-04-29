@@ -527,7 +527,7 @@
           <tbody class="client-row align-top" data-idx="${idx}" data-stage="${stage}" data-open="false" data-case-no="${c.caseNo}">
             <tr>
               <td colspan="8" class="p-0 border-t border-gray-100">
-                <div class="card-frame ring-1 ring-transparent rounded-sm transition-colors">
+                <div class="card-frame border border-transparent rounded-sm transition-colors">
                   <!-- Главная строка: grid-сетка под форму шапки таблицы -->
                   <div class="card-main grid grid-cols-[40px_1.4fr_140px_180px_100px_1fr_140px_140px] items-center gap-2 px-2 md:px-3 lg:px-4 py-2.5 hover:bg-gray-50 rounded-sm">
                     <!-- Чекбокс -->
@@ -862,7 +862,7 @@
         }
 
         // Аккордеон: открывает card-frame + card-expand одного клиента.
-        // При раскрытии card-frame получает ring-1 indigo-600 + bg-indigo-50/40 + shadow-sm.
+        // При раскрытии card-frame получает border indigo-600 + bg-indigo-50/40 + shadow-sm.
         // Один клиент открыт одновременно.
         function openCard(tb) {
           // Закрыть все остальные открытые
@@ -874,8 +874,8 @@
           const expand = tb.querySelector(".card-expand");
           const main = tb.querySelector(".card-main");
           if (frame) {
-            frame.classList.remove("ring-transparent");
-            frame.classList.add("ring-indigo-600", "bg-indigo-50/40", "shadow-sm");
+            frame.classList.remove("border-transparent");
+            frame.classList.add("border-indigo-600", "bg-indigo-50/40", "shadow-sm");
           }
           if (main) {
             // При раскрытии убираем hover-rounded (нижние углы займёт expand)
@@ -892,8 +892,8 @@
           const expand = tb.querySelector(".card-expand");
           const main = tb.querySelector(".card-main");
           if (frame) {
-            frame.classList.add("ring-transparent");
-            frame.classList.remove("ring-indigo-600", "bg-indigo-50/40", "shadow-sm");
+            frame.classList.add("border-transparent");
+            frame.classList.remove("border-indigo-600", "bg-indigo-50/40", "shadow-sm");
           }
           if (main) {
             main.classList.add("rounded-sm");
