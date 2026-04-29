@@ -46,13 +46,35 @@
         </div>
       </div>
 
+      <!-- Вкладки стадии (Flowbite Tabs with underline) -->
+      <div class="mb-3 border-b border-gray-200">
+        <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" role="tablist">
+          <li class="mr-2" role="presentation">
+            <button id="tab-prep-btn" type="button" data-stage="prep" role="tab" aria-selected="true" aria-controls="clients-table"
+                    class="stage-tab inline-flex items-center gap-2 px-3 md:px-4 py-2.5 border-b-2 border-indigo-600 text-indigo-600 rounded-t-lg whitespace-nowrap">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5z"/><path d="M14 3v5h5"/></svg>
+              <span>Подготовка документов</span>
+              <span class="stage-count inline-flex items-center justify-center min-w-[1.5rem] h-5 px-1.5 text-xs font-medium bg-indigo-100 text-indigo-700 rounded-full">0</span>
+            </button>
+          </li>
+          <li class="mr-2" role="presentation">
+            <button id="tab-court-btn" type="button" data-stage="court" role="tab" aria-selected="false" aria-controls="clients-table"
+                    class="stage-tab inline-flex items-center gap-2 px-3 md:px-4 py-2.5 border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 rounded-t-lg whitespace-nowrap">
+              <svg class="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10h18"/><path d="M5 10v10h14V10"/><path d="M12 3l8 7H4z"/></svg>
+              <span>Поданы в суд</span>
+              <span class="stage-count inline-flex items-center justify-center min-w-[1.5rem] h-5 px-1.5 text-xs font-medium bg-gray-100 text-gray-600 rounded-full">0</span>
+            </button>
+          </li>
+        </ul>
+      </div>
+
       <!-- Таблица -->
-      <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
+      <div id="clients-table" class="bg-white rounded-xl border border-gray-200 overflow-hidden">
         <div class="overflow-x-auto">
-          <table class="min-w-full text-sm">
+          <table class="min-w-full text-sm border-separate border-spacing-0">
             <thead class="bg-[#f3f4f6] text-gray-600">
               <tr>
-                <th class="w-10 px-2 md:px-3 lg:px-4 py-2.5 text-left">
+                <th class="w-10 px-2 md:px-3 lg:px-4 py-2.5 text-left border-b border-gray-200">
                   <label class="toggle-slider inline-flex items-center">
                     <input id="check-all" type="checkbox" class="peer sr-only" />
                     <span class="w-4 h-4 rounded border border-gray-300 bg-white peer-checked:bg-indigo-600 peer-checked:border-indigo-600 inline-flex items-center justify-center">
@@ -60,15 +82,16 @@
                     </span>
                   </label>
                 </th>
-                <th class="px-2 md:px-3 lg:px-4 py-2.5 text-left cursor-pointer" data-sort="name">ФИО <span class="text-gray-400">↕</span></th>
-                <th class="px-2 md:px-3 lg:px-4 py-2.5 text-left cursor-pointer" data-sort="caseNo">№ дела</th>
-                <th class="px-2 md:px-3 lg:px-4 py-2.5 text-left">Статус дела</th>
-                <th class="px-2 md:px-3 lg:px-4 py-2.5 text-left">Документы</th>
-                <th class="px-2 md:px-3 lg:px-4 py-2.5 text-left">Регион</th>
-                <th class="px-2 md:px-3 lg:px-4 py-2.5 text-left">Быстрая загрузка</th>
+                <th class="px-2 md:px-3 lg:px-4 py-2.5 text-left cursor-pointer border-b border-gray-200" data-sort="name">ФИО <span class="text-gray-400">↕</span></th>
+                <th class="px-2 md:px-3 lg:px-4 py-2.5 text-left cursor-pointer border-b border-gray-200" data-sort="caseNo">№ дела</th>
+                <th class="px-2 md:px-3 lg:px-4 py-2.5 text-left border-b border-gray-200">Статус дела</th>
+                <th class="px-2 md:px-3 lg:px-4 py-2.5 text-left border-b border-gray-200">Документы</th>
+                <th class="px-2 md:px-3 lg:px-4 py-2.5 text-left border-b border-gray-200">Регион</th>
+                <th class="px-2 md:px-3 lg:px-4 py-2.5 text-left border-b border-gray-200">Быстрая загрузка</th>
+                <th class="px-2 md:px-3 lg:px-4 py-2.5 text-left border-b border-gray-200">Чат</th>
               </tr>
             </thead>
-            <tbody id="clients-tbody" class="divide-y divide-gray-100"></tbody>
+            <tbody id="clients-table-body"></tbody>
           </table>
         </div>
       </div>
@@ -83,17 +106,56 @@
       <ul id="region-list" class="max-h-60 overflow-y-auto text-sm"></ul>
     </div>
 
+    <!-- Drawer: Неточности по делу (Flowbite Drawer right) -->
+    <div id="conflicts-drawer" tabindex="-1" aria-labelledby="conflicts-drawer-label"
+         class="fixed top-0 right-0 z-50 h-screen w-full sm:w-[420px] p-0 overflow-hidden bg-white border-l border-gray-200 shadow-xl transition-transform translate-x-full"
+         data-drawer-backdrop="true" data-drawer-placement="right">
+      <div class="flex flex-col h-full">
+        <header class="px-5 py-4 border-b border-gray-200">
+          <div class="flex items-start justify-between gap-3">
+            <div class="min-w-0">
+              <h2 id="conflicts-drawer-label" class="text-base font-semibold text-gray-900">Неточности по делу</h2>
+              <p id="conflicts-client" class="text-sm text-gray-500 truncate">—</p>
+            </div>
+            <button type="button" data-drawer-hide="conflicts-drawer" aria-label="Закрыть"
+                    class="shrink-0 inline-flex items-center justify-center w-8 h-8 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
+              <span class="sr-only">Закрыть</span>
+            </button>
+          </div>
+          <div class="mt-3 flex items-center gap-3">
+            <span id="conflicts-progress-label" class="text-xs text-gray-500">Решено 0 из 0</span>
+            <div class="flex-1 h-1.5 bg-gray-200 rounded-full overflow-hidden">
+              <div id="conflicts-progress-bar" class="h-full bg-indigo-600 transition-all" data-w="0"></div>
+            </div>
+          </div>
+        </header>
+        <div id="conflicts-list" class="flex-1 overflow-y-auto px-5 py-4 space-y-3"></div>
+        <footer class="px-5 py-4 border-t border-gray-200 flex items-center justify-between gap-3">
+          <button type="button" data-drawer-hide="conflicts-drawer"
+                  class="inline-flex items-center justify-center h-10 px-4 rounded-lg border border-gray-200 bg-white text-sm text-gray-700 hover:bg-gray-50">
+            Отмена
+          </button>
+          <button type="button" id="conflicts-apply"
+                  class="inline-flex items-center justify-center gap-2 h-10 px-4 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm disabled:opacity-50 disabled:cursor-not-allowed">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            Применить и закрыть
+          </button>
+        </footer>
+      </div>
+    </div>
+
     <script src="assets/layout.js"></script>
     <script>
-      // 7 статусов
+      // 7 статусов · stage: "prep" — на стадии подготовки документов; "court" — поданы в суд
       const CASE_STATUSES = {
-        processing: { label: (p) => `${p}% обработано`, dot: "bg-sky-500", text: "text-sky-700" },
-        analysis: { label: () => "Анализ документов", dot: "bg-violet-500", text: "text-violet-700" },
-        collecting: { label: () => "Сбор документов", dot: "bg-amber-500", text: "text-amber-700" },
-        generating: { label: () => "Генерация документов", dot: "bg-indigo-500", text: "text-indigo-700" },
-        filing: { label: () => "Подача в суд", dot: "bg-blue-500", text: "text-blue-700" },
-        paused: { label: () => "Остановлено", dot: "bg-gray-400", text: "text-gray-600" },
-        done: { label: () => "Завершено", dot: "bg-emerald-500", text: "text-emerald-700" },
+        processing: { label: (p) => `${p}% обработано`, dot: "bg-sky-500", text: "text-sky-700", stage: "prep" },
+        analysis: { label: () => "Анализ документов", dot: "bg-violet-500", text: "text-violet-700", stage: "prep" },
+        collecting: { label: () => "Сбор документов", dot: "bg-amber-500", text: "text-amber-700", stage: "prep" },
+        generating: { label: () => "Генерация документов", dot: "bg-indigo-500", text: "text-indigo-700", stage: "prep" },
+        paused: { label: () => "Остановлено", dot: "bg-gray-400", text: "text-gray-600", stage: "prep" },
+        filing: { label: () => "Подача в суд", dot: "bg-blue-500", text: "text-blue-700", stage: "court" },
+        done: { label: () => "Завершено", dot: "bg-emerald-500", text: "text-emerald-700", stage: "court" },
       };
 
       // Статусы документов (жизненный цикл)
@@ -143,17 +205,68 @@
       ];
 
       const CLIENTS = [
-        { name: "Семенов Артём Викторович", caseNo: "А40-12345/2026", status: "processing", progress: 64, docs: [6, 20], region: "Москва", debts: "2 450 000 ₽", creditors: 7, property: "Квартира, авто", taxes: "34 000 ₽", deals: 2 },
-        { name: "Белова Ирина Павловна", caseNo: "А56-09871/2026", status: "analysis", progress: 100, docs: [18, 20], region: "Санкт-Петербург", debts: "1 120 000 ₽", creditors: 3, property: "—", taxes: "12 500 ₽", deals: 1 },
-        { name: "Григорьев Николай Сергеевич", caseNo: "А60-33721/2026", status: "collecting", progress: 100, docs: [11, 18], region: "Свердловская область", debts: "3 890 000 ₽", creditors: 9, property: "Дом, 2 авто", taxes: "87 000 ₽", deals: 4 },
-        { name: "Лазарев Константин Олегович", caseNo: "А45-77654/2026", status: "generating", progress: 100, docs: [22, 22], region: "Новосибирская область", debts: "950 000 ₽", creditors: 4, property: "Квартира", taxes: "9 800 ₽", deals: 1 },
-        { name: "Орлова Мария Андреевна", caseNo: "А65-10201/2026", status: "filing", progress: 100, docs: [24, 24], region: "Республика Татарстан", debts: "4 200 000 ₽", creditors: 11, property: "Квартира, дача", taxes: "54 000 ₽", deals: 3 },
-        { name: "Титов Алексей Юрьевич", caseNo: "А32-54412/2026", status: "done", progress: 100, docs: [26, 26], region: "Краснодарский край", debts: "1 780 000 ₽", creditors: 5, property: "Авто", taxes: "18 200 ₽", deals: 2 },
-        { name: "Филатова Елена Дмитриевна", caseNo: "А43-88123/2026", status: "paused", progress: 42, docs: [4, 16], region: "Нижегородская область", debts: "2 100 000 ₽", creditors: 6, property: "—", taxes: "25 000 ₽", deals: 1 },
-        { name: "Макаров Владислав Игоревич", caseNo: "А76-20034/2026", status: "processing", progress: 23, docs: [3, 18], region: "Челябинская область", debts: "3 340 000 ₽", creditors: 8, property: "Дом", taxes: "41 000 ₽", deals: 2 },
-        { name: "Зайцева Наталья Олеговна", caseNo: "А55-61230/2026", status: "collecting", progress: 100, docs: [9, 20], region: "Самарская область", debts: "1 500 000 ₽", creditors: 4, property: "Квартира", taxes: "15 600 ₽", deals: 1 },
-        { name: "Рябов Дмитрий Александрович", caseNo: "А46-70122/2026", status: "analysis", progress: 100, docs: [14, 22], region: "Омская область", debts: "2 980 000 ₽", creditors: 7, property: "Авто, земля", taxes: "31 500 ₽", deals: 2 },
+        { name: "Семенов Артём Викторович", caseNo: "А40-12345/2026", status: "processing", progress: 64, docs: [6, 20], region: "Москва", debts: "2 450 000 ₽", creditors: 7, property: "Квартира, авто", taxes: "34 000 ₽", deals: 2, unread: 3 },
+        { name: "Белова Ирина Павловна", caseNo: "А56-09871/2026", status: "analysis", progress: 100, docs: [18, 20], region: "Санкт-Петербург", debts: "1 120 000 ₽", creditors: 3, property: "—", taxes: "12 500 ₽", deals: 1, unread: 0 },
+        { name: "Григорьев Николай Сергеевич", caseNo: "А60-33721/2026", status: "collecting", progress: 100, docs: [11, 18], region: "Свердловская область", debts: "3 890 000 ₽", creditors: 9, property: "Дом, 2 авто", taxes: "87 000 ₽", deals: 4, unread: 1 },
+        { name: "Лазарев Константин Олегович", caseNo: "А45-77654/2026", status: "generating", progress: 100, docs: [22, 22], region: "Новосибирская область", debts: "950 000 ₽", creditors: 4, property: "Квартира", taxes: "9 800 ₽", deals: 1, unread: 0 },
+        { name: "Орлова Мария Андреевна", caseNo: "А65-10201/2026", status: "filing", progress: 100, docs: [24, 24], region: "Республика Татарстан", debts: "4 200 000 ₽", creditors: 11, property: "Квартира, дача", taxes: "54 000 ₽", deals: 3, unread: 2 },
+        { name: "Титов Алексей Юрьевич", caseNo: "А32-54412/2026", status: "done", progress: 100, docs: [26, 26], region: "Краснодарский край", debts: "1 780 000 ₽", creditors: 5, property: "Авто", taxes: "18 200 ₽", deals: 2, unread: 0 },
+        { name: "Филатова Елена Дмитриевна", caseNo: "А43-88123/2026", status: "paused", progress: 42, docs: [4, 16], region: "Нижегородская область", debts: "2 100 000 ₽", creditors: 6, property: "—", taxes: "25 000 ₽", deals: 1, unread: 5 },
+        { name: "Макаров Владислав Игоревич", caseNo: "А76-20034/2026", status: "processing", progress: 23, docs: [3, 18], region: "Челябинская область", debts: "3 340 000 ₽", creditors: 8, property: "Дом", taxes: "41 000 ₽", deals: 2, unread: 7 },
+        { name: "Зайцева Наталья Олеговна", caseNo: "А55-61230/2026", status: "collecting", progress: 100, docs: [9, 20], region: "Самарская область", debts: "1 500 000 ₽", creditors: 4, property: "Квартира", taxes: "15 600 ₽", deals: 1, unread: 0 },
+        { name: "Рябов Дмитрий Александрович", caseNo: "А46-70122/2026", status: "analysis", progress: 100, docs: [14, 22], region: "Омская область", debts: "2 980 000 ₽", creditors: 7, property: "Авто, земля", taxes: "31 500 ₽", deals: 2, unread: 1 },
       ];
+
+      // Неточности в извлечённых данных: одно и то же поле в разных документах имеет разные значения.
+      // Отображаются в Drawer; юрист выбирает верное значение. Ключ — caseNo.
+      // Конфликты есть только у части клиентов в активной обработке.
+      const CONFLICTS = {
+        "А40-12345/2026": [
+          { field: "Адрес регистрации", options: [
+            { src: "Паспорт", value: "г. Москва, ул. Ленина, 12, кв. 45" },
+            { src: "Справка о регистрации", value: "г. Москва, ул. Ленина, 12, кв. 145" },
+          ]},
+          { field: "Серия и номер паспорта", options: [
+            { src: "Паспорт", value: "45 12 № 678901" },
+            { src: "Кредитный договор №1", value: "45 12 № 678991" },
+          ]},
+          { field: "Дата рождения", options: [
+            { src: "Паспорт", value: "15.03.1985" },
+            { src: "СНИЛС", value: "15.03.1986" },
+          ]},
+          { field: "ИНН", options: [
+            { src: "ИНН", value: "770512345678" },
+            { src: "Справка 2-НДФЛ", value: "770512345687" },
+          ]},
+        ],
+        "А76-20034/2026": [
+          { field: "ФИО супруга(и)", options: [
+            { src: "Свидетельство о браке", value: "Макарова Анна Сергеевна" },
+            { src: "Анкета клиента", value: "Макарова Анна Сергеевна (Трофимова)" },
+          ]},
+          { field: "Сумма задолженности по КД №1", options: [
+            { src: "Выписка БКИ", value: "540 200 ₽" },
+            { src: "Требования кредиторов", value: "562 800 ₽" },
+          ]},
+          { field: "Контактный телефон", options: [
+            { src: "Анкета клиента", value: "+7 (916) 123-45-67" },
+            { src: "Кредитный договор №2", value: "+7 (916) 123-45-77" },
+          ]},
+        ],
+        "А46-70122/2026": [
+          { field: "Место рождения", options: [
+            { src: "Паспорт", value: "г. Омск" },
+            { src: "СНИЛС", value: "г. Новосибирск" },
+          ]},
+          { field: "Основной долг по ипотеке", options: [
+            { src: "Кредитный договор №2", value: "1 240 000 ₽" },
+            { src: "Выписка БКИ", value: "1 218 500 ₽" },
+          ]},
+        ],
+      };
+      // Возвращает массив конфликтов клиента или пустой массив
+      function getConflicts(c) { return CONFLICTS[c.caseNo] || []; }
+
 
       // ==== Генераторы детализации по клиенту (долги / кредиторы / имущество / сделки / налоги) ====
       const CREDITOR_BANKS = [
@@ -306,393 +419,495 @@
 
       function rowHtml(c, idx) {
         const kadUrl = `https://kad.arbitr.ru/Card?number=${encodeURIComponent(c.caseNo)}`;
+        const stage = CASE_STATUSES[c.status].stage; // "prep" | "court"
+        const conflicts = getConflicts(c);
+        const hasConflicts = conflicts.length > 0;
+        const unread = c.unread || 0;
+
+        // Колонка "Статус дела": если есть неточности — кнопка-замена, иначе обычный бейдж
+        const statusCell = hasConflicts
+          ? `<button type="button" class="conflicts-btn inline-flex items-center gap-1.5 h-7 px-2 rounded-md bg-rose-50 text-rose-700 hover:bg-rose-100 text-xs">
+              <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
+              <span>Есть неточности</span>
+              <span class="inline-flex items-center justify-center min-w-[1.25rem] h-4 px-1 text-[10px] font-medium bg-white text-rose-700 rounded-full">${conflicts.length}</span>
+            </button>`
+          : statusBadge(c.status, c.progress);
+
+        // Колонка "Чат": кнопка с иконкой, текстом "Написать" и бейджем непрочитанных
+        const chatCell = `
+          <button type="button" class="chat-btn relative inline-flex items-center gap-1.5 h-8 px-2.5 rounded-lg border border-gray-200 bg-white text-xs text-gray-700 hover:border-indigo-400 hover:text-indigo-700">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            <span>Написать</span>
+            ${unread > 0 ? `<span class="inline-flex items-center justify-center min-w-[1.25rem] h-4 px-1 text-[10px] font-medium bg-rose-500 text-white rounded-full" aria-label="Непрочитанных сообщений: ${unread}">${unread}</span>` : ""}
+          </button>`;
+
         return `
-          <tr class="main-row hover:bg-gray-50 align-top" data-idx="${idx}">
-            <td class="px-2 md:px-3 lg:px-4 py-2.5">
-              <label class="toggle-slider inline-flex items-center">
-                <input type="checkbox" class="peer sr-only row-check" />
-                <span class="w-4 h-4 rounded border border-gray-300 bg-white peer-checked:bg-indigo-600 peer-checked:border-indigo-600 inline-flex items-center justify-center">
-                  <svg class="w-3 h-3 text-white opacity-0 peer-checked:opacity-100" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></svg>
+          <tbody class="client-row align-top" data-idx="${idx}" data-stage="${stage}" data-open="false" data-case-no="${c.caseNo}">
+            <tr class="main-row hover:bg-gray-50">
+              <td class="px-2 md:px-3 lg:px-4 py-2.5 border-t border-gray-100">
+                <label class="toggle-slider inline-flex items-center">
+                  <input type="checkbox" class="peer sr-only row-check" />
+                  <span class="w-4 h-4 rounded border border-gray-300 bg-white peer-checked:bg-indigo-600 peer-checked:border-indigo-600 inline-flex items-center justify-center">
+                    <svg class="w-3 h-3 text-white opacity-0 peer-checked:opacity-100" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></svg>
+                  </span>
+                </label>
+              </td>
+              <td class="expand-name px-2 md:px-3 lg:px-4 py-2.5 border-t border-gray-100 cursor-pointer">
+                <div class="inline-flex items-center gap-2 text-gray-900">
+                  <svg class="w-4 h-4 text-gray-400 transition-transform chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+                  <span>${c.name}</span>
+                </div>
+              </td>
+              <td class="px-2 md:px-3 lg:px-4 py-2.5 border-t border-gray-100">
+                <a href="${kadUrl}" target="_blank" rel="noopener" class="text-indigo-600 hover:text-indigo-700">${c.caseNo}</a>
+              </td>
+              <td class="px-2 md:px-3 lg:px-4 py-2.5 border-t border-gray-100">${statusCell}</td>
+              <td class="px-2 md:px-3 lg:px-4 py-2.5 border-t border-gray-100">
+                <span class="inline-flex items-center gap-1 text-gray-700">
+                  <svg class="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5z"/><path d="M14 3v5h5"/></svg>
+                  <span class="text-gray-900">${c.docs[0]}</span>
+                  <span class="text-gray-400">/ ${c.docs[1]}</span>
                 </span>
-              </label>
-            </td>
-            <td class="px-2 md:px-3 lg:px-4 py-2.5">
-              <button type="button" class="expand-name inline-flex items-center gap-2 text-left text-gray-900 hover:text-indigo-700">
-                <svg class="w-4 h-4 text-gray-400 transition-transform chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
-                <span>${c.name}</span>
-              </button>
-            </td>
-            <td class="px-2 md:px-3 lg:px-4 py-2.5">
-              <a href="${kadUrl}" target="_blank" rel="noopener" class="text-indigo-600 hover:text-indigo-700">${c.caseNo}</a>
-            </td>
-            <td class="px-2 md:px-3 lg:px-4 py-2.5">${statusBadge(c.status, c.progress)}</td>
-            <td class="px-2 md:px-3 lg:px-4 py-2.5">
-              <button type="button" class="expand-docs inline-flex items-center gap-2 text-gray-700 hover:text-indigo-700">
-                <svg class="w-4 h-4 text-gray-400 transition-transform chevron-docs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
-                <span class="text-gray-900">${c.docs[0]}</span>
-                <span class="text-gray-400">/ ${c.docs[1]}</span>
-              </button>
-            </td>
-            <td class="px-2 md:px-3 lg:px-4 py-2.5">
-              <button type="button" class="region-btn inline-flex items-start gap-1.5 text-left text-gray-700 hover:text-indigo-700">
-                <svg class="w-4 h-4 mt-0.5 shrink-0 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-12a7 7 0 1 1 14 0c0 5.5-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
-                <span class="region-value">${c.region}</span>
-              </button>
-            </td>
-            <td class="px-2 md:px-3 lg:px-4 py-2.5">
-              <label class="inline-flex items-center justify-center gap-1.5 h-8 px-2.5 rounded-lg border border-dashed border-gray-300 text-xs text-gray-600 hover:border-indigo-400 hover:bg-indigo-50/40 hover:text-indigo-700 cursor-pointer">
-                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"/><path d="M7 8l5-5 5 5"/><rect x="3" y="15" width="18" height="6" rx="2"/></svg>
-                <span>Загрузить</span>
-                <input type="file" class="sr-only" multiple />
-              </label>
-            </td>
-          </tr>
-          <!-- Expand: краткая информация (вкладки) -->
-          <tr class="expand-row expand-name-row hidden bg-white">
-            <td colspan="7" class="px-2 py-2">
-              <div class="client-tabs bg-white border border-gray-200 rounded-xl overflow-hidden">
-                <!-- Вкладки (Flowbite: Tabs with underline) -->
-                <div class="border-b border-gray-200">
-                  <ul class="flex flex-wrap -mb-px text-sm font-medium text-center text-gray-500">
-                    <li class="mr-2">
-                      <button type="button" data-ct="debts" class="ct-tab group inline-flex items-center gap-1.5 md:gap-2 px-2 py-2.5 md:px-3 md:py-3 lg:p-4 border-b-2 border-indigo-600 text-indigo-600 rounded-t-lg whitespace-nowrap">
-                        <svg class="w-4 h-4 text-indigo-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
-                        Долги <span class="text-gray-400 font-normal">· ${c.detail.debts.length}</span>
-                      </button>
-                    </li>
-                    <li class="mr-2">
-                      <button type="button" data-ct="creditors" class="ct-tab group inline-flex items-center gap-1.5 md:gap-2 px-2 py-2.5 md:px-3 md:py-3 lg:p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 whitespace-nowrap">
-                        <svg class="w-4 h-4 text-gray-400 group-hover:text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V10l7-5 7 5v11"/><path d="M9 21v-6h6v6"/></svg>
-                        Кредиторы <span class="text-gray-400 font-normal">· ${c.detail.creditors.length}</span>
-                      </button>
-                    </li>
-                    <li class="mr-2">
-                      <button type="button" data-ct="property" class="ct-tab group inline-flex items-center gap-1.5 md:gap-2 px-2 py-2.5 md:px-3 md:py-3 lg:p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 whitespace-nowrap">
-                        <svg class="w-4 h-4 text-gray-400 group-hover:text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg>
-                        Имущество <span class="text-gray-400 font-normal">· ${c.detail.property.length}</span>
-                      </button>
-                    </li>
-                    <li class="mr-2">
-                      <button type="button" data-ct="deals" class="ct-tab group inline-flex items-center gap-1.5 md:gap-2 px-2 py-2.5 md:px-3 md:py-3 lg:p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 whitespace-nowrap">
-                        <svg class="w-4 h-4 text-gray-400 group-hover:text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3l5 5-5 5"/><path d="M21 8H8"/><path d="M8 21l-5-5 5-5"/><path d="M3 16h13"/></svg>
-                        Сделки <span class="text-gray-400 font-normal">· ${c.detail.deals.length}</span>
-                      </button>
-                    </li>
-                    <li class="mr-2">
-                      <button type="button" data-ct="taxes" class="ct-tab group inline-flex items-center gap-1.5 md:gap-2 px-2 py-2.5 md:px-3 md:py-3 lg:p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 whitespace-nowrap">
-                        <svg class="w-4 h-4 text-gray-400 group-hover:text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8"/><path d="M8 11h8"/><path d="M8 15h5"/></svg>
-                        Налоги и сборы <span class="text-gray-400 font-normal">· ${c.detail.taxes.length}</span>
-                      </button>
-                    </li>
-                  </ul>
-                </div>
+              </td>
+              <td class="px-2 md:px-3 lg:px-4 py-2.5 border-t border-gray-100">
+                <button type="button" class="region-btn inline-flex items-start gap-1.5 text-left text-gray-700 hover:text-indigo-700">
+                  <svg class="w-4 h-4 mt-0.5 shrink-0 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-12a7 7 0 1 1 14 0c0 5.5-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
+                  <span class="region-value">${c.region}</span>
+                </button>
+              </td>
+              <td class="px-2 md:px-3 lg:px-4 py-2.5 border-t border-gray-100">
+                <label class="flex items-center justify-center gap-1.5 w-full h-8 px-2.5 rounded-lg border border-dashed border-gray-300 text-xs text-gray-600 hover:border-indigo-400 hover:bg-indigo-50/40 hover:text-indigo-700 cursor-pointer">
+                  <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"/><path d="M7 8l5-5 5 5"/><rect x="3" y="15" width="18" height="6" rx="2"/></svg>
+                  <span>Загрузить</span>
+                  <input type="file" class="sr-only" multiple />
+                </label>
+              </td>
+              <td class="px-2 md:px-3 lg:px-4 py-2.5 border-t border-gray-100">${chatCell}</td>
+            </tr>
+            <!-- Expand 1: краткая информация (вкладки) -->
+            <tr class="expand-row expand-name-row hidden bg-white">
+              <td colspan="8" class="px-2 py-2 border-t border-gray-100">
+                <div class="client-tabs bg-white border border-gray-200 rounded-xl overflow-hidden">
+                  <!-- Вкладки (Flowbite: Tabs with underline) -->
+                  <div class="border-b border-gray-200">
+                    <ul class="flex flex-wrap -mb-px text-sm font-medium text-center text-gray-500">
+                      <li class="mr-2">
+                        <button type="button" data-ct="debts" class="ct-tab group inline-flex items-center gap-1.5 md:gap-2 px-2 py-2.5 md:px-3 md:py-3 lg:p-4 border-b-2 border-indigo-600 text-indigo-600 rounded-t-lg whitespace-nowrap">
+                          <svg class="w-4 h-4 text-indigo-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+                          Долги <span class="text-gray-400 font-normal">· ${c.detail.debts.length}</span>
+                        </button>
+                      </li>
+                      <li class="mr-2">
+                        <button type="button" data-ct="creditors" class="ct-tab group inline-flex items-center gap-1.5 md:gap-2 px-2 py-2.5 md:px-3 md:py-3 lg:p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 whitespace-nowrap">
+                          <svg class="w-4 h-4 text-gray-400 group-hover:text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V10l7-5 7 5v11"/><path d="M9 21v-6h6v6"/></svg>
+                          Кредиторы <span class="text-gray-400 font-normal">· ${c.detail.creditors.length}</span>
+                        </button>
+                      </li>
+                      <li class="mr-2">
+                        <button type="button" data-ct="property" class="ct-tab group inline-flex items-center gap-1.5 md:gap-2 px-2 py-2.5 md:px-3 md:py-3 lg:p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 whitespace-nowrap">
+                          <svg class="w-4 h-4 text-gray-400 group-hover:text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg>
+                          Имущество <span class="text-gray-400 font-normal">· ${c.detail.property.length}</span>
+                        </button>
+                      </li>
+                      <li class="mr-2">
+                        <button type="button" data-ct="deals" class="ct-tab group inline-flex items-center gap-1.5 md:gap-2 px-2 py-2.5 md:px-3 md:py-3 lg:p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 whitespace-nowrap">
+                          <svg class="w-4 h-4 text-gray-400 group-hover:text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3l5 5-5 5"/><path d="M21 8H8"/><path d="M8 21l-5-5 5-5"/><path d="M3 16h13"/></svg>
+                          Сделки <span class="text-gray-400 font-normal">· ${c.detail.deals.length}</span>
+                        </button>
+                      </li>
+                      <li class="mr-2">
+                        <button type="button" data-ct="taxes" class="ct-tab group inline-flex items-center gap-1.5 md:gap-2 px-2 py-2.5 md:px-3 md:py-3 lg:p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 whitespace-nowrap">
+                          <svg class="w-4 h-4 text-gray-400 group-hover:text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8"/><path d="M8 11h8"/><path d="M8 15h5"/></svg>
+                          Налоги и сборы <span class="text-gray-400 font-normal">· ${c.detail.taxes.length}</span>
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
 
-                <!-- Панель: Долги -->
-                <div class="ct-panel" data-ct-panel="debts">
-                  <div>
-                    <table class="min-w-full text-xs md:text-sm">
-                      <thead class="bg-[#f3f4f6] text-gray-600">
-                        <tr>
-                          <th class="px-1.5 md:px-2 py-1.5 text-left">Тип обязательства</th>
-                          <th class="px-1.5 md:px-2 py-1.5 text-left">Кредитор</th>
-                          <th class="px-1.5 md:px-2 py-1.5 text-right">Основной долг</th>
-                          <th class="px-1.5 md:px-2 py-1.5 text-right">Проценты</th>
-                          <th class="px-1.5 md:px-2 py-1.5 text-right">Пени</th>
-                          <th class="px-1.5 md:px-2 py-1.5 text-right">Итого</th>
-                        </tr>
-                      </thead>
-                      <tbody class="divide-y divide-gray-100">
-                        ${c.detail.debts.map((d) => `
-                          <tr class="hover:bg-gray-50">
-                            <td class="px-1.5 md:px-2 py-1.5 text-gray-900">${d.type.t}</td>
-                            <td class="px-1.5 md:px-2 py-1.5 text-gray-900">${d.creditor}</td>
-                            <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-900">${money(d.principal)}</td>
-                            <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-700">${money(d.interest)}</td>
-                            <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-700">${money(d.penalty)}</td>
-                            <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-900">${money(d.total)}</td>
-                          </tr>`).join("")}
-                      </tbody>
-                      <tfoot>
-                        <tr class="bg-gray-50">
-                          <td class="px-1.5 md:px-2 py-1.5 text-gray-600" colspan="5">Итого по долгам</td>
-                          <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-900">${money(c.detail.debts.reduce((s, d) => s + d.total, 0))}</td>
-                        </tr>
-                      </tfoot>
-                    </table>
+                  <!-- Панель: Долги -->
+                  <div class="ct-panel" data-ct-panel="debts">
+                    <div>
+                      <table class="min-w-full text-xs md:text-sm">
+                        <thead class="bg-[#f3f4f6] text-gray-600">
+                          <tr>
+                            <th class="px-1.5 md:px-2 py-1.5 text-left">Тип обязательства</th>
+                            <th class="px-1.5 md:px-2 py-1.5 text-left">Кредитор</th>
+                            <th class="px-1.5 md:px-2 py-1.5 text-right">Основной долг</th>
+                            <th class="px-1.5 md:px-2 py-1.5 text-right">Проценты</th>
+                            <th class="px-1.5 md:px-2 py-1.5 text-right">Пени</th>
+                            <th class="px-1.5 md:px-2 py-1.5 text-right">Итого</th>
+                          </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100">
+                          ${c.detail.debts.map((d) => `
+                            <tr class="hover:bg-gray-50">
+                              <td class="px-1.5 md:px-2 py-1.5 text-gray-900">${d.type.t}</td>
+                              <td class="px-1.5 md:px-2 py-1.5 text-gray-900">${d.creditor}</td>
+                              <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-900">${money(d.principal)}</td>
+                              <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-700">${money(d.interest)}</td>
+                              <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-700">${money(d.penalty)}</td>
+                              <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-900">${money(d.total)}</td>
+                            </tr>`).join("")}
+                        </tbody>
+                        <tfoot>
+                          <tr class="bg-gray-50">
+                            <td class="px-1.5 md:px-2 py-1.5 text-gray-600" colspan="5">Итого по долгам</td>
+                            <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-900">${money(c.detail.debts.reduce((s, d) => s + d.total, 0))}</td>
+                          </tr>
+                        </tfoot>
+                      </table>
+                    </div>
+                  </div>
+
+                  <!-- Панель: Кредиторы -->
+                  <div class="ct-panel hidden" data-ct-panel="creditors">
+                    <div>
+                      <table class="min-w-full text-xs md:text-sm">
+                        <thead class="bg-[#f3f4f6] text-gray-600">
+                          <tr>
+                            <th class="px-1.5 md:px-2 py-1.5 text-left">Кредитор</th>
+                            <th class="px-1.5 md:px-2 py-1.5 text-left">Договор</th>
+                            <th class="px-1.5 md:px-2 py-1.5 text-left">Дата</th>
+                            <th class="px-1.5 md:px-2 py-1.5 text-right">Сумма требования</th>
+                            <th class="px-1.5 md:px-2 py-1.5 text-right">Просрочка, дн.</th>
+                            <th class="px-1.5 md:px-2 py-1.5 text-left">В реестре</th>
+                          </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100">
+                          ${c.detail.creditors.map((cr) => `
+                            <tr class="hover:bg-gray-50">
+                              <td class="px-1.5 md:px-2 py-1.5 text-gray-900">${cr.bank}</td>
+                              <td class="px-1.5 md:px-2 py-1.5 text-gray-700">${cr.contract}</td>
+                              <td class="px-1.5 md:px-2 py-1.5 text-gray-700">${cr.date}</td>
+                              <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-900">${money(cr.amount)}</td>
+                              <td class="px-1.5 md:px-2 py-1.5 text-right ${cr.overdue > 180 ? "text-rose-700" : (cr.overdue > 60 ? "text-amber-700" : "text-gray-700")}">${cr.overdue}</td>
+                              <td class="px-1.5 md:px-2 py-1.5">
+                                <span class="inline-flex items-center gap-1.5 text-xs ${cr.inRegistry ? "text-emerald-700" : "text-gray-600"}">
+                                  <span class="w-1.5 h-1.5 rounded-full ${cr.inRegistry ? "bg-emerald-500" : "bg-gray-400"}"></span>
+                                  ${cr.inRegistry ? "Включён" : "Не включён"}
+                                </span>
+                              </td>
+                            </tr>`).join("")}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                  <!-- Панель: Имущество -->
+                  <div class="ct-panel hidden" data-ct-panel="property">
+                    <div>
+                      <table class="min-w-full text-xs md:text-sm">
+                        <thead class="bg-[#f3f4f6] text-gray-600">
+                          <tr>
+                            <th class="px-1.5 md:px-2 py-1.5 text-left">Объект</th>
+                            <th class="px-1.5 md:px-2 py-1.5 text-left">Дата регистрации</th>
+                            <th class="px-1.5 md:px-2 py-1.5 text-right">Оценочная стоимость</th>
+                            <th class="px-1.5 md:px-2 py-1.5 text-left">Статус</th>
+                          </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100">
+                          ${c.detail.property.length ? c.detail.property.map((p) => {
+                            const statusColor = p.status === "Единственное жильё" ? "text-emerald-700" : (p.status === "В залоге" ? "text-amber-700" : "text-indigo-700");
+                            const statusDot = p.status === "Единственное жильё" ? "bg-emerald-500" : (p.status === "В залоге" ? "bg-amber-500" : "bg-indigo-500");
+                            return `
+                            <tr class="hover:bg-gray-50">
+                              <td class="px-1.5 md:px-2 py-1.5 text-gray-900">${p.type}</td>
+                              <td class="px-1.5 md:px-2 py-1.5 text-gray-700">${p.registered}</td>
+                              <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-900">${money(p.value)}</td>
+                              <td class="px-1.5 md:px-2 py-1.5">
+                                <span class="inline-flex items-center gap-1.5 text-xs ${statusColor}">
+                                  <span class="w-1.5 h-1.5 rounded-full ${statusDot}"></span>${p.status}
+                                </span>
+                              </td>
+                            </tr>`;
+                          }).join("") : `<tr><td colspan="4" class="px-1.5 md:px-2 py-1.5 text-center text-gray-400">Имущество не зарегистрировано</td></tr>`}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                  <!-- Панель: Сделки -->
+                  <div class="ct-panel hidden" data-ct-panel="deals">
+                    <div>
+                      <table class="min-w-full text-xs md:text-sm">
+                        <thead class="bg-[#f3f4f6] text-gray-600">
+                          <tr>
+                            <th class="px-1.5 md:px-2 py-1.5 text-left">Тип сделки</th>
+                            <th class="px-1.5 md:px-2 py-1.5 text-left">Контрагент</th>
+                            <th class="px-1.5 md:px-2 py-1.5 text-left">Дата</th>
+                            <th class="px-1.5 md:px-2 py-1.5 text-right">Сумма</th>
+                            <th class="px-1.5 md:px-2 py-1.5 text-left">Риск оспаривания</th>
+                          </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100">
+                          ${c.detail.deals.length ? c.detail.deals.map((dl) => {
+                            const riskColor = dl.risk === "Высокий" ? "text-rose-700" : (dl.risk === "Средний" ? "text-amber-700" : "text-emerald-700");
+                            const riskDot = dl.risk === "Высокий" ? "bg-rose-500" : (dl.risk === "Средний" ? "bg-amber-500" : "bg-emerald-500");
+                            return `
+                            <tr class="hover:bg-gray-50">
+                              <td class="px-1.5 md:px-2 py-1.5 text-gray-900">${dl.type}</td>
+                              <td class="px-1.5 md:px-2 py-1.5 text-gray-700">${dl.counterparty}</td>
+                              <td class="px-1.5 md:px-2 py-1.5 text-gray-700">${dl.date}</td>
+                              <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-900">${money(dl.amount)}</td>
+                              <td class="px-1.5 md:px-2 py-1.5">
+                                <span class="inline-flex items-center gap-1.5 text-xs ${riskColor}">
+                                  <span class="w-1.5 h-1.5 rounded-full ${riskDot}"></span>${dl.risk}
+                                </span>
+                              </td>
+                            </tr>`;
+                          }).join("") : `<tr><td colspan="5" class="px-1.5 md:px-2 py-1.5 text-center text-gray-400">Сделок за 3 года не зафиксировано</td></tr>`}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                  <!-- Панель: Налоги и сборы -->
+                  <div class="ct-panel hidden" data-ct-panel="taxes">
+                    <div>
+                      <table class="min-w-full text-xs md:text-sm">
+                        <thead class="bg-[#f3f4f6] text-gray-600">
+                          <tr>
+                            <th class="px-1.5 md:px-2 py-1.5 text-left">Вид налога / сбора</th>
+                            <th class="px-1.5 md:px-2 py-1.5 text-left">Орган</th>
+                            <th class="px-1.5 md:px-2 py-1.5 text-left">Период</th>
+                            <th class="px-1.5 md:px-2 py-1.5 text-right">Основная сумма</th>
+                            <th class="px-1.5 md:px-2 py-1.5 text-right">Пени</th>
+                            <th class="px-1.5 md:px-2 py-1.5 text-right">Итого</th>
+                            <th class="px-1.5 md:px-2 py-1.5 text-left">Статус</th>
+                          </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100">
+                          ${c.detail.taxes.map((t) => {
+                            const stColor = t.status === "К оплате" ? "text-rose-700" : (t.status === "В реестре требований" ? "text-indigo-700" : "text-amber-700");
+                            const stDot = t.status === "К оплате" ? "bg-rose-500" : (t.status === "В реестре требований" ? "bg-indigo-500" : "bg-amber-500");
+                            return `
+                            <tr class="hover:bg-gray-50">
+                              <td class="px-1.5 md:px-2 py-1.5 text-gray-900">${t.type}</td>
+                              <td class="px-1.5 md:px-2 py-1.5 text-gray-700">${t.authority}</td>
+                              <td class="px-1.5 md:px-2 py-1.5 text-gray-700">${t.period}</td>
+                              <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-900">${money(t.base)}</td>
+                              <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-700">${money(t.penalty)}</td>
+                              <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-900">${money(t.total)}</td>
+                              <td class="px-1.5 md:px-2 py-1.5">
+                                <span class="inline-flex items-center gap-1.5 text-xs ${stColor}">
+                                  <span class="w-1.5 h-1.5 rounded-full ${stDot}"></span>${t.status}
+                                </span>
+                              </td>
+                            </tr>`;
+                          }).join("")}
+                        </tbody>
+                        <tfoot>
+                          <tr class="bg-gray-50">
+                            <td class="px-1.5 md:px-2 py-1.5 text-gray-600" colspan="5">Итого по налогам и сборам</td>
+                            <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-900">${money(c.detail.taxes.reduce((s, t) => s + t.total, 0))}</td>
+                            <td></td>
+                          </tr>
+                        </tfoot>
+                      </table>
+                    </div>
                   </div>
                 </div>
+              </td>
+            </tr>
+            <!-- Expand 2: документы -->
+            <tr class="expand-row expand-docs-row hidden bg-white">
+              <td colspan="8" class="px-2 py-2 border-t border-gray-100">
+                <div>
+                  <div class="text-xs text-gray-500 mb-3">Документы дела · ${c.docs[0]} из ${c.docs[1]}</div>
+                  ${(() => {
+                    // Собираем все документы дела и раскладываем по 3 группам
+                    const PROBLEM_KEYS = ["unreadable", "corrupted", "mismatch", "expired", "wrong_type"];
+                    const groups = { pending: [], errors: [], accepted: [] };
+                    for (let i = 0; i < c.docs[1]; i++) {
+                      const uploaded = i < c.docs[0];
+                      const name = DOC_NAMES[i % DOC_NAMES.length] + (i >= DOC_NAMES.length ? ` · доп. ${i - DOC_NAMES.length + 1}` : "");
+                      const stKey = pickDocStatus(idx, i, uploaded);
+                      const item = { i, name, stKey };
+                      if (stKey === "pending") groups.pending.push(item);
+                      else if (PROBLEM_KEYS.includes(stKey)) groups.errors.push(item);
+                      else groups.accepted.push(item);
+                    }
 
-                <!-- Панель: Кредиторы -->
-                <div class="ct-panel hidden" data-ct-panel="creditors">
-                  <div>
-                    <table class="min-w-full text-xs md:text-sm">
-                      <thead class="bg-[#f3f4f6] text-gray-600">
-                        <tr>
-                          <th class="px-1.5 md:px-2 py-1.5 text-left">Кредитор</th>
-                          <th class="px-1.5 md:px-2 py-1.5 text-left">Договор</th>
-                          <th class="px-1.5 md:px-2 py-1.5 text-left">Дата</th>
-                          <th class="px-1.5 md:px-2 py-1.5 text-right">Сумма требования</th>
-                          <th class="px-1.5 md:px-2 py-1.5 text-right">Просрочка, дн.</th>
-                          <th class="px-1.5 md:px-2 py-1.5 text-left">В реестре</th>
-                        </tr>
-                      </thead>
-                      <tbody class="divide-y divide-gray-100">
-                        ${c.detail.creditors.map((cr) => `
-                          <tr class="hover:bg-gray-50">
-                            <td class="px-1.5 md:px-2 py-1.5 text-gray-900">${cr.bank}</td>
-                            <td class="px-1.5 md:px-2 py-1.5 text-gray-700">${cr.contract}</td>
-                            <td class="px-1.5 md:px-2 py-1.5 text-gray-700">${cr.date}</td>
-                            <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-900">${money(cr.amount)}</td>
-                            <td class="px-1.5 md:px-2 py-1.5 text-right ${cr.overdue > 180 ? "text-rose-700" : (cr.overdue > 60 ? "text-amber-700" : "text-gray-700")}">${cr.overdue}</td>
-                            <td class="px-1.5 md:px-2 py-1.5">
-                              <span class="inline-flex items-center gap-1.5 text-xs ${cr.inRegistry ? "text-emerald-700" : "text-gray-600"}">
-                                <span class="w-1.5 h-1.5 rounded-full ${cr.inRegistry ? "bg-emerald-500" : "bg-gray-400"}"></span>
-                                ${cr.inRegistry ? "Включён" : "Не включён"}
+                    const renderCard = ({ name, stKey }) => {
+                      const st = DOC_STATUSES[stKey];
+                      const isProblem = PROBLEM_KEYS.includes(stKey);
+                      const isPending = stKey === "pending";
+                      const isProcessing = stKey === "processing";
+                      const fileIcon = isProcessing
+                        ? `<svg class="w-4 h-4 shrink-0 ${st.icon} animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>`
+                        : `<svg class="w-4 h-4 shrink-0 ${st.icon}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5z"/><path d="M14 3v5h5"/></svg>`;
+                      const dotPulse = isProcessing ? " animate-pulse" : "";
+                      return `
+                        <li>
+                          <label class="doc-card group relative flex flex-col gap-1 rounded-lg bg-white border ${st.border} px-3 py-2 cursor-pointer hover:border-indigo-300" data-name="${name}" data-status="${stKey}">
+                            <div class="flex items-center justify-between gap-2 min-w-0">
+                              <div class="flex items-center gap-2 min-w-0">
+                                ${fileIcon}
+                                <span class="text-sm text-gray-900 truncate">${name}</span>
+                              </div>
+                              <span class="inline-flex items-center gap-1 text-xs shrink-0 ${st.text}">
+                                <span class="w-1.5 h-1.5 rounded-full ${st.dot}${dotPulse}"></span>
+                                ${st.label}
                               </span>
-                            </td>
-                          </tr>`).join("")}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-
-                <!-- Панель: Имущество -->
-                <div class="ct-panel hidden" data-ct-panel="property">
-                  <div>
-                    <table class="min-w-full text-xs md:text-sm">
-                      <thead class="bg-[#f3f4f6] text-gray-600">
-                        <tr>
-                          <th class="px-1.5 md:px-2 py-1.5 text-left">Объект</th>
-                          <th class="px-1.5 md:px-2 py-1.5 text-left">Дата регистрации</th>
-                          <th class="px-1.5 md:px-2 py-1.5 text-right">Оценочная стоимость</th>
-                          <th class="px-1.5 md:px-2 py-1.5 text-left">Статус</th>
-                        </tr>
-                      </thead>
-                      <tbody class="divide-y divide-gray-100">
-                        ${c.detail.property.length ? c.detail.property.map((p) => {
-                          const statusColor = p.status === "Единственное жильё" ? "text-emerald-700" : (p.status === "В залоге" ? "text-amber-700" : "text-indigo-700");
-                          const statusDot = p.status === "Единственное жильё" ? "bg-emerald-500" : (p.status === "В залоге" ? "bg-amber-500" : "bg-indigo-500");
-                          return `
-                          <tr class="hover:bg-gray-50">
-                            <td class="px-1.5 md:px-2 py-1.5 text-gray-900">${p.type}</td>
-                            <td class="px-1.5 md:px-2 py-1.5 text-gray-700">${p.registered}</td>
-                            <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-900">${money(p.value)}</td>
-                            <td class="px-1.5 md:px-2 py-1.5">
-                              <span class="inline-flex items-center gap-1.5 text-xs ${statusColor}">
-                                <span class="w-1.5 h-1.5 rounded-full ${statusDot}"></span>${p.status}
-                              </span>
-                            </td>
-                          </tr>`;
-                        }).join("") : `<tr><td colspan="4" class="px-1.5 md:px-2 py-1.5 text-center text-gray-400">Имущество не зарегистрировано</td></tr>`}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-
-                <!-- Панель: Сделки -->
-                <div class="ct-panel hidden" data-ct-panel="deals">
-                  <div>
-                    <table class="min-w-full text-xs md:text-sm">
-                      <thead class="bg-[#f3f4f6] text-gray-600">
-                        <tr>
-                          <th class="px-1.5 md:px-2 py-1.5 text-left">Тип сделки</th>
-                          <th class="px-1.5 md:px-2 py-1.5 text-left">Контрагент</th>
-                          <th class="px-1.5 md:px-2 py-1.5 text-left">Дата</th>
-                          <th class="px-1.5 md:px-2 py-1.5 text-right">Сумма</th>
-                          <th class="px-1.5 md:px-2 py-1.5 text-left">Риск оспаривания</th>
-                        </tr>
-                      </thead>
-                      <tbody class="divide-y divide-gray-100">
-                        ${c.detail.deals.length ? c.detail.deals.map((dl) => {
-                          const riskColor = dl.risk === "Высокий" ? "text-rose-700" : (dl.risk === "Средний" ? "text-amber-700" : "text-emerald-700");
-                          const riskDot = dl.risk === "Высокий" ? "bg-rose-500" : (dl.risk === "Средний" ? "bg-amber-500" : "bg-emerald-500");
-                          return `
-                          <tr class="hover:bg-gray-50">
-                            <td class="px-1.5 md:px-2 py-1.5 text-gray-900">${dl.type}</td>
-                            <td class="px-1.5 md:px-2 py-1.5 text-gray-700">${dl.counterparty}</td>
-                            <td class="px-1.5 md:px-2 py-1.5 text-gray-700">${dl.date}</td>
-                            <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-900">${money(dl.amount)}</td>
-                            <td class="px-1.5 md:px-2 py-1.5">
-                              <span class="inline-flex items-center gap-1.5 text-xs ${riskColor}">
-                                <span class="w-1.5 h-1.5 rounded-full ${riskDot}"></span>${dl.risk}
-                              </span>
-                            </td>
-                          </tr>`;
-                        }).join("") : `<tr><td colspan="5" class="px-1.5 md:px-2 py-1.5 text-center text-gray-400">Сделок за 3 года не зафиксировано</td></tr>`}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-
-                <!-- Панель: Налоги и сборы -->
-                <div class="ct-panel hidden" data-ct-panel="taxes">
-                  <div>
-                    <table class="min-w-full text-xs md:text-sm">
-                      <thead class="bg-[#f3f4f6] text-gray-600">
-                        <tr>
-                          <th class="px-1.5 md:px-2 py-1.5 text-left">Вид налога / сбора</th>
-                          <th class="px-1.5 md:px-2 py-1.5 text-left">Орган</th>
-                          <th class="px-1.5 md:px-2 py-1.5 text-left">Период</th>
-                          <th class="px-1.5 md:px-2 py-1.5 text-right">Основная сумма</th>
-                          <th class="px-1.5 md:px-2 py-1.5 text-right">Пени</th>
-                          <th class="px-1.5 md:px-2 py-1.5 text-right">Итого</th>
-                          <th class="px-1.5 md:px-2 py-1.5 text-left">Статус</th>
-                        </tr>
-                      </thead>
-                      <tbody class="divide-y divide-gray-100">
-                        ${c.detail.taxes.map((t) => {
-                          const stColor = t.status === "К оплате" ? "text-rose-700" : (t.status === "В реестре требований" ? "text-indigo-700" : "text-amber-700");
-                          const stDot = t.status === "К оплате" ? "bg-rose-500" : (t.status === "В реестре требований" ? "bg-indigo-500" : "bg-amber-500");
-                          return `
-                          <tr class="hover:bg-gray-50">
-                            <td class="px-1.5 md:px-2 py-1.5 text-gray-900">${t.type}</td>
-                            <td class="px-1.5 md:px-2 py-1.5 text-gray-700">${t.authority}</td>
-                            <td class="px-1.5 md:px-2 py-1.5 text-gray-700">${t.period}</td>
-                            <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-900">${money(t.base)}</td>
-                            <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-700">${money(t.penalty)}</td>
-                            <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-900">${money(t.total)}</td>
-                            <td class="px-1.5 md:px-2 py-1.5">
-                              <span class="inline-flex items-center gap-1.5 text-xs ${stColor}">
-                                <span class="w-1.5 h-1.5 rounded-full ${stDot}"></span>${t.status}
-                              </span>
-                            </td>
-                          </tr>`;
-                        }).join("")}
-                      </tbody>
-                      <tfoot>
-                        <tr class="bg-gray-50">
-                          <td class="px-1.5 md:px-2 py-1.5 text-gray-600" colspan="5">Итого по налогам и сборам</td>
-                          <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-900">${money(c.detail.taxes.reduce((s, t) => s + t.total, 0))}</td>
-                          <td></td>
-                        </tr>
-                      </tfoot>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </td>
-          </tr>
-          <!-- Expand: документы -->
-          <tr class="expand-row expand-docs-row hidden bg-white">
-            <td colspan="7" class="px-2 py-2">
-              <div>
-                <div class="text-xs text-gray-500 mb-3">Документы дела · ${c.docs[0]} из ${c.docs[1]}</div>
-                ${(() => {
-                  // Собираем все документы дела и раскладываем по 3 группам
-                  const PROBLEM_KEYS = ["unreadable", "corrupted", "mismatch", "expired", "wrong_type"];
-                  const groups = { pending: [], errors: [], accepted: [] };
-                  for (let i = 0; i < c.docs[1]; i++) {
-                    const uploaded = i < c.docs[0];
-                    const name = DOC_NAMES[i % DOC_NAMES.length] + (i >= DOC_NAMES.length ? ` · доп. ${i - DOC_NAMES.length + 1}` : "");
-                    const stKey = pickDocStatus(idx, i, uploaded);
-                    const item = { i, name, stKey };
-                    if (stKey === "pending") groups.pending.push(item);
-                    else if (PROBLEM_KEYS.includes(stKey)) groups.errors.push(item);
-                    else groups.accepted.push(item);
-                  }
-
-                  // Рендер одной карточки документа
-                  const renderCard = ({ name, stKey }) => {
-                    const st = DOC_STATUSES[stKey];
-                    const isProblem = PROBLEM_KEYS.includes(stKey);
-                    const isPending = stKey === "pending";
-                    const isProcessing = stKey === "processing";
-                    const fileIcon = isProcessing
-                      ? `<svg class="w-4 h-4 shrink-0 ${st.icon} animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>`
-                      : `<svg class="w-4 h-4 shrink-0 ${st.icon}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5z"/><path d="M14 3v5h5"/></svg>`;
-                    const dotPulse = isProcessing ? " animate-pulse" : "";
-                    return `
-                      <li>
-                        <label class="doc-card group relative flex flex-col gap-1 rounded-lg bg-white border ${st.border} px-3 py-2 cursor-pointer hover:border-indigo-300" data-name="${name}" data-status="${stKey}">
-                          <div class="flex items-center justify-between gap-2 min-w-0">
-                            <div class="flex items-center gap-2 min-w-0">
-                              ${fileIcon}
-                              <span class="text-sm text-gray-900 truncate">${name}</span>
                             </div>
-                            <span class="inline-flex items-center gap-1 text-xs shrink-0 ${st.text}">
-                              <span class="w-1.5 h-1.5 rounded-full ${st.dot}${dotPulse}"></span>
-                              ${st.label}
+                            <div class="flex items-center justify-between gap-2 pl-6">
+                              <span class="text-xs text-gray-500 truncate">${st.hint}</span>
+                              <button type="button" class="text-xs ${isProblem ? "text-rose-600" : isPending ? "text-indigo-600" : "text-gray-500"} hover:underline shrink-0">${st.action}</button>
+                            </div>
+                            <span class="doc-dropzone pointer-events-none absolute inset-0 rounded-lg border-2 border-dashed border-indigo-400 bg-indigo-50/95 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 px-3">
+                              <svg class="w-4 h-4 text-indigo-600 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 15V3"/><path d="M7 8l5-5 5 5"/><rect x="3" y="15" width="18" height="6" rx="2"/>
+                              </svg>
+                              <span class="text-xs text-indigo-700 truncate">${isPending ? "Перетащите или выберите" : "Заменить файл"}</span>
                             </span>
-                          </div>
-                          <div class="flex items-center justify-between gap-2 pl-6">
-                            <span class="text-xs text-gray-500 truncate">${st.hint}</span>
-                            <button type="button" class="text-xs ${isProblem ? "text-rose-600" : isPending ? "text-indigo-600" : "text-gray-500"} hover:underline shrink-0">${st.action}</button>
-                          </div>
-                          <span class="doc-dropzone pointer-events-none absolute inset-0 rounded-lg border-2 border-dashed border-indigo-400 bg-indigo-50/95 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 px-3">
-                            <svg class="w-4 h-4 text-indigo-600 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                              <path d="M12 15V3"/><path d="M7 8l5-5 5 5"/><rect x="3" y="15" width="18" height="6" rx="2"/>
-                            </svg>
-                            <span class="text-xs text-indigo-700 truncate">${isPending ? "Перетащите или выберите" : "Заменить файл"}</span>
-                          </span>
-                          <input type="file" class="sr-only doc-input" />
-                        </label>
-                      </li>`;
-                  };
+                            <input type="file" class="sr-only doc-input" />
+                          </label>
+                        </li>`;
+                    };
 
-                  // Рендер секции группы (заголовок + сетка карточек)
-                  const renderGroup = (title, items, dotClass, textClass) => {
-                    if (!items.length) return "";
-                    return `
-                      <section class="mb-4 last:mb-0">
-                        <div class="flex items-center justify-between gap-2 mb-2">
-                          <h4 class="inline-flex items-center gap-2 text-xs ${textClass} tracking-wider uppercase">
-                            <span class="w-1.5 h-1.5 rounded-full ${dotClass}"></span>
-                            ${title}
-                          </h4>
-                          <span class="inline-flex items-center justify-center min-w-[1.5rem] h-5 px-1.5 text-xs font-medium text-gray-700 bg-gray-100 rounded-full">${items.length}</span>
-                        </div>
-                        <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
-                          ${items.map(renderCard).join("")}
-                        </ul>
-                      </section>`;
-                  };
+                    const renderGroup = (title, items, dotClass, textClass) => {
+                      if (!items.length) return "";
+                      return `
+                        <section class="mb-4 last:mb-0">
+                          <div class="flex items-center justify-between gap-2 mb-2">
+                            <h4 class="inline-flex items-center gap-2 text-xs ${textClass} tracking-wider uppercase">
+                              <span class="w-1.5 h-1.5 rounded-full ${dotClass}"></span>
+                              ${title}
+                            </h4>
+                            <span class="inline-flex items-center justify-center min-w-[1.5rem] h-5 px-1.5 text-xs font-medium text-gray-700 bg-gray-100 rounded-full">${items.length}</span>
+                          </div>
+                          <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
+                            ${items.map(renderCard).join("")}
+                          </ul>
+                        </section>`;
+                    };
 
-                  return [
-                    renderGroup("Ожидает загрузки", groups.pending, "bg-gray-400", "text-gray-500"),
-                    renderGroup("Ошибки в документах", groups.errors, "bg-rose-500", "text-rose-600"),
-                    renderGroup("Документ принят", groups.accepted, "bg-emerald-500", "text-emerald-700"),
-                  ].join("");
-                })()}
-              </div>
-            </td>
-          </tr>
+                    return [
+                      renderGroup("Ожидает загрузки", groups.pending, "bg-gray-400", "text-gray-500"),
+                      renderGroup("Ошибки в документах", groups.errors, "bg-rose-500", "text-rose-600"),
+                      renderGroup("Документ принят", groups.accepted, "bg-emerald-500", "text-emerald-700"),
+                    ].join("");
+                  })()}
+                </div>
+              </td>
+            </tr>
+          </tbody>
         `;
       }
 
       document.addEventListener("layout:ready", () => {
-        const tbody = document.getElementById("clients-tbody");
+        // Контейнер таблицы — теперь несколько <tbody> внутри одной <table>
+        const tableBody = document.getElementById("clients-table-body");
+        // ВНИМАНИЕ: это дочерний элемент <table>; будем заменять на DocumentFragment
+        // через innerHTML временного контейнера, поэтому вместо одного tbody теперь
+        // используем "контейнер" — родительскую <table>.
+        const table = tableBody.parentElement;
 
+        // Текущая активная стадия: prep | court
+        let currentStage = "prep";
+
+        // Рендер: вставляет N <tbody> по одному на клиента в <table>
         const render = (items) => {
-          tbody.innerHTML = items.map((c, i) => rowHtml(c, i)).join("");
+          // удаляем все существующие client-row (множественные tbody),
+          // оставляем только #clients-table-body как точку вставки
+          table.querySelectorAll("tbody.client-row").forEach((n) => n.remove());
+          // также очистим оригинальный пустой #clients-table-body
+          tableBody.innerHTML = "";
 
-          // Раскрытие имени
-          tbody.querySelectorAll(".expand-name").forEach((btn) => {
-            btn.addEventListener("click", () => {
-              const tr = btn.closest("tr");
-              const ch = btn.querySelector(".chevron");
-              const next = tr.nextElementSibling;
-              if (!next) return;
-              next.classList.toggle("hidden");
-              ch.classList.toggle("rotate-90");
+          // Вставляем все tbody-клиенты ПЕРЕД пустым tableBody (порядок не важен, оба внутри table)
+          const html = items.map((c, i) => rowHtml(c, i)).join("");
+          // парсим html и вставляем как DOM-узлы
+          const tmp = document.createElement("table");
+          tmp.innerHTML = html;
+          // tmp теперь <table><tbody>...</tbody><tbody>...</tbody></table>
+          [...tmp.querySelectorAll("tbody.client-row")].forEach((tb) => {
+            table.insertBefore(tb, tableBody);
+          });
+
+          // Применим текущую стадию (фильтр через display)
+          applyStageFilter();
+
+          // Бинд обработчиков
+          bindRowEvents();
+          updateStageCounts();
+        };
+
+        // Фильтрация tbody по выбранной стадии: скрываем те, что не подходят
+        function applyStageFilter() {
+          table.querySelectorAll("tbody.client-row").forEach((tb) => {
+            tb.classList.toggle("hidden", tb.dataset.stage !== currentStage);
+          });
+        }
+
+        // Обновляем счётчики на табах стадии (по всем tbody, не только видимым)
+        function updateStageCounts() {
+          const all = table.querySelectorAll("tbody.client-row");
+          let prep = 0, court = 0;
+          all.forEach((tb) => {
+            if (tb.dataset.stage === "prep") prep++;
+            else if (tb.dataset.stage === "court") court++;
+          });
+          const prepBtn = document.getElementById("tab-prep-btn");
+          const courtBtn = document.getElementById("tab-court-btn");
+          if (prepBtn) prepBtn.querySelector(".stage-count").textContent = prep;
+          if (courtBtn) courtBtn.querySelector(".stage-count").textContent = court;
+        }
+
+        // Аккордеон: открывает только один tbody одновременно
+        function openTbody(tb) {
+          // Закрыть остальные
+          table.querySelectorAll("tbody.client-row[data-open=\"true\"]").forEach((other) => {
+            if (other !== tb) closeTbody(other);
+          });
+          tb.dataset.open = "true";
+          // Раскрыть обе строки expand
+          tb.querySelectorAll(".expand-row").forEach((tr) => tr.classList.remove("hidden"));
+          // Indigo-рамка по периметру tbody
+          tb.classList.add("ring-2", "ring-indigo-600", "ring-inset", "shadow-md", "shadow-indigo-100");
+          // Подсветка main-row + поворот шеврона
+          const main = tb.querySelector(".main-row");
+          if (main) main.classList.add("bg-indigo-50");
+          const ch = tb.querySelector(".chevron");
+          if (ch) ch.classList.add("rotate-90");
+        }
+        function closeTbody(tb) {
+          tb.dataset.open = "false";
+          tb.querySelectorAll(".expand-row").forEach((tr) => tr.classList.add("hidden"));
+          tb.classList.remove("ring-2", "ring-indigo-600", "ring-inset", "shadow-md", "shadow-indigo-100");
+          const main = tb.querySelector(".main-row");
+          if (main) main.classList.remove("bg-indigo-50");
+          const ch = tb.querySelector(".chevron");
+          if (ch) ch.classList.remove("rotate-90");
+        }
+
+        function bindRowEvents() {
+          // Раскрытие/сворачивание по клику на ячейку ФИО (вся ячейка — кликабельна)
+          table.querySelectorAll("tbody.client-row .expand-name").forEach((td) => {
+            td.addEventListener("click", (e) => {
+              // не реагируем на клик по чекбоксу/ссылкам внутри
+              if (e.target.closest("a, button, input, label.toggle-slider")) return;
+              const tb = td.closest("tbody.client-row");
+              if (!tb) return;
+              if (tb.dataset.open === "true") closeTbody(tb);
+              else openTbody(tb);
             });
           });
 
-          // Переключение вкладок (Flowbite: Tabs with underline)
-          tbody.querySelectorAll(".client-tabs").forEach((wrap) => {
+          // Внутренние вкладки (Долги/Кредиторы/...)
+          table.querySelectorAll(".client-tabs").forEach((wrap) => {
             const tabs = wrap.querySelectorAll(".ct-tab");
             const panels = wrap.querySelectorAll(".ct-panel");
             tabs.forEach((tab) => {
-              tab.addEventListener("click", () => {
+              tab.addEventListener("click", (e) => {
+                e.stopPropagation();
                 const key = tab.dataset.ct;
                 tabs.forEach((t) => {
                   const active = t === tab;
-                  // сама вкладка
                   t.classList.toggle("border-indigo-600", active);
                   t.classList.toggle("text-indigo-600", active);
                   t.classList.toggle("border-transparent", !active);
                   t.classList.toggle("hover:text-gray-600", !active);
                   t.classList.toggle("hover:border-gray-300", !active);
-                  // иконка внутри
                   const svg = t.querySelector("svg");
                   if (svg) {
                     svg.classList.toggle("text-indigo-600", active);
@@ -700,46 +915,55 @@
                     svg.classList.toggle("group-hover:text-gray-500", !active);
                   }
                 });
-                panels.forEach((p) => {
-                  p.classList.toggle("hidden", p.dataset.ctPanel !== key);
-                });
+                panels.forEach((p) => p.classList.toggle("hidden", p.dataset.ctPanel !== key));
               });
             });
           });
 
-          // Раскрытие документов
-          tbody.querySelectorAll(".expand-docs").forEach((btn) => {
-            btn.addEventListener("click", () => {
-              const tr = btn.closest("tr");
-              const ch = btn.querySelector(".chevron-docs");
-              // expand-docs-row находится через 2 tr (после name-expand)
-              const row1 = tr.nextElementSibling;
-              const row2 = row1 ? row1.nextElementSibling : null;
-              if (row2 && row2.classList.contains("expand-docs-row")) {
-                row2.classList.toggle("hidden");
-                ch.classList.toggle("rotate-90");
-              }
-            });
-          });
-
-          // Выделение строки
-          tbody.querySelectorAll(".row-check").forEach((cb) => {
+          // Чекбокс строки — выделение
+          table.querySelectorAll(".row-check").forEach((cb) => {
             cb.addEventListener("change", (e) => {
-              const row = e.target.closest("tr");
-              row.classList.toggle("bg-gray-100", e.target.checked);
+              const main = e.target.closest("tr.main-row");
+              if (main) main.classList.toggle("bg-gray-100", e.target.checked);
+              e.stopPropagation();
             });
           });
+          // Чтобы клик по label чекбокса не триггерил раскрытие (всплытие)
+          table.querySelectorAll("label.toggle-slider").forEach((lbl) => {
+            lbl.addEventListener("click", (e) => e.stopPropagation());
+          });
 
-          // Регион
-          tbody.querySelectorAll(".region-btn").forEach((btn) =>
+          // Регион-поповер
+          table.querySelectorAll(".region-btn").forEach((btn) => {
             btn.addEventListener("click", (e) => {
               e.stopPropagation();
               openRegionPopover(btn);
-            })
-          );
+            });
+          });
+
+          // Кнопка "Есть неточности" → открыть Drawer с конфликтами клиента
+          table.querySelectorAll(".conflicts-btn").forEach((btn) => {
+            btn.addEventListener("click", (e) => {
+              e.stopPropagation();
+              const tb = btn.closest("tbody.client-row");
+              const idx = parseInt(tb.dataset.idx, 10);
+              const c = CLIENTS[idx];
+              openConflictsDrawer(c);
+            });
+          });
+
+          // Кнопка "Написать" (чат) — заглушка
+          table.querySelectorAll(".chat-btn").forEach((btn) => {
+            btn.addEventListener("click", (e) => {
+              e.stopPropagation();
+              // в превью просто визуально гасим бейдж непрочитанных
+              const badge = btn.querySelector("span.bg-rose-500");
+              if (badge) badge.remove();
+            });
+          });
 
           // Drag & drop на карточках документов
-          tbody.querySelectorAll(".doc-card").forEach((card) => {
+          table.querySelectorAll(".doc-card").forEach((card) => {
             const overlay = card.querySelector(".doc-dropzone");
             const input = card.querySelector(".doc-input");
             const show = () => overlay.classList.remove("opacity-0");
@@ -753,7 +977,6 @@
             card.addEventListener("drop", (e) => {
               const files = e.dataTransfer && e.dataTransfer.files;
               if (files && files.length) {
-                // в превью просто подсвечиваем именем файла
                 const label = card.querySelector(".truncate");
                 if (label) label.textContent = files[0].name;
               }
@@ -765,11 +988,40 @@
               }
             });
           });
-        };
+        }
 
         render(CLIENTS);
 
-        // Фильтрация
+        // ===== Вкладки стадии (Подготовка / Поданы в суд) =====
+        document.querySelectorAll(".stage-tab").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            currentStage = btn.dataset.stage;
+            document.querySelectorAll(".stage-tab").forEach((t) => {
+              const active = t === btn;
+              t.setAttribute("aria-selected", active ? "true" : "false");
+              t.classList.toggle("border-indigo-600", active);
+              t.classList.toggle("text-indigo-600", active);
+              t.classList.toggle("border-transparent", !active);
+              t.classList.toggle("text-gray-500", !active);
+              t.classList.toggle("hover:text-gray-700", !active);
+              t.classList.toggle("hover:border-gray-300", !active);
+              const svg = t.querySelector("svg");
+              if (svg) {
+                svg.classList.toggle("text-gray-400", !active);
+              }
+              const cnt = t.querySelector(".stage-count");
+              if (cnt) {
+                cnt.classList.toggle("bg-indigo-100", active);
+                cnt.classList.toggle("text-indigo-700", active);
+                cnt.classList.toggle("bg-gray-100", !active);
+                cnt.classList.toggle("text-gray-600", !active);
+              }
+            });
+            applyStageFilter();
+          });
+        });
+
+        // Фильтрация (поиск + статус)
         const search = document.getElementById("search-input");
         const filter = document.getElementById("status-filter");
         const applyFilters = () => {
@@ -789,9 +1041,9 @@
         search.addEventListener("input", applyFilters);
         filter.addEventListener("change", applyFilters);
 
-        // Check all
+        // Check all (только видимые tbody)
         document.getElementById("check-all").addEventListener("change", (e) => {
-          tbody.querySelectorAll(".row-check").forEach((cb) => {
+          table.querySelectorAll("tbody.client-row:not(.hidden) .row-check").forEach((cb) => {
             cb.checked = e.target.checked;
             cb.dispatchEvent(new Event("change"));
           });
@@ -808,7 +1060,7 @@
           });
         });
 
-        // Регион-поповер
+        // ===== Регион-поповер =====
         const pop = document.getElementById("region-popover");
         const regSearch = document.getElementById("region-search");
         const regList = document.getElementById("region-list");
@@ -833,7 +1085,6 @@
           activeRegionBtn = btn;
           const rect = btn.getBoundingClientRect();
           pop.style.top = `${rect.bottom + 6}px`;
-          // Ограничим чтобы не выпадал за экран
           const left = Math.min(rect.left, window.innerWidth - 280);
           pop.style.left = `${Math.max(8, left)}px`;
           pop.classList.remove("hidden");
@@ -849,7 +1100,6 @@
         document.addEventListener("click", (e) => {
           if (!pop.contains(e.target) && !e.target.closest(".region-btn")) closeRegionPopover();
         });
-        // Enter в поле поиска — применить первый найденный вариант
         regSearch.addEventListener("keydown", (e) => {
           if (e.key === "Enter") {
             e.preventDefault();
@@ -860,14 +1110,140 @@
           }
         });
         window.addEventListener("resize", closeRegionPopover);
-        // Закрываем поповер только при скролле СНАРУЖИ (сама страница), но НЕ при скролле внутри списка регионов
         window.addEventListener("scroll", (e) => {
           if (pop.classList.contains("hidden")) return;
           const t = e.target;
           if (t === pop || (t && t.nodeType === 1 && pop.contains(t))) return;
           closeRegionPopover();
         }, true);
+
+        // ===== Drawer "Неточности по делу" =====
+        const drawerEl = document.getElementById("conflicts-drawer");
+        const drawerListEl = document.getElementById("conflicts-list");
+        const drawerClientEl = document.getElementById("conflicts-client");
+        const drawerProgressLabel = document.getElementById("conflicts-progress-label");
+        const drawerProgressBar = document.getElementById("conflicts-progress-bar");
+        const drawerApplyBtn = document.getElementById("conflicts-apply");
+        // Создаём Flowbite Drawer instance один раз
+        // (Flowbite экспортирует Drawer через window.Drawer / data-* — используем data-drawer-target на кнопках,
+        //  но программно вызываем show/hide; для этого создадим инстанс через new Drawer)
+        let drawerInstance = null;
+        function ensureDrawer() {
+          if (drawerInstance) return drawerInstance;
+          if (typeof Drawer === "function") {
+            drawerInstance = new Drawer(drawerEl, {
+              placement: "right",
+              backdrop: true,
+              bodyScrolling: false,
+            });
+          }
+          return drawerInstance;
+        }
+
+        function openConflictsDrawer(client) {
+          const conflicts = getConflicts(client);
+          drawerClientEl.textContent = `${client.name} · ${client.caseNo}`;
+          // Состояние решений: indices -> selected option idx (или null)
+          const state = conflicts.map(() => null);
+          const renderProgress = () => {
+            const resolved = state.filter((s) => s !== null).length;
+            const total = state.length;
+            drawerProgressLabel.textContent = `Решено ${resolved} из ${total}`;
+            const pct = total === 0 ? 0 : Math.round((resolved / total) * 100);
+            drawerProgressBar.style.width = `${pct}%`;
+            drawerProgressBar.dataset.w = String(pct);
+            drawerApplyBtn.disabled = resolved !== total || total === 0;
+          };
+          // Рендер карточек конфликтов
+          drawerListEl.innerHTML = conflicts.map((conf, ci) => `
+            <div class="rounded-xl border border-gray-200 bg-white p-3">
+              <div class="flex items-start justify-between gap-2 mb-2">
+                <h3 class="text-sm font-medium text-gray-900">${conf.field}</h3>
+                <span class="conflict-status text-xs text-amber-700 inline-flex items-center gap-1">
+                  <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                  Не решено
+                </span>
+              </div>
+              <ul class="space-y-1.5" role="radiogroup" aria-label="${conf.field}">
+                ${conf.options.map((opt, oi) => `
+                  <li>
+                    <label class="flex items-start gap-2.5 p-2 rounded-lg border border-gray-200 hover:border-indigo-400 hover:bg-indigo-50/40 cursor-pointer">
+                      <input type="radio" name="conf-${ci}" value="${oi}" class="mt-1 h-4 w-4 text-indigo-600 border-gray-300 focus:ring-indigo-500" />
+                      <span class="min-w-0 flex-1">
+                        <span class="block text-xs text-gray-500">${opt.src}</span>
+                        <span class="block text-sm text-gray-900 break-words">${opt.value}</span>
+                      </span>
+                    </label>
+                  </li>
+                `).join("")}
+              </ul>
+            </div>
+          `).join("");
+
+          // Биндим радио
+          drawerListEl.querySelectorAll('input[type="radio"]').forEach((r) => {
+            r.addEventListener("change", (e) => {
+              const name = e.target.name; // conf-<ci>
+              const ci = parseInt(name.split("-")[1], 10);
+              state[ci] = parseInt(e.target.value, 10);
+              // Обновим статус карточки
+              const card = e.target.closest(".rounded-xl");
+              const stEl = card.querySelector(".conflict-status");
+              stEl.classList.remove("text-amber-700");
+              stEl.classList.add("text-emerald-700");
+              const dot = stEl.querySelector("span.w-1\\.5");
+              // упростим: пересоздадим содержимое
+              stEl.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>Решено`;
+              renderProgress();
+            });
+          });
+
+          renderProgress();
+
+          // Открыть drawer
+          const inst = ensureDrawer();
+          if (inst && typeof inst.show === "function") inst.show();
+          else {
+            // fallback: класс translate-x-full
+            drawerEl.classList.remove("translate-x-full");
+            drawerEl.classList.add("translate-x-0");
+          }
+        }
+
+        // Кнопка "Применить и закрыть"
+        drawerApplyBtn.addEventListener("click", () => {
+          const inst = ensureDrawer();
+          if (inst && typeof inst.hide === "function") inst.hide();
+          else {
+            drawerEl.classList.add("translate-x-full");
+            drawerEl.classList.remove("translate-x-0");
+          }
+        });
+
+        // Доп. обработчик на все кнопки закрытия (X / Отмена) — на случай задержек инициализации Flowbite
+        drawerEl.querySelectorAll('[data-drawer-hide="conflicts-drawer"]').forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const inst = ensureDrawer();
+            if (inst && typeof inst.hide === "function") inst.hide();
+            else {
+              drawerEl.classList.add("translate-x-full");
+              drawerEl.classList.remove("translate-x-0");
+            }
+          });
+        });
+        // Закрытие по Escape когда drawer открыт
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape" && !drawerEl.classList.contains("translate-x-full")) {
+            const inst = ensureDrawer();
+            if (inst && typeof inst.hide === "function") inst.hide();
+            else drawerEl.classList.add("translate-x-full");
+          }
+        });
+
+        // Делаем функцию доступной обработчикам внутри bindRowEvents
+        window.openConflictsDrawer = openConflictsDrawer;
       });
+
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.2/flowbite.min.js"></script>
   </body>
