@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ЮрКлик — Чаты с клиентами</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = { theme: { extend: { fontFamily: { sans: ["Inter", "ui-sans-serif", "system-ui"] } } } };
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.2/flowbite.min.css" />
+  </head>
+  <body class="bg-gray-50 font-sans text-gray-900 antialiased">
+    <div id="app-shell" data-page="chats" data-title="Чаты с клиентами"></div>
+
+    <div id="page-source">
+      <!-- ==== Двухпанельный мессенджер ==== -->
+      <div class="bg-white rounded-xl border border-gray-200 overflow-hidden h-[calc(100vh-12rem)] min-h-[480px] grid grid-cols-1 md:grid-cols-[320px_1fr] lg:grid-cols-[360px_1fr]">
+
+        <!-- ====== Левая колонка: список диалогов ====== -->
+        <aside id="chats-aside" class="border-r border-gray-200 flex flex-col min-h-0">
+          <!-- Поиск -->
+          <div class="p-3 border-b border-gray-200 shrink-0">
+            <div class="relative">
+              <svg class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+              <input id="chats-search" type="text" placeholder="Поиск по ФИО или № дела…" aria-label="Поиск диалогов"
+                     class="h-10 w-full pl-9 pr-3 rounded-lg border border-gray-200 bg-white text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400" />
+            </div>
+          </div>
+
+          <!-- Список -->
+          <ul id="dialogs-list" class="flex-1 overflow-y-auto" role="listbox" aria-label="Список диалогов"></ul>
+
+          <!-- Empty state поиска (скрыт по умолчанию) -->
+          <div id="dialogs-empty" class="hidden flex-1 items-center justify-center p-6 text-center">
+            <div class="text-sm text-gray-500">Ничего не найдено</div>
+          </div>
+        </aside>
+
+        <!-- ====== Правая колонка: лента сообщений ====== -->
+        <section class="flex flex-col min-h-0">
+          <!-- Header -->
+          <header id="chat-header" class="px-4 sm:px-5 py-3 border-b border-gray-200 flex items-center justify-between gap-3 shrink-0">
+            <div class="flex items-center gap-3 min-w-0">
+              <button id="chat-back" type="button" aria-label="Назад к списку"
+                      class="md:hidden inline-flex items-center justify-center w-9 h-9 rounded-lg text-gray-600 hover:bg-gray-100">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+              </button>
+              <span id="chat-avatar" class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-indigo-100 text-indigo-700 text-sm shrink-0">—</span>
+              <div class="min-w-0">
+                <div id="chat-name" class="text-sm text-gray-900 truncate">Выберите клиента</div>
+                <a id="chat-case" href="#" class="text-xs text-indigo-600 hover:underline truncate block">—</a>
+              </div>
+            </div>
+            <div class="flex items-center gap-2 shrink-0">
+              <button type="button" aria-label="Видеозвонок" class="hidden sm:inline-flex items-center justify-center w-9 h-9 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M23 7l-7 5 7 5z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+              </button>
+              <button type="button" aria-label="Информация" class="inline-flex items-center justify-center w-9 h-9 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+              </button>
+            </div>
+          </header>
+
+          <!-- Сообщения -->
+          <div id="chat-messages" class="flex-1 overflow-y-auto px-4 sm:px-5 py-4 space-y-4 bg-gray-50/50"></div>
+
+          <!-- Empty state (когда диалог не выбран) -->
+          <div id="chat-empty" class="hidden flex-1 flex-col items-center justify-center p-6 text-center bg-gray-50/50">
+            <span class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-indigo-50 text-indigo-600 mb-3">
+              <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </span>
+            <p class="text-sm text-gray-700">Выберите клиента из списка слева</p>
+            <p class="text-xs text-gray-500 mt-1">Здесь появится переписка по делу</p>
+          </div>
+
+          <!-- Composer -->
+          <form id="composer" class="border-t border-gray-200 p-3 flex items-end gap-2 shrink-0 bg-white">
+            <button type="button" aria-label="Прикрепить файл" id="composer-attach"
+                    class="inline-flex items-center justify-center w-10 h-10 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-gray-700 shrink-0">
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+            </button>
+            <input id="composer-file-input" type="file" class="sr-only" multiple aria-label="Файлы" />
+
+            <label for="composer-text" class="sr-only">Текст сообщения</label>
+            <textarea id="composer-text" name="message" rows="1" placeholder="Напишите сообщение…"
+                      class="flex-1 max-h-32 px-3 py-2 rounded-lg border border-gray-200 bg-white text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 resize-none"></textarea>
+
+            <button type="submit" aria-label="Отправить"
+                    class="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white shrink-0">
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            </button>
+          </form>
+        </section>
+      </div>
+    </div>
+
+    <script src="assets/layout.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.2/flowbite.min.js"></script>
+    <script>
+      // ===== Чаты с клиентами =====
+      // Демо-данные клиентов и переписок. В боевом проекте подменяются API-ответом.
+      // Структура: каждый клиент = { id, name, caseNo, messages: [{ from, text, ts, files?, read? }], unread }
+      // from: "lawyer" (наше) | "client" (входящее)
+
+      // Утилиты дат — для группировки по дням и подписи времени
+      function dayKey(d) { return d.toISOString().slice(0, 10); }
+      function isSameDay(a, b) { return dayKey(a) === dayKey(b); }
+      function pad2(n) { return n < 10 ? "0" + n : "" + n; }
+      function fmtTime(d) { return pad2(d.getHours()) + ":" + pad2(d.getMinutes()); }
+      function fmtDayLabel(d) {
+        const today = new Date();
+        const yest = new Date(today.getTime() - 86400000);
+        if (isSameDay(d, today)) return "Сегодня";
+        if (isSameDay(d, yest)) return "Вчера";
+        const months = ["января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря"];
+        const sameYear = d.getFullYear() === today.getFullYear();
+        return d.getDate() + " " + months[d.getMonth()] + (sameYear ? "" : " " + d.getFullYear());
+      }
+      function fmtDialogTime(d) {
+        const today = new Date();
+        if (isSameDay(d, today)) return fmtTime(d);
+        const yest = new Date(today.getTime() - 86400000);
+        if (isSameDay(d, yest)) return "Вчера";
+        return pad2(d.getDate()) + "." + pad2(d.getMonth() + 1);
+      }
+      function initials(fullName) {
+        const parts = fullName.trim().split(/\s+/);
+        return ((parts[0] || "")[0] || "") + ((parts[1] || "")[0] || "");
+      }
+
+      // Хелпер построения сообщений со смещением от "сейчас"
+      function ago(minutes) { return new Date(Date.now() - minutes * 60000); }
+
+      const CHATS = [
+        {
+          id: 0, name: "Семенов Артём Викторович", caseNo: "А40-12345/2026", unread: 3, online: true,
+          messages: [
+            { from: "client",  text: "Здравствуйте! Получил уведомление о начале процедуры — что от меня нужно дальше?", ts: ago(60 * 26) },
+            { from: "lawyer",  text: "Добрый день! Нужно загрузить выписки по счетам за последние 3 месяца, паспорт и СНИЛС. Это всё через личный кабинет.", ts: ago(60 * 25), read: true },
+            { from: "client",  text: "Понял. По выпискам — за все банки или только основные?", ts: ago(60 * 4) },
+            { from: "client",  text: "И ещё — нужно ли согласие супруги?", ts: ago(60 * 3 + 50) },
+            { from: "client",  text: "Сегодня смогу подъехать к нотариусу.", ts: ago(15), files: [{ name: "Паспорт.pdf", size: "1,4 МБ" }] },
+          ],
+        },
+        {
+          id: 1, name: "Белова Ирина Павловна", caseNo: "А56-09871/2026", unread: 0, online: false,
+          messages: [
+            { from: "lawyer", text: "Ирина, документы получены — в работе. Сообщу, как будет результат.", ts: ago(60 * 24 * 2 + 120), read: true },
+            { from: "client", text: "Спасибо!", ts: ago(60 * 24 * 2 + 110) },
+          ],
+        },
+        {
+          id: 2, name: "Григорьев Николай Сергеевич", caseNo: "А60-33721/2026", unread: 1, online: false,
+          messages: [
+            { from: "lawyer", text: "Николай, отправил вам черновик заявления — посмотрите, пожалуйста.", ts: ago(60 * 24 * 3 + 30), read: true, files: [{ name: "Заявление_черновик.docx", size: "240 КБ" }] },
+            { from: "client", text: "Посмотрел. Один вопрос: верно ли указан номер ИП?", ts: ago(60 * 12) },
+          ],
+        },
+        {
+          id: 3, name: "Лазарев Константин Олегович", caseNo: "А45-77654/2026", unread: 0, online: false,
+          messages: [
+            { from: "lawyer", text: "Константин, всё готово. Жду подтверждения суда.", ts: ago(60 * 24 * 5), read: true },
+          ],
+        },
+        {
+          id: 4, name: "Орлова Мария Андреевна", caseNo: "А65-10201/2026", unread: 2, online: true,
+          messages: [
+            { from: "client", text: "Здравствуйте, на какую дату назначено заседание?", ts: ago(60 * 24 + 5) },
+            { from: "client", text: "И нужно ли мне присутствовать лично?", ts: ago(60 * 24) },
+          ],
+        },
+        {
+          id: 5, name: "Титов Алексей Юрьевич", caseNo: "А32-54412/2026", unread: 0, online: false,
+          messages: [
+            { from: "lawyer", text: "Алексей, дело завершено. Поздравляем с финансовым стартом с чистого листа.", ts: ago(60 * 24 * 30), read: true },
+            { from: "client", text: "Огромное спасибо!", ts: ago(60 * 24 * 30 - 5) },
+          ],
+        },
+        {
+          id: 6, name: "Филатова Елена Дмитриевна", caseNo: "А43-88123/2026", unread: 5, online: true,
+          messages: [
+            { from: "client", text: "Добрый день", ts: ago(40) },
+            { from: "client", text: "Я получила письмо от ФССП", ts: ago(38) },
+            { from: "client", text: "Это связано с нашим делом?", ts: ago(37) },
+            { from: "client", text: "Прикрепляю фото", ts: ago(35), files: [{ name: "Письмо_ФССП.jpg", size: "780 КБ" }] },
+            { from: "client", text: "Жду вашего ответа", ts: ago(20) },
+          ],
+        },
+        {
+          id: 7, name: "Макаров Владислав Игоревич", caseNo: "А76-20034/2026", unread: 7, online: false,
+          messages: [
+            { from: "client", text: "Здравствуйте!", ts: ago(60 * 5 + 10) },
+            { from: "client", text: "Подскажите, пришёл звонок от коллекторов — что делать?", ts: ago(60 * 5 + 5) },
+          ],
+        },
+        {
+          id: 8, name: "Зайцева Наталья Олеговна", caseNo: "А55-61230/2026", unread: 0, online: false,
+          messages: [
+            { from: "lawyer", text: "Наталья, документы в порядке, отправляем в суд.", ts: ago(60 * 48), read: true },
+          ],
+        },
+        {
+          id: 9, name: "Рябов Дмитрий Александрович", caseNo: "А46-70122/2026", unread: 1, online: false,
+          messages: [
+            { from: "lawyer", text: "Дмитрий, нужны выписки ещё по одному счёту — Альфа-Банк.", ts: ago(60 * 6), read: true },
+            { from: "client", text: "Завтра пришлю.", ts: ago(60 * 4) },
+          ],
+        },
+      ];
+
+      let activeId = null;
+
+      // ====== Список диалогов (левая колонка) ======
+      function lastMsg(c) { return c.messages[c.messages.length - 1]; }
+
+      function dialogPreview(m) {
+        if (!m) return "Нет сообщений";
+        const prefix = m.from === "lawyer" ? "Вы: " : "";
+        if (m.text) return prefix + m.text;
+        if (m.files && m.files.length) return prefix + "📎 " + m.files[0].name;
+        return prefix;
+      }
+
+      function renderDialogs(filterText) {
+        const list = document.getElementById("dialogs-list");
+        const empty = document.getElementById("dialogs-empty");
+        list.innerHTML = "";
+        const q = (filterText || "").trim().toLowerCase();
+        // Сортировка: по дате последнего сообщения (свежие сверху)
+        const sorted = [...CHATS].sort((a, b) => lastMsg(b).ts - lastMsg(a).ts);
+        const filtered = sorted.filter((c) => {
+          if (!q) return true;
+          return c.name.toLowerCase().includes(q) || c.caseNo.toLowerCase().includes(q);
+        });
+
+        if (filtered.length === 0) {
+          list.classList.add("hidden");
+          empty.classList.remove("hidden");
+          empty.classList.add("flex");
+          return;
+        }
+        list.classList.remove("hidden");
+        empty.classList.add("hidden");
+        empty.classList.remove("flex");
+
+        filtered.forEach((c) => {
+          const m = lastMsg(c);
+          const isActive = c.id === activeId;
+          const li = document.createElement("li");
+          li.setAttribute("role", "option");
+          li.setAttribute("aria-selected", isActive ? "true" : "false");
+          li.dataset.id = c.id;
+          li.className =
+            "dialog-item flex items-start gap-3 px-3 py-3 cursor-pointer border-b border-gray-100 " +
+            (isActive ? "bg-indigo-50" : "hover:bg-gray-50");
+          li.innerHTML = `
+            <span class="relative inline-flex items-center justify-center w-10 h-10 rounded-full bg-indigo-100 text-indigo-700 text-sm shrink-0">
+              ${initials(c.name)}
+              ${c.online ? `<span class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-500 border-2 border-white" aria-label="В сети"></span>` : ""}
+            </span>
+            <div class="min-w-0 flex-1">
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-sm text-gray-900 truncate ${c.unread > 0 ? "font-medium" : ""}">${c.name}</span>
+                <span class="text-xs text-gray-400 shrink-0">${fmtDialogTime(m.ts)}</span>
+              </div>
+              <div class="text-xs text-indigo-600 truncate">${c.caseNo}</div>
+              <div class="flex items-center justify-between gap-2 mt-0.5">
+                <span class="text-xs text-gray-500 truncate ${c.unread > 0 ? "text-gray-700" : ""}">${dialogPreview(m)}</span>
+                ${c.unread > 0
+                  ? `<span class="inline-flex items-center justify-center min-w-[1.25rem] h-5 px-1.5 text-[10px] font-medium bg-indigo-600 text-white rounded-full shrink-0" aria-label="Непрочитанных: ${c.unread}">${c.unread}</span>`
+                  : ""}
+              </div>
+            </div>`;
+          li.addEventListener("click", () => selectDialog(c.id));
+          list.appendChild(li);
+        });
+      }
+
+      // ====== Лента сообщений (правая колонка) ======
+      function selectDialog(id) {
+        activeId = id;
+        const c = CHATS.find((x) => x.id === id);
+        if (!c) return;
+        // Сброс непрочитанных
+        c.unread = 0;
+        // Header
+        document.getElementById("chat-avatar").textContent = initials(c.name);
+        document.getElementById("chat-name").textContent = c.name;
+        const caseLink = document.getElementById("chat-case");
+        caseLink.textContent = c.caseNo;
+        caseLink.href = "clients.html?caseNo=" + encodeURIComponent(c.caseNo);
+        // На мобильном — скрываем сайдбар, показываем чат
+        if (window.matchMedia("(max-width: 767px)").matches) {
+          document.getElementById("chats-aside").classList.add("hidden");
+        }
+        // Сообщения с группировкой по дням
+        renderMessages(c);
+        // Скрыть empty-state
+        document.getElementById("chat-empty").classList.add("hidden");
+        document.getElementById("chat-empty").classList.remove("flex");
+        // Перерисовать список (сброс бейджа)
+        const search = document.getElementById("chats-search");
+        renderDialogs(search.value);
+        // Обновить URL без перезагрузки страницы
+        const url = new URL(window.location.href);
+        url.searchParams.set("clientId", String(id));
+        window.history.replaceState({}, "", url.toString());
+      }
+
+      function renderMessages(c) {
+        const root = document.getElementById("chat-messages");
+        root.innerHTML = "";
+        let lastDay = null;
+        c.messages.forEach((m) => {
+          const d = m.ts instanceof Date ? m.ts : new Date(m.ts);
+          const k = dayKey(d);
+          if (k !== lastDay) {
+            const div = document.createElement("div");
+            div.className = "flex items-center justify-center my-3";
+            div.innerHTML = `<span class="inline-flex items-center px-3 py-1 rounded-full bg-gray-200/70 text-gray-600 text-xs">${fmtDayLabel(d)}</span>`;
+            root.appendChild(div);
+            lastDay = k;
+          }
+          root.appendChild(messageNode(m, d));
+        });
+        // прокрутка вниз
+        root.scrollTop = root.scrollHeight;
+      }
+
+      function messageNode(m, d) {
+        const isOwn = m.from === "lawyer";
+        const wrap = document.createElement("div");
+        wrap.className = "flex " + (isOwn ? "justify-end" : "justify-start");
+
+        const bubbleClass = isOwn
+          ? "max-w-[80%] sm:max-w-md rounded-2xl rounded-br-sm bg-indigo-600 text-white px-3.5 py-2"
+          : "max-w-[80%] sm:max-w-md rounded-2xl rounded-bl-sm bg-white border border-gray-200 text-gray-900 px-3.5 py-2";
+
+        const filesHtml = (m.files || []).map((f) => `
+          <a href="#" class="mt-2 flex items-center gap-2 px-2.5 py-2 rounded-lg ${isOwn ? "bg-white/10 hover:bg-white/15 text-white" : "bg-gray-50 hover:bg-gray-100 text-gray-700"} text-xs">
+            <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            <span class="truncate">${f.name}</span>
+            <span class="${isOwn ? "text-white/70" : "text-gray-500"} shrink-0">${f.size || ""}</span>
+          </a>`).join("");
+
+        const readMark = isOwn
+          ? `<span class="inline-flex items-center gap-0.5 ml-1 ${m.read ? "text-white/90" : "text-white/60"}" aria-label="${m.read ? "Прочитано" : "Доставлено"}">
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              ${m.read ? `<svg class="w-3.5 h-3.5 -ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>` : ""}
+            </span>`
+          : "";
+
+        wrap.innerHTML = `
+          <div class="${bubbleClass}">
+            ${m.text ? `<div class="text-sm whitespace-pre-wrap break-words">${escapeHtml(m.text)}</div>` : ""}
+            ${filesHtml}
+            <div class="mt-1 flex items-center justify-end gap-1 text-[11px] ${isOwn ? "text-white/70" : "text-gray-400"}">
+              <span>${fmtTime(d)}</span>
+              ${readMark}
+            </div>
+          </div>`;
+        return wrap;
+      }
+
+      function escapeHtml(s) {
+        return s
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+      }
+
+      function showEmptyState() {
+        document.getElementById("chat-empty").classList.remove("hidden");
+        document.getElementById("chat-empty").classList.add("flex");
+        document.getElementById("chat-messages").innerHTML = "";
+      }
+
+      // ====== Composer: отправка ======
+      function sendMessage() {
+        if (activeId === null) return;
+        const ta = document.getElementById("composer-text");
+        const text = ta.value.trim();
+        if (!text) return;
+        const c = CHATS.find((x) => x.id === activeId);
+        c.messages.push({ from: "lawyer", text, ts: new Date(), read: false });
+        ta.value = "";
+        ta.style.height = "auto";
+        renderMessages(c);
+        renderDialogs(document.getElementById("chats-search").value);
+        // Имитация прочтения через 1.5с
+        setTimeout(() => {
+          const m = c.messages[c.messages.length - 1];
+          if (m) m.read = true;
+          if (c.id === activeId) renderMessages(c);
+        }, 1500);
+      }
+
+      // ====== Инициализация ======
+      document.addEventListener("layout:ready", () => {
+        // Auto-grow textarea
+        const ta = document.getElementById("composer-text");
+        ta.addEventListener("input", () => {
+          ta.style.height = "auto";
+          ta.style.height = Math.min(ta.scrollHeight, 128) + "px";
+        });
+        // Enter — отправка, Shift+Enter — перенос
+        ta.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" && !e.shiftKey) {
+            e.preventDefault();
+            sendMessage();
+          }
+        });
+        // Submit формы
+        document.getElementById("composer").addEventListener("submit", (e) => {
+          e.preventDefault();
+          sendMessage();
+        });
+        // Скрепка → input file
+        document.getElementById("composer-attach").addEventListener("click", () => {
+          document.getElementById("composer-file-input").click();
+        });
+        // Поиск
+        const search = document.getElementById("chats-search");
+        search.addEventListener("input", () => renderDialogs(search.value));
+        // Назад на мобильном
+        document.getElementById("chat-back").addEventListener("click", () => {
+          document.getElementById("chats-aside").classList.remove("hidden");
+        });
+
+        // Стартовый рендер
+        renderDialogs("");
+
+        // Чтение ?clientId=N → автоматически открыть нужный диалог
+        const params = new URLSearchParams(window.location.search);
+        const cid = parseInt(params.get("clientId"), 10);
+        if (!Number.isNaN(cid) && CHATS.some((c) => c.id === cid)) {
+          selectDialog(cid);
+        } else {
+          // На десктопе — авто-открыть первый, на мобильном — показать только список
+          if (window.matchMedia("(min-width: 768px)").matches) {
+            selectDialog(CHATS[0].id);
+          } else {
+            showEmptyState();
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

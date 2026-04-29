@@ -450,13 +450,13 @@
             </button>`
           : statusBadge(c.status, c.progress);
 
-        // Колонка "Чат": если есть непрочитанные сообщения от клиента — "Ответить" + бейдж; иначе "Написать"
+        // Колонка "Чат": ссылка на chats.html?clientId=idx; если есть непрочитанные сообщения — "Ответить" + бейдж; иначе "Написать"
         const chatCell = `
-          <button type="button" class="chat-btn relative inline-flex items-center gap-1.5 h-8 px-2.5 rounded-lg border border-gray-200 bg-white text-xs text-gray-700 hover:border-indigo-400 hover:text-indigo-700">
+          <a href="chats.html?clientId=${idx}" class="chat-btn relative inline-flex items-center gap-1.5 h-8 px-2.5 rounded-lg border border-gray-200 bg-white text-xs text-gray-700 hover:border-indigo-400 hover:text-indigo-700">
             <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
             <span>${unread > 0 ? "Ответить" : "Написать"}</span>
             ${unread > 0 ? `<span class="inline-flex items-center justify-center min-w-[1.25rem] h-4 px-1 text-[10px] font-medium bg-rose-500 text-white rounded-full" aria-label="Непрочитанных сообщений: ${unread}">${unread}</span>` : ""}
-          </button>`;
+          </a>`;
 
         // Строим документы для card-expand
         const docsHtml = (() => {
