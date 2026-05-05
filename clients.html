@@ -127,7 +127,7 @@
       <span id="bulk-toast-text">Готово</span>
     </div>
 
-    <!-- Drawer: Требуются действия по делу (Flowbite Drawer right) -->
+    <!-- Drawer: Требуется действие (Flowbite Drawer right) -->
     <div id="conflicts-drawer" tabindex="-1" aria-labelledby="conflicts-drawer-label"
          class="fixed top-0 right-0 z-50 h-screen w-full sm:w-[420px] p-0 overflow-hidden bg-white border-l border-gray-200 shadow-xl transition-transform translate-x-full"
          data-drawer-backdrop="true" data-drawer-placement="right">
@@ -135,7 +135,7 @@
         <header class="px-5 py-4 border-b border-gray-200">
           <div class="flex items-start justify-between gap-3">
             <div class="min-w-0">
-              <h2 id="conflicts-drawer-label" class="text-base font-semibold text-gray-900">Требуются действия по делу</h2>
+              <h2 id="conflicts-drawer-label" class="text-base font-semibold text-gray-900">Требуется действие</h2>
               <p id="conflicts-client" class="text-sm text-gray-500 truncate">—</p>
             </div>
             <button type="button" data-drawer-hide="conflicts-drawer" aria-label="Закрыть"
@@ -1164,7 +1164,7 @@
           });
         });
 
-        // ===== Drawer "Требуются действия по делу" =====
+        // ===== Drawer "Требуется действие" =====
         const drawerEl = document.getElementById("conflicts-drawer");
         const drawerListEl = document.getElementById("conflicts-list");
         const drawerClientEl = document.getElementById("conflicts-client");
