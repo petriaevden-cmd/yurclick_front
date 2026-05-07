@@ -712,13 +712,6 @@
 
                       <!-- Панель: Долги -->
                       <div class="ct-panel" data-ct-panel="debts">
-                        <div class="flex items-center justify-between px-4 py-3 border-b border-gray-100 bg-gray-50">
-                          <div class="flex items-center gap-2 text-sm text-gray-500">
-                            <svg class="w-3.5 h-3.5 text-indigo-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
-                            Долги · <span class="text-gray-700 font-medium">${c.detail.debts.length}</span>
-                          </div>
-                          <span class="text-sm text-gray-500">Итого: <span class="font-semibold text-gray-900 tabular-nums">${money(c.detail.debts.reduce((s,d)=>s+d.total,0))}</span></span>
-                        </div>
                         <div class="overflow-x-auto">
                           <table class="w-full min-w-[580px] text-sm text-left" id="tbl-debts-${idx}">
                             <thead>
@@ -751,13 +744,6 @@
 
                       <!-- Панель: Кредиторы -->
                       <div class="ct-panel hidden" data-ct-panel="creditors">
-                        <div class="flex items-center justify-between px-4 py-3 border-b border-gray-100 bg-gray-50">
-                          <div class="flex items-center gap-2 text-sm text-gray-500">
-                            <svg class="w-3.5 h-3.5 text-indigo-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V10l7-5 7 5v11"/><path d="M9 21v-6h6v6"/></svg>
-                            Кредиторы · <span class="text-gray-700 font-medium">${c.detail.creditors.length}</span>
-                          </div>
-                          <span class="text-sm text-gray-500">Сумма требований: <span class="font-semibold text-gray-900 tabular-nums">${money(c.detail.creditors.reduce((s,cr)=>s+cr.amount,0))}</span></span>
-                        </div>
                         <div class="overflow-x-auto">
                           <table class="w-full min-w-[580px] text-sm text-left" id="tbl-cred-${idx}">
                             <thead>
@@ -792,13 +778,6 @@
 
                       <!-- Панель: Имущество -->
                       <div class="ct-panel hidden" data-ct-panel="property">
-                        <div class="flex items-center justify-between px-4 py-3 border-b border-gray-100 bg-gray-50">
-                          <div class="flex items-center gap-2 text-sm text-gray-500">
-                            <svg class="w-3.5 h-3.5 text-indigo-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg>
-                            Имущество · <span class="text-gray-700 font-medium">${c.detail.property.length}</span>
-                          </div>
-                          <span class="text-sm text-gray-500">Оценка: <span class="font-semibold text-gray-900 tabular-nums">${money(c.detail.property.reduce((s,p)=>s+p.value,0))}</span></span>
-                        </div>
                         <div class="overflow-x-auto">
                           <table class="w-full min-w-[580px] text-sm text-left" id="tbl-prop-${idx}">
                             <thead>
@@ -833,13 +812,6 @@
 
                       <!-- Панель: Сделки -->
                       <div class="ct-panel hidden" data-ct-panel="deals">
-                        <div class="flex items-center justify-between px-4 py-3 border-b border-gray-100 bg-gray-50">
-                          <div class="flex items-center gap-2 text-sm text-gray-500">
-                            <svg class="w-3.5 h-3.5 text-indigo-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3l5 5-5 5"/><path d="M21 8H8"/><path d="M8 21l-5-5 5-5"/><path d="M3 16h13"/></svg>
-                            Сделки · <span class="text-gray-700 font-medium">${c.detail.deals.length}</span>
-                          </div>
-                          <span class="text-sm text-gray-500">За последние 3 года</span>
-                        </div>
                         <div class="overflow-x-auto">
                           <table class="w-full min-w-[580px] text-sm text-left" id="tbl-deals-${idx}">
                             <thead>
@@ -867,13 +839,6 @@
 
                       <!-- Панель: Налоги и сборы -->
                       <div class="ct-panel hidden" data-ct-panel="taxes">
-                        <div class="flex items-center justify-between px-4 py-3 border-b border-gray-100 bg-gray-50">
-                          <div class="flex items-center gap-2 text-sm text-gray-500">
-                            <svg class="w-3.5 h-3.5 text-indigo-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8"/><path d="M8 11h8"/><path d="M8 15h5"/></svg>
-                            Налоги и сборы · <span class="text-gray-700 font-medium">${c.detail.taxes.length}</span>
-                          </div>
-                          <span class="text-sm text-gray-500">Итого: <span class="font-semibold text-gray-900 tabular-nums">${money(c.detail.taxes.reduce((s,t)=>s+t.total,0))}</span></span>
-                        </div>
                         <div class="overflow-x-auto">
                           <table class="w-full min-w-[580px] text-sm text-left" id="tbl-taxes-${idx}">
                             <thead>
