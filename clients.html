@@ -61,7 +61,7 @@
             <button id="tab-required-btn" type="button" data-stage="required" role="tab" aria-selected="false" aria-controls="clients-table"
                     class="stage-tab inline-flex items-center gap-2 px-3 md:px-4 py-2.5 border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 rounded-t-lg whitespace-nowrap">
               <svg class="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-              <span>Требуются документы</span>
+              <span>На подачу</span>
               <span class="stage-count inline-flex items-center justify-center min-w-[1.5rem] h-5 px-1.5 text-xs font-medium bg-gray-100 text-gray-600 rounded-full">0</span>
             </button>
           </li>
@@ -100,9 +100,7 @@
         <div class="mb-4 bg-white rounded-xl border border-gray-200 px-4 md:px-5 py-4">
           <div class="flex flex-wrap items-start justify-between gap-4">
             <div class="min-w-0">
-              <h2 class="text-base md:text-lg font-semibold text-gray-900">Требуются документы</h2>
-              <p class="mt-1 text-sm text-gray-500">Загрузите документы по каждому клиенту. Действие фиксируется за вами.</p>
-              <div class="mt-3 flex items-center gap-2 text-sm">
+              <div class="flex items-center gap-2 text-sm">
                 <span id="req-progress-dot" class="w-2 h-2 rounded-full bg-gray-400"></span>
                 <span id="req-progress-text" class="text-gray-700">0 из 0 файлов загружено</span>
               </div>
@@ -557,6 +555,14 @@
             else groups.accepted.push(item);
           }
 
+          // Добавить необязательные документы в общий список
+          const optTypes = { trademark: "Товарный знак / патент", marriage: "Свидетельство о браке", prenup: "Брачный договор" };
+          (c.optionalAssets || []).forEach((key) => {
+            const name = optTypes[key] || key;
+            // Необязательные документы всегда начинают как pending (не загружены)
+            groups.pending.push({ i: -1, name, stKey: "pending" });
+          });
+
           const renderCard = ({ name, stKey }) => {
             const st = DOC_STATUSES[stKey];
             const isProblem = PROBLEM_KEYS.includes(stKey);
@@ -568,7 +574,7 @@
             const dotPulse = isProcessing ? " animate-pulse" : "";
             return `
               <li>
-                <label class="doc-card group relative flex flex-col gap-1 rounded-lg bg-white border ${st.border} px-3 py-2 cursor-pointer hover:border-indigo-300" data-name="${name}" data-status="${stKey}">
+                <label class="doc-card group relative flex flex-col gap-1 rounded-lg bg-white border ${st.border} px-3 py-2 cursor-pointer hover:border-indigo-300" data-name="${name}" data-status="${stKey}" tabindex="0">
                   <div class="flex items-center justify-between gap-2 min-w-0">
                     <div class="flex items-center gap-2 min-w-0">
                       ${fileIcon}
@@ -701,12 +707,6 @@
                               Налоги и сборы <span class="text-gray-400 font-normal">· ${c.detail.taxes.length}</span>
                             </button>
                           </li>
-                          <li class="mr-2">
-                            <button type="button" data-ct="assets" class="ct-tab group inline-flex items-center gap-1.5 md:gap-2 px-2 py-2.5 md:px-3 md:py-3 lg:p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 whitespace-nowrap">
-                              <svg class="w-4 h-4 text-gray-400 group-hover:text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-                              Необязательные активы <span class="text-gray-400 font-normal">· ${(c.optionalAssets || []).length}</span>
-                            </button>
-                          </li>
                         </ul>
                       </div>
 
@@ -718,26 +718,27 @@
                               <tr>
                                 <th class="px-1.5 md:px-2 py-1.5 text-left">Тип обязательства</th>
                                 <th class="px-1.5 md:px-2 py-1.5 text-left">Кредитор</th>
-                                <th class="px-1.5 md:px-2 py-1.5 text-right">Основной долг</th>
-                                <th class="px-1.5 md:px-2 py-1.5 text-right">Проценты</th>
-                                <th class="px-1.5 md:px-2 py-1.5 text-right">Пени</th>
                                 <th class="px-1.5 md:px-2 py-1.5 text-right">Итого</th>
+                                <th class="px-1.5 md:px-2 py-1.5 text-right">Из них основной долг</th>
                               </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-100">
                               ${c.detail.debts.map((d) => `
                                 <tr class="hover:bg-gray-50">
-                                  <td class="px-1.5 md:px-2 py-1.5 text-gray-900">${d.type.t}</td>
-                                  <td class="px-1.5 md:px-2 py-1.5 text-gray-900">${d.creditor}</td>
-                                  <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-900">${money(d.principal)}</td>
-                                  <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-700">${money(d.interest)}</td>
-                                  <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-700">${money(d.penalty)}</td>
-                                  <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-900">${money(d.total)}</td>
+                                  <td class="px-1.5 md:px-2 py-1.5">
+                                    <span class="inline-flex items-center gap-1.5 text-xs ${d.type.c}">
+                                      <span class="w-1.5 h-1.5 rounded-full ${d.type.d}"></span>
+                                      ${d.type.t}
+                                    </span>
+                                  </td>
+                                  <td class="px-1.5 md:px-2 py-1.5 text-gray-700 truncate max-w-[180px]">${d.creditor}</td>
+                                  <td class="px-1.5 md:px-2 py-1.5 text-right font-medium text-gray-900">${money(d.total)}</td>
+                                  <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-500">${money(d.principal)}</td>
                                 </tr>`).join("")}
                             </tbody>
                             <tfoot>
                               <tr class="bg-gray-50">
-                                <td class="px-1.5 md:px-2 py-1.5 text-gray-600" colspan="5">Итого по долгам</td>
+                                <td class="px-1.5 md:px-2 py-1.5 text-gray-600" colspan="3">Итого по долгам</td>
                                 <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-900">${money(c.detail.debts.reduce((s, d) => s + d.total, 0))}</td>
                               </tr>
                             </tfoot>
@@ -752,8 +753,6 @@
                             <thead class="bg-[#f3f4f6] text-gray-600">
                               <tr>
                                 <th class="px-1.5 md:px-2 py-1.5 text-left">Кредитор</th>
-                                <th class="px-1.5 md:px-2 py-1.5 text-left">Договор</th>
-                                <th class="px-1.5 md:px-2 py-1.5 text-left">Дата</th>
                                 <th class="px-1.5 md:px-2 py-1.5 text-right">Сумма требования</th>
                                 <th class="px-1.5 md:px-2 py-1.5 text-right">Просрочка, дн.</th>
                                 <th class="px-1.5 md:px-2 py-1.5 text-left">В реестре</th>
@@ -763,8 +762,6 @@
                               ${c.detail.creditors.map((cr) => `
                                 <tr class="hover:bg-gray-50">
                                   <td class="px-1.5 md:px-2 py-1.5 text-gray-900">${cr.bank}</td>
-                                  <td class="px-1.5 md:px-2 py-1.5 text-gray-700">${cr.contract}</td>
-                                  <td class="px-1.5 md:px-2 py-1.5 text-gray-700">${cr.date}</td>
                                   <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-900">${money(cr.amount)}</td>
                                   <td class="px-1.5 md:px-2 py-1.5 text-right ${cr.overdue > 180 ? "text-rose-700" : (cr.overdue > 60 ? "text-amber-700" : "text-gray-700")}">${cr.overdue}</td>
                                   <td class="px-1.5 md:px-2 py-1.5">
@@ -819,7 +816,6 @@
                             <thead class="bg-[#f3f4f6] text-gray-600">
                               <tr>
                                 <th class="px-1.5 md:px-2 py-1.5 text-left">Тип сделки</th>
-                                <th class="px-1.5 md:px-2 py-1.5 text-left">Контрагент</th>
                                 <th class="px-1.5 md:px-2 py-1.5 text-left">Дата</th>
                                 <th class="px-1.5 md:px-2 py-1.5 text-right">Сумма</th>
                                 <th class="px-1.5 md:px-2 py-1.5 text-left">Риск оспаривания</th>
@@ -832,7 +828,6 @@
                                 return `
                                 <tr class="hover:bg-gray-50">
                                   <td class="px-1.5 md:px-2 py-1.5 text-gray-900">${dl.type}</td>
-                                  <td class="px-1.5 md:px-2 py-1.5 text-gray-700">${dl.counterparty}</td>
                                   <td class="px-1.5 md:px-2 py-1.5 text-gray-700">${dl.date}</td>
                                   <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-900">${money(dl.amount)}</td>
                                   <td class="px-1.5 md:px-2 py-1.5">
@@ -841,7 +836,7 @@
                                     </span>
                                   </td>
                                 </tr>`;
-                              }).join("") : `<tr><td colspan="5" class="px-1.5 md:px-2 py-1.5 text-center text-gray-400">Сделок за 3 года не зафиксировано</td></tr>`}
+                              }).join("") : `<tr><td colspan="4" class="px-1.5 md:px-2 py-1.5 text-center text-gray-400">Сделок за 3 года не зафиксировано</td></tr>`}
                             </tbody>
                           </table>
                         </div>
@@ -854,10 +849,7 @@
                             <thead class="bg-[#f3f4f6] text-gray-600">
                               <tr>
                                 <th class="px-1.5 md:px-2 py-1.5 text-left">Вид налога / сбора</th>
-                                <th class="px-1.5 md:px-2 py-1.5 text-left">Орган</th>
                                 <th class="px-1.5 md:px-2 py-1.5 text-left">Период</th>
-                                <th class="px-1.5 md:px-2 py-1.5 text-right">Основная сумма</th>
-                                <th class="px-1.5 md:px-2 py-1.5 text-right">Пени</th>
                                 <th class="px-1.5 md:px-2 py-1.5 text-right">Итого</th>
                                 <th class="px-1.5 md:px-2 py-1.5 text-left">Статус</th>
                               </tr>
@@ -869,10 +861,7 @@
                                 return `
                                 <tr class="hover:bg-gray-50">
                                   <td class="px-1.5 md:px-2 py-1.5 text-gray-900">${t.type}</td>
-                                  <td class="px-1.5 md:px-2 py-1.5 text-gray-700">${t.authority}</td>
                                   <td class="px-1.5 md:px-2 py-1.5 text-gray-700">${t.period}</td>
-                                  <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-900">${money(t.base)}</td>
-                                  <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-700">${money(t.penalty)}</td>
                                   <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-900">${money(t.total)}</td>
                                   <td class="px-1.5 md:px-2 py-1.5">
                                     <span class="inline-flex items-center gap-1.5 text-xs ${stColor}">
@@ -884,33 +873,14 @@
                             </tbody>
                             <tfoot>
                               <tr class="bg-gray-50">
-                                <td class="px-1.5 md:px-2 py-1.5 text-gray-600" colspan="5">Итого по налогам и сборам</td>
+                                <td class="px-1.5 md:px-2 py-1.5 text-gray-600" colspan="3">Итого по налогам и сборам</td>
                                 <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-900">${money(c.detail.taxes.reduce((s, t) => s + t.total, 0))}</td>
-                                <td></td>
                               </tr>
                             </tfoot>
                           </table>
                         </div>
                       </div>
 
-                      <!-- Панель: Необязательные активы -->
-                      <div class="ct-panel hidden" data-ct-panel="assets">
-                        <div class="px-3 md:px-4 py-3">
-                          <p class="text-xs text-gray-500 mb-3">Отметьте активы, по которым потребуется загрузить документ при подаче в суд.</p>
-                          <ul class="space-y-2">
-                            ${OPTIONAL_DOC_TYPES.map((dt) => {
-                              const checked = (c.optionalAssets || []).includes(dt.key);
-                              return `
-                                <li>
-                                  <label class="flex items-center gap-3 px-3 py-2 rounded-lg border border-gray-200 hover:border-indigo-300 cursor-pointer">
-                                    <input type="checkbox" data-action="asset-toggle" data-client="${idx}" data-asset="${dt.key}" class="w-4 h-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-200" ${checked ? "checked" : ""} />
-                                    <span class="text-sm text-gray-900">${dt.label}</span>
-                                  </label>
-                                </li>`;
-                            }).join("")}
-                          </ul>
-                        </div>
-                      </div>
                     </div>
 
                     <!-- Документы дела -->
@@ -1149,6 +1119,26 @@
           table.querySelectorAll(".doc-card").forEach((card) => {
             const overlay = card.querySelector(".doc-dropzone");
             const input = card.querySelector(".doc-input");
+
+            // Клик по кнопке-действию (Загрузить / Заменить / Исправить / ...) открывает диалог
+            const actionBtn = card.querySelector("button");
+            if (actionBtn) {
+              actionBtn.addEventListener("click", (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                input.click();
+              });
+            }
+
+            // Клик по самой карточке (label) тоже должен открывать диалог,
+            // но только если статус не "processing" (там действие заблокировано)
+            card.addEventListener("click", (e) => {
+              if (e.target.closest("button")) return; // кнопка сама обработает
+              const stKey = card.dataset.status;
+              if (stKey === "processing") return;
+              input.click();
+            });
+
             const show = () => overlay.classList.remove("opacity-0");
             const hide = () => overlay.classList.add("opacity-0");
             ["dragenter", "dragover"].forEach((ev) =>
