@@ -1,0 +1,1158 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ЮрКлик — Оплата</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: { sans: ["Inter", "ui-sans-serif", "system-ui"] },
+            colors: { surface: "#fbf9fa" },
+          },
+        },
+      };
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.2/flowbite.min.css"
+    />
+  </head>
+  <body class="bg-gray-50 font-sans text-gray-900 antialiased">
+    <div id="app-shell" data-page="billing" data-title="Оплата"></div>
+
+    <div id="page-source">
+      <!-- ===== § 3. Блок прогресса рассрочки ===== -->
+      <section class="bg-white rounded-xl border border-gray-200 p-5 mb-5">
+        <!-- 3.1. Заголовок + итоговая сумма -->
+        <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-2 text-xs text-gray-500 tracking-wider uppercase">
+              <span class="inline-block w-1.5 h-1.5 rounded-full bg-indigo-500"></span>
+              Рассрочка по договору № Д-2024-0042
+            </div>
+            <div class="mt-4 text-4xl text-gray-900">48 000&nbsp;₽</div>
+            <div class="mt-1 text-sm text-gray-600">Общая сумма по договору</div>
+          </div>
+          <div class="sm:text-right">
+            <div class="text-xs text-gray-500 uppercase tracking-wider">Осталось оплатить</div>
+            <div class="mt-1 text-3xl text-gray-900">30 000&nbsp;₽</div>
+            <div class="text-xs text-gray-500 mt-0.5">5 платежей · до 01.10.2026</div>
+          </div>
+        </div>
+
+        <!-- 3.2. Прогресс-бар платежей -->
+        <div class="mt-5">
+          <div class="flex items-center justify-between text-xs text-gray-500 mb-1.5">
+            <span>Внесено: 3 из 8 платежей</span>
+            <span class="text-emerald-700">18 000&nbsp;₽ из 48 000&nbsp;₽</span>
+          </div>
+          <div class="h-2 rounded-full bg-gray-100 overflow-hidden">
+            <div class="h-full rounded-full bg-indigo-600 w-[37.5%]"></div>
+          </div>
+        </div>
+
+        <!-- 3.3. Шаги-индикаторы платежей + легенда -->
+        <div class="mt-4 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+          <div class="flex flex-wrap gap-2">
+            <!-- Оплачен 1 -->
+            <span
+              class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-emerald-100 text-emerald-700 text-xs border border-emerald-200"
+              title="Январь 2026 · 6 000 ₽"
+              >1</span
+            >
+            <!-- Оплачен 2 -->
+            <span
+              class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-emerald-100 text-emerald-700 text-xs border border-emerald-200"
+              title="Февраль 2026 · 6 000 ₽"
+              >2</span
+            >
+            <!-- Оплачен 3 -->
+            <span
+              class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-emerald-100 text-emerald-700 text-xs border border-emerald-200"
+              title="Март 2026 · 6 000 ₽"
+              >3</span
+            >
+            <!-- Текущий 4 -->
+            <span
+              class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-indigo-600 text-white text-xs ring-2 ring-indigo-300"
+              title="Апрель 2026 · 6 000 ₽ · Срок: 01.05.2026"
+              >4</span
+            >
+            <!-- Предстоящие 5..8 -->
+            <span
+              class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-white border border-gray-300 text-gray-400 text-xs"
+              title="Май 2026"
+              >5</span
+            >
+            <span
+              class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-white border border-gray-300 text-gray-400 text-xs"
+              title="Июнь 2026"
+              >6</span
+            >
+            <span
+              class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-white border border-gray-300 text-gray-400 text-xs"
+              title="Июль 2026"
+              >7</span
+            >
+            <span
+              class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-white border border-gray-300 text-gray-400 text-xs"
+              title="Август 2026"
+              >8</span
+            >
+          </div>
+          <!-- Легенда -->
+          <div class="flex flex-wrap gap-x-4 gap-y-1.5">
+            <span class="inline-flex items-center gap-1.5 text-xs text-gray-500">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+              Оплачен
+            </span>
+            <span class="inline-flex items-center gap-1.5 text-xs text-gray-500">
+              <span class="w-1.5 h-1.5 rounded-full bg-indigo-600"></span>
+              Текущий
+            </span>
+            <span class="inline-flex items-center gap-1.5 text-xs text-gray-500">
+              <span class="w-1.5 h-1.5 rounded-full bg-gray-300"></span>
+              Предстоит
+            </span>
+          </div>
+        </div>
+
+        <!-- 3.4. Футер карточки -->
+        <hr class="my-4 border-gray-200" />
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-sm">
+          <span class="inline-flex items-center gap-1.5 text-xs text-amber-700">
+            <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+            Следующий платёж — 01.06.2026
+          </span>
+          <button
+            type="button"
+            id="btn-open-payment"
+            data-invoice="ЮК-2026-005"
+            data-period="Май 2026"
+            data-amount="6 000"
+            class="w-full sm:w-auto inline-flex items-center justify-center gap-2 h-10 px-4 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm"
+          >
+            <svg
+              class="w-4 h-4"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect x="2" y="5" width="20" height="14" rx="2" />
+              <line x1="2" y1="10" x2="22" y2="10" />
+            </svg>
+            Оплатить следующий платёж
+          </button>
+        </div>
+      </section>
+
+      <!-- ===== § 4. Список счетов ===== -->
+      <section class="bg-white rounded-xl border border-gray-200 overflow-hidden">
+        <!-- 4.1. Вкладки -->
+        <div class="border-b border-gray-200">
+          <nav class="flex gap-6 text-sm px-5" aria-label="Вкладки счетов">
+            <button
+              type="button"
+              data-tab="unpaid"
+              class="tab-btn -mb-px border-b-2 border-indigo-600 text-indigo-700 py-3 inline-flex items-center"
+            >
+              К оплате
+              <span
+                class="ml-1.5 inline-flex items-center justify-center min-w-[1.25rem] h-5 px-1.5 text-[10px] bg-indigo-600 text-white rounded-full"
+                >5</span
+              >
+            </button>
+            <button
+              type="button"
+              data-tab="paid"
+              class="tab-btn -mb-px border-b-2 border-transparent text-gray-600 hover:text-gray-900 py-3"
+            >
+              Оплачены
+            </button>
+          </nav>
+        </div>
+
+        <!-- 4.2. Таблица «К оплате» -->
+        <div id="tab-panel-unpaid" class="overflow-x-auto">
+          <table class="min-w-full text-sm">
+            <thead class="bg-[#f3f4f6] text-gray-600">
+              <tr>
+                <th class="px-4 py-3 text-left font-medium">Счёт</th>
+                <th class="px-4 py-3 text-left font-medium">Период</th>
+                <th class="px-4 py-3 text-left font-medium">Сумма</th>
+                <th class="px-4 py-3 text-left font-medium">Срок оплаты</th>
+                <th class="px-4 py-3 text-left font-medium">Статус</th>
+                <th class="px-4 py-3 text-right font-medium">Действие</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+              <!-- Просроченный -->
+              <tr class="hover:bg-gray-50">
+                <td class="px-4 py-3 text-gray-900">№ ЮК-2026-004</td>
+                <td class="px-4 py-3 text-gray-700">Апрель 2026</td>
+                <td class="px-4 py-3 text-gray-900">6 000&nbsp;₽</td>
+                <td class="px-4 py-3 text-rose-700">01.05.2026</td>
+                <td class="px-4 py-3">
+                  <span class="inline-flex items-center gap-1.5 text-xs text-rose-700">
+                    <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
+                    Просрочен
+                  </span>
+                </td>
+                <td class="px-4 py-3 text-right">
+                  <button
+                    type="button"
+                    data-invoice="ЮК-2026-004"
+                    data-period="Апрель 2026"
+                    data-amount="6 000"
+                    class="btn-pay inline-flex items-center gap-1.5 h-8 px-3 rounded-lg bg-rose-600 hover:bg-rose-700 text-white text-xs"
+                  >
+                    Оплатить
+                  </button>
+                </td>
+              </tr>
+              <!-- Текущий (Ожидает) -->
+              <tr class="hover:bg-gray-50">
+                <td class="px-4 py-3 text-gray-900">№ ЮК-2026-005</td>
+                <td class="px-4 py-3 text-gray-700">Май 2026</td>
+                <td class="px-4 py-3 text-gray-900">6 000&nbsp;₽</td>
+                <td class="px-4 py-3 text-gray-700">01.06.2026</td>
+                <td class="px-4 py-3">
+                  <span class="inline-flex items-center gap-1.5 text-xs text-amber-700">
+                    <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                    Ожидает
+                  </span>
+                </td>
+                <td class="px-4 py-3 text-right">
+                  <button
+                    type="button"
+                    data-invoice="ЮК-2026-005"
+                    data-period="Май 2026"
+                    data-amount="6 000"
+                    class="btn-pay inline-flex items-center gap-1.5 h-8 px-3 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs"
+                  >
+                    Оплатить
+                  </button>
+                </td>
+              </tr>
+              <!-- Предстоящий ЮК-006 -->
+              <tr class="hover:bg-gray-50">
+                <td class="px-4 py-3 text-gray-900">№ ЮК-2026-006</td>
+                <td class="px-4 py-3 text-gray-700">Июнь 2026</td>
+                <td class="px-4 py-3 text-gray-900">6 000&nbsp;₽</td>
+                <td class="px-4 py-3 text-gray-700">01.07.2026</td>
+                <td class="px-4 py-3">
+                  <span class="inline-flex items-center gap-1.5 text-xs text-gray-600">
+                    <span class="w-1.5 h-1.5 rounded-full bg-gray-400"></span>
+                    Предстоит
+                  </span>
+                </td>
+                <td class="px-4 py-3 text-right">
+                  <button
+                    type="button"
+                    disabled
+                    class="inline-flex items-center gap-1.5 h-8 px-3 rounded-lg border border-gray-200 text-gray-400 text-xs cursor-not-allowed"
+                  >
+                    Ещё не выставлен
+                  </button>
+                </td>
+              </tr>
+              <!-- Предстоящий ЮК-007 -->
+              <tr class="hover:bg-gray-50">
+                <td class="px-4 py-3 text-gray-900">№ ЮК-2026-007</td>
+                <td class="px-4 py-3 text-gray-700">Июль 2026</td>
+                <td class="px-4 py-3 text-gray-900">6 000&nbsp;₽</td>
+                <td class="px-4 py-3 text-gray-700">01.08.2026</td>
+                <td class="px-4 py-3">
+                  <span class="inline-flex items-center gap-1.5 text-xs text-gray-600">
+                    <span class="w-1.5 h-1.5 rounded-full bg-gray-400"></span>
+                    Предстоит
+                  </span>
+                </td>
+                <td class="px-4 py-3 text-right">
+                  <button
+                    type="button"
+                    disabled
+                    class="inline-flex items-center gap-1.5 h-8 px-3 rounded-lg border border-gray-200 text-gray-400 text-xs cursor-not-allowed"
+                  >
+                    Ещё не выставлен
+                  </button>
+                </td>
+              </tr>
+              <!-- Предстоящий ЮК-008 -->
+              <tr class="hover:bg-gray-50">
+                <td class="px-4 py-3 text-gray-900">№ ЮК-2026-008</td>
+                <td class="px-4 py-3 text-gray-700">Август 2026</td>
+                <td class="px-4 py-3 text-gray-900">6 000&nbsp;₽</td>
+                <td class="px-4 py-3 text-gray-700">01.09.2026</td>
+                <td class="px-4 py-3">
+                  <span class="inline-flex items-center gap-1.5 text-xs text-gray-600">
+                    <span class="w-1.5 h-1.5 rounded-full bg-gray-400"></span>
+                    Предстоит
+                  </span>
+                </td>
+                <td class="px-4 py-3 text-right">
+                  <button
+                    type="button"
+                    disabled
+                    class="inline-flex items-center gap-1.5 h-8 px-3 rounded-lg border border-gray-200 text-gray-400 text-xs cursor-not-allowed"
+                  >
+                    Ещё не выставлен
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- 4.3. Таблица «Оплачены» -->
+        <div id="tab-panel-paid" class="hidden overflow-x-auto">
+          <table class="min-w-full text-sm">
+            <thead class="bg-[#f3f4f6] text-gray-600">
+              <tr>
+                <th class="px-4 py-3 text-left font-medium">Счёт</th>
+                <th class="px-4 py-3 text-left font-medium">Период</th>
+                <th class="px-4 py-3 text-left font-medium">Сумма</th>
+                <th class="px-4 py-3 text-left font-medium">Дата оплаты</th>
+                <th class="px-4 py-3 text-left font-medium">Способ</th>
+                <th class="px-4 py-3 text-right font-medium">Документы</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+              <!-- Платёж 1 (Картой) -->
+              <tr class="hover:bg-gray-50">
+                <td class="px-4 py-3 text-gray-900">№ ЮК-2026-001</td>
+                <td class="px-4 py-3 text-gray-700">Январь 2026</td>
+                <td class="px-4 py-3 text-gray-900">6 000&nbsp;₽</td>
+                <td class="px-4 py-3 text-gray-700">05.01.2026</td>
+                <td class="px-4 py-3">
+                  <span class="inline-flex items-center gap-1.5 text-xs text-gray-600">
+                    <svg
+                      class="w-4 h-4 text-gray-400 shrink-0"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <rect x="2" y="5" width="20" height="14" rx="2" />
+                      <line x1="2" y1="10" x2="22" y2="10" />
+                    </svg>
+                    Картой
+                  </span>
+                </td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center justify-end gap-1">
+                    <a
+                      href="#"
+                      title="Скачать счёт"
+                      aria-label="Скачать счёт"
+                      class="w-8 h-8 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-indigo-600 inline-flex items-center justify-center"
+                    >
+                      <svg
+                        class="w-4 h-4"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="7 10 12 15 17 10" />
+                        <line x1="12" y1="15" x2="12" y2="3" />
+                      </svg>
+                    </a>
+                    <a
+                      href="#"
+                      title="Скачать Акт выполненных работ"
+                      aria-label="Скачать Акт выполненных работ"
+                      class="w-8 h-8 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-indigo-600 inline-flex items-center justify-center"
+                    >
+                      <svg
+                        class="w-4 h-4"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                        <polyline points="14 2 14 8 20 8" />
+                        <polyline points="9 15 11 17 15 13" />
+                      </svg>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+              <!-- Платёж 2 (По реквизитам) -->
+              <tr class="hover:bg-gray-50">
+                <td class="px-4 py-3 text-gray-900">№ ЮК-2026-002</td>
+                <td class="px-4 py-3 text-gray-700">Февраль 2026</td>
+                <td class="px-4 py-3 text-gray-900">6 000&nbsp;₽</td>
+                <td class="px-4 py-3 text-gray-700">03.02.2026</td>
+                <td class="px-4 py-3">
+                  <span class="inline-flex items-center gap-1.5 text-xs text-gray-600">
+                    <svg
+                      class="w-4 h-4 text-gray-400 shrink-0"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M3 21h18" />
+                      <path d="M5 21V7l8-4v18" />
+                      <path d="M19 21V11l-6-4" />
+                      <line x1="9" y1="9" x2="9" y2="9.01" />
+                      <line x1="9" y1="12" x2="9" y2="12.01" />
+                      <line x1="9" y1="15" x2="9" y2="15.01" />
+                      <line x1="9" y1="18" x2="9" y2="18.01" />
+                    </svg>
+                    По реквизитам
+                  </span>
+                </td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center justify-end gap-1">
+                    <a
+                      href="#"
+                      title="Скачать счёт"
+                      aria-label="Скачать счёт"
+                      class="w-8 h-8 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-indigo-600 inline-flex items-center justify-center"
+                    >
+                      <svg
+                        class="w-4 h-4"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="7 10 12 15 17 10" />
+                        <line x1="12" y1="15" x2="12" y2="3" />
+                      </svg>
+                    </a>
+                    <a
+                      href="#"
+                      title="Скачать Акт выполненных работ"
+                      aria-label="Скачать Акт выполненных работ"
+                      class="w-8 h-8 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-indigo-600 inline-flex items-center justify-center"
+                    >
+                      <svg
+                        class="w-4 h-4"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                        <polyline points="14 2 14 8 20 8" />
+                        <polyline points="9 15 11 17 15 13" />
+                      </svg>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+              <!-- Платёж 3 (Картой, Акт ещё недоступен — серый) -->
+              <tr class="hover:bg-gray-50">
+                <td class="px-4 py-3 text-gray-900">№ ЮК-2026-003</td>
+                <td class="px-4 py-3 text-gray-700">Март 2026</td>
+                <td class="px-4 py-3 text-gray-900">6 000&nbsp;₽</td>
+                <td class="px-4 py-3 text-gray-700">02.03.2026</td>
+                <td class="px-4 py-3">
+                  <span class="inline-flex items-center gap-1.5 text-xs text-gray-600">
+                    <svg
+                      class="w-4 h-4 text-gray-400 shrink-0"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <rect x="2" y="5" width="20" height="14" rx="2" />
+                      <line x1="2" y1="10" x2="22" y2="10" />
+                    </svg>
+                    Картой
+                  </span>
+                </td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center justify-end gap-1">
+                    <a
+                      href="#"
+                      title="Скачать счёт"
+                      aria-label="Скачать счёт"
+                      class="w-8 h-8 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-indigo-600 inline-flex items-center justify-center"
+                    >
+                      <svg
+                        class="w-4 h-4"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="7 10 12 15 17 10" />
+                        <line x1="12" y1="15" x2="12" y2="3" />
+                      </svg>
+                    </a>
+                    <span
+                      title="Акт будет доступен по завершении периода"
+                      class="w-8 h-8 rounded-lg text-gray-300 inline-flex items-center justify-center cursor-not-allowed"
+                    >
+                      <svg
+                        class="w-4 h-4"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                        <polyline points="14 2 14 8 20 8" />
+                        <polyline points="9 15 11 17 15 13" />
+                      </svg>
+                    </span>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <!-- ===== § 5. Drawer выбора способа оплаты ===== -->
+    <div id="pay-overlay" class="hidden fixed inset-0 z-40 bg-gray-900/40"></div>
+    <aside
+      id="pay-drawer"
+      class="fixed top-0 right-0 z-50 h-full w-full max-w-full sm:max-w-md bg-white border-l border-gray-200 translate-x-full transition-transform duration-300 flex flex-col"
+      aria-label="Оплата счёта"
+    >
+      <!-- Header -->
+      <div class="flex items-center justify-between gap-3 p-5 border-b border-gray-200 shrink-0">
+        <div class="min-w-0">
+          <h2 class="text-base text-gray-900">Оплата счёта</h2>
+          <p class="text-sm text-gray-500 mt-0.5">
+            <span id="drawer-invoice">№ ЮК-2026-005</span> ·
+            <span id="drawer-period">Май 2026</span> ·
+            <span id="drawer-amount-inline" class="text-gray-900">6 000&nbsp;₽</span>
+          </p>
+        </div>
+        <button
+          id="pay-close"
+          type="button"
+          title="Закрыть"
+          aria-label="Закрыть"
+          class="w-9 h-9 rounded-lg text-gray-500 hover:bg-gray-100 inline-flex items-center justify-center shrink-0"
+        >
+          <svg
+            class="w-5 h-5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Body -->
+      <div class="flex-1 overflow-y-auto p-5 space-y-4">
+        <!-- Выбор способа оплаты -->
+        <fieldset>
+          <legend class="text-xs text-gray-500 uppercase tracking-wider mb-3">
+            Способ оплаты
+          </legend>
+          <div class="grid grid-cols-2 gap-3">
+            <!-- Картой -->
+            <label
+              class="flex flex-col gap-2 p-4 rounded-xl border border-gray-200 bg-white cursor-pointer has-[:checked]:border-indigo-400 has-[:checked]:bg-indigo-50/40"
+            >
+              <input
+                type="radio"
+                name="pay_method"
+                value="card"
+                class="sr-only peer"
+                checked
+              />
+              <span
+                class="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-gray-100 text-gray-500 peer-checked:bg-indigo-100 peer-checked:text-indigo-600"
+              >
+                <svg
+                  class="w-5 h-5"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect x="2" y="5" width="20" height="14" rx="2" />
+                  <line x1="2" y1="10" x2="22" y2="10" />
+                </svg>
+              </span>
+              <span class="text-sm text-gray-900">Картой</span>
+              <span class="text-xs text-gray-500">Visa, Mastercard, МИР — мгновенно</span>
+            </label>
+            <!-- По реквизитам -->
+            <label
+              class="flex flex-col gap-2 p-4 rounded-xl border border-gray-200 bg-white cursor-pointer has-[:checked]:border-indigo-400 has-[:checked]:bg-indigo-50/40"
+            >
+              <input
+                type="radio"
+                name="pay_method"
+                value="bank"
+                class="sr-only peer"
+              />
+              <span
+                class="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-gray-100 text-gray-500 peer-checked:bg-indigo-100 peer-checked:text-indigo-600"
+              >
+                <svg
+                  class="w-5 h-5"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M3 21h18" />
+                  <path d="M5 21V7l8-4v18" />
+                  <path d="M19 21V11l-6-4" />
+                  <line x1="9" y1="9" x2="9" y2="9.01" />
+                  <line x1="9" y1="12" x2="9" y2="12.01" />
+                  <line x1="9" y1="15" x2="9" y2="15.01" />
+                  <line x1="9" y1="18" x2="9" y2="18.01" />
+                </svg>
+              </span>
+              <span class="text-sm text-gray-900">По реквизитам</span>
+              <span class="text-xs text-gray-500">Банковский перевод — 1–3 дня</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- Блок: Картой -->
+        <div id="pay-block-card" class="space-y-3">
+          <p class="text-xs text-gray-500 uppercase tracking-wider">Детали платежа</p>
+          <div class="rounded-xl border border-indigo-200 bg-indigo-50/50 p-4 text-sm text-gray-700">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-gray-500">Счёт <span id="card-invoice">№ ЮК-2026-005</span></span>
+              <span class="text-gray-900" id="card-period">Май 2026</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-gray-500">К оплате</span>
+              <span class="text-lg text-gray-900"><span id="card-amount">6 000</span>&nbsp;₽</span>
+            </div>
+          </div>
+          <button
+            type="button"
+            id="btn-open-gateway"
+            class="w-full inline-flex items-center justify-center gap-2 h-12 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm"
+          >
+            <svg
+              class="w-4 h-4"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect x="3" y="11" width="18" height="11" rx="2" />
+              <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+            </svg>
+            Перейти к оплате
+          </button>
+          <p class="text-xs text-center text-gray-400">
+            Безопасная оплата через платёжный шлюз
+          </p>
+          <!-- Иконки платёжных систем (текстовые плейсхолдеры) -->
+          <div class="flex items-center justify-center gap-3 pt-1">
+            <span
+              class="inline-flex items-center justify-center h-6 px-2.5 rounded border border-gray-200 text-[10px] text-gray-500 tracking-wider"
+              aria-label="Visa"
+              >VISA</span
+            >
+            <span
+              class="inline-flex items-center justify-center h-6 px-2.5 rounded border border-gray-200 text-[10px] text-gray-500 tracking-wider"
+              aria-label="Mastercard"
+              >MC</span
+            >
+            <span
+              class="inline-flex items-center justify-center h-6 px-2.5 rounded border border-gray-200 text-[10px] text-gray-500 tracking-wider"
+              aria-label="МИР"
+              >МИР</span
+            >
+          </div>
+        </div>
+
+        <!-- Блок: По реквизитам -->
+        <div id="pay-block-bank" class="hidden space-y-3">
+          <p class="text-xs text-gray-500 uppercase tracking-wider">Реквизиты для оплаты</p>
+          <div class="rounded-xl border border-gray-200 bg-white divide-y divide-gray-100 text-sm">
+            <!-- Получатель -->
+            <div class="flex items-center justify-between px-4 py-3 gap-3">
+              <span class="text-gray-500 shrink-0">Получатель</span>
+              <span class="copy-value text-gray-900 text-right grow">ООО «ЮрКлик»</span>
+              <button
+                type="button"
+                title="Скопировать"
+                aria-label="Скопировать получателя"
+                class="copy-btn w-7 h-7 rounded-lg text-gray-400 hover:bg-gray-100 hover:text-indigo-600 inline-flex items-center justify-center shrink-0"
+              >
+                <svg
+                  class="w-4 h-4 copy-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect x="9" y="9" width="13" height="13" rx="2" />
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                </svg>
+              </button>
+            </div>
+            <!-- ИНН -->
+            <div class="flex items-center justify-between px-4 py-3 gap-3">
+              <span class="text-gray-500 shrink-0">ИНН</span>
+              <span class="copy-value text-gray-900 text-right grow">7701234567</span>
+              <button
+                type="button"
+                title="Скопировать"
+                aria-label="Скопировать ИНН"
+                class="copy-btn w-7 h-7 rounded-lg text-gray-400 hover:bg-gray-100 hover:text-indigo-600 inline-flex items-center justify-center shrink-0"
+              >
+                <svg
+                  class="w-4 h-4 copy-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect x="9" y="9" width="13" height="13" rx="2" />
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                </svg>
+              </button>
+            </div>
+            <!-- КПП -->
+            <div class="flex items-center justify-between px-4 py-3 gap-3">
+              <span class="text-gray-500 shrink-0">КПП</span>
+              <span class="copy-value text-gray-900 text-right grow">770101001</span>
+              <button
+                type="button"
+                title="Скопировать"
+                aria-label="Скопировать КПП"
+                class="copy-btn w-7 h-7 rounded-lg text-gray-400 hover:bg-gray-100 hover:text-indigo-600 inline-flex items-center justify-center shrink-0"
+              >
+                <svg
+                  class="w-4 h-4 copy-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect x="9" y="9" width="13" height="13" rx="2" />
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                </svg>
+              </button>
+            </div>
+            <!-- Р/с -->
+            <div class="flex items-center justify-between px-4 py-3 gap-3">
+              <span class="text-gray-500 shrink-0">Р/с</span>
+              <span class="copy-value text-gray-900 font-mono text-xs text-right grow">40702810000000012345</span>
+              <button
+                type="button"
+                title="Скопировать"
+                aria-label="Скопировать расчётный счёт"
+                class="copy-btn w-7 h-7 rounded-lg text-gray-400 hover:bg-gray-100 hover:text-indigo-600 inline-flex items-center justify-center shrink-0"
+              >
+                <svg
+                  class="w-4 h-4 copy-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect x="9" y="9" width="13" height="13" rx="2" />
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                </svg>
+              </button>
+            </div>
+            <!-- Банк -->
+            <div class="flex items-center justify-between px-4 py-3 gap-3">
+              <span class="text-gray-500 shrink-0">Банк</span>
+              <span class="copy-value text-gray-900 text-right grow">ПАО Сбербанк</span>
+              <button
+                type="button"
+                title="Скопировать"
+                aria-label="Скопировать банк"
+                class="copy-btn w-7 h-7 rounded-lg text-gray-400 hover:bg-gray-100 hover:text-indigo-600 inline-flex items-center justify-center shrink-0"
+              >
+                <svg
+                  class="w-4 h-4 copy-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect x="9" y="9" width="13" height="13" rx="2" />
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                </svg>
+              </button>
+            </div>
+            <!-- БИК -->
+            <div class="flex items-center justify-between px-4 py-3 gap-3">
+              <span class="text-gray-500 shrink-0">БИК</span>
+              <span class="copy-value text-gray-900 font-mono text-xs text-right grow">044525225</span>
+              <button
+                type="button"
+                title="Скопировать"
+                aria-label="Скопировать БИК"
+                class="copy-btn w-7 h-7 rounded-lg text-gray-400 hover:bg-gray-100 hover:text-indigo-600 inline-flex items-center justify-center shrink-0"
+              >
+                <svg
+                  class="w-4 h-4 copy-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect x="9" y="9" width="13" height="13" rx="2" />
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                </svg>
+              </button>
+            </div>
+            <!-- Назначение -->
+            <div class="flex items-start justify-between px-4 py-3 gap-3">
+              <span class="text-gray-500 shrink-0">Назначение</span>
+              <span class="copy-value text-gray-900 text-right text-xs leading-relaxed grow">
+                Оплата по счёту № ЮК-2026-005 за услуги по договору № Д-2024-0042. Без НДС.
+              </span>
+              <button
+                type="button"
+                title="Скопировать"
+                aria-label="Скопировать назначение"
+                class="copy-btn w-7 h-7 rounded-lg text-gray-400 hover:bg-gray-100 hover:text-indigo-600 inline-flex items-center justify-center shrink-0 mt-0.5"
+              >
+                <svg
+                  class="w-4 h-4 copy-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect x="9" y="9" width="13" height="13" rx="2" />
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                </svg>
+              </button>
+            </div>
+            <!-- Сумма -->
+            <div class="flex items-center justify-between px-4 py-3 gap-3 bg-gray-50 rounded-b-xl">
+              <span class="text-gray-700">Сумма платежа</span>
+              <span class="copy-value text-gray-900 text-base text-right grow">6 000,00&nbsp;₽</span>
+              <button
+                type="button"
+                title="Скопировать"
+                aria-label="Скопировать сумму"
+                class="copy-btn w-7 h-7 rounded-lg text-gray-400 hover:bg-gray-100 hover:text-indigo-600 inline-flex items-center justify-center shrink-0"
+              >
+                <svg
+                  class="w-4 h-4 copy-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect x="9" y="9" width="13" height="13" rx="2" />
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Скачать счёт PDF -->
+          <a
+            href="#"
+            download
+            class="w-full inline-flex items-center justify-center gap-2 h-10 rounded-lg border border-gray-200 bg-white text-sm text-gray-700 hover:bg-gray-50"
+          >
+            <svg
+              class="w-4 h-4"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+            Скачать счёт PDF
+          </a>
+
+          <!-- Предупреждение -->
+          <div
+            class="flex items-start gap-2 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-xs text-amber-800"
+            role="status"
+          >
+            <svg
+              class="w-4 h-4 shrink-0 mt-0.5"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="16" x2="12" y2="12" />
+              <line x1="12" y1="8" x2="12.01" y2="8" />
+            </svg>
+            <p>
+              Перевод зачисляется в течение 1–3 рабочих дней. После оплаты статус счёта обновится
+              автоматически.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="p-5 border-t border-gray-200 shrink-0">
+        <button
+          type="button"
+          id="pay-cancel"
+          class="w-full inline-flex items-center justify-center h-10 px-4 rounded-lg border border-gray-200 bg-white text-sm text-gray-700 hover:bg-gray-50"
+        >
+          Закрыть
+        </button>
+      </div>
+    </aside>
+
+    <!-- ===== § 7. Toast-контейнер ===== -->
+    <div
+      id="toast-root"
+      class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"
+      aria-live="polite"
+      aria-atomic="true"
+    ></div>
+
+    <script src="assets/client-layout.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.2/flowbite.min.js"></script>
+    <script>
+      document.addEventListener("layout:ready", () => {
+        // ===== § 4.1. Переключение вкладок =====
+        const tabs = document.querySelectorAll(".tab-btn");
+        const panels = {
+          unpaid: document.getElementById("tab-panel-unpaid"),
+          paid: document.getElementById("tab-panel-paid"),
+        };
+        const activeCls = ["border-indigo-600", "text-indigo-700"];
+        const inactiveCls = ["border-transparent", "text-gray-600", "hover:text-gray-900"];
+        tabs.forEach((tab) => {
+          tab.addEventListener("click", () => {
+            const key = tab.dataset.tab;
+            tabs.forEach((t) => {
+              t.classList.remove(...activeCls);
+              t.classList.add(...inactiveCls);
+            });
+            tab.classList.remove(...inactiveCls);
+            tab.classList.add(...activeCls);
+            Object.entries(panels).forEach(([k, el]) => {
+              el.classList.toggle("hidden", k !== key);
+            });
+          });
+        });
+
+        // ===== § 5. Drawer =====
+        const overlay = document.getElementById("pay-overlay");
+        const drawer = document.getElementById("pay-drawer");
+        const drawerInvoice = document.getElementById("drawer-invoice");
+        const drawerPeriod = document.getElementById("drawer-period");
+        const drawerAmountInline = document.getElementById("drawer-amount-inline");
+        const cardInvoice = document.getElementById("card-invoice");
+        const cardPeriod = document.getElementById("card-period");
+        const cardAmount = document.getElementById("card-amount");
+
+        const openPayDrawer = (data) => {
+          if (data) {
+            const inv = data.invoice ? `№ ${data.invoice}` : "№ ЮК-2026-005";
+            const per = data.period || "Май 2026";
+            const amt = data.amount || "6 000";
+            drawerInvoice.textContent = inv;
+            drawerPeriod.textContent = per;
+            drawerAmountInline.innerHTML = `${amt}\u00A0₽`;
+            cardInvoice.textContent = inv;
+            cardPeriod.textContent = per;
+            cardAmount.textContent = amt;
+          }
+          overlay.classList.remove("hidden");
+          requestAnimationFrame(() => drawer.classList.remove("translate-x-full"));
+        };
+        const closePayDrawer = () => {
+          drawer.classList.add("translate-x-full");
+          setTimeout(() => overlay.classList.add("hidden"), 300);
+        };
+
+        document.querySelectorAll(".btn-pay").forEach((btn) =>
+          btn.addEventListener("click", () =>
+            openPayDrawer({
+              invoice: btn.dataset.invoice,
+              period: btn.dataset.period,
+              amount: btn.dataset.amount,
+            })
+          )
+        );
+        const btnOpenPayment = document.getElementById("btn-open-payment");
+        btnOpenPayment?.addEventListener("click", () =>
+          openPayDrawer({
+            invoice: btnOpenPayment.dataset.invoice,
+            period: btnOpenPayment.dataset.period,
+            amount: btnOpenPayment.dataset.amount,
+          })
+        );
+        overlay.addEventListener("click", closePayDrawer);
+        document.getElementById("pay-close")?.addEventListener("click", closePayDrawer);
+        document.getElementById("pay-cancel")?.addEventListener("click", closePayDrawer);
+
+        // Esc — закрыть drawer
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape" && !drawer.classList.contains("translate-x-full")) {
+            closePayDrawer();
+          }
+        });
+
+        // ===== § 5.1. Переключение блоков карточка / реквизиты =====
+        const blockCard = document.getElementById("pay-block-card");
+        const blockBank = document.getElementById("pay-block-bank");
+        document.querySelectorAll('[name="pay_method"]').forEach((radio) => {
+          radio.addEventListener("change", () => {
+            blockCard.classList.toggle("hidden", radio.value !== "card");
+            blockBank.classList.toggle("hidden", radio.value !== "bank");
+          });
+        });
+
+        // ===== § 5.2. Копирование реквизитов =====
+        const COPY_PATH =
+          '<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>';
+        const CHECK_PATH = '<polyline points="20 6 9 17 4 12"/>';
+        document.querySelectorAll(".copy-btn").forEach((btn) => {
+          btn.addEventListener("click", async () => {
+            const row = btn.closest("div");
+            const valEl = row?.querySelector(".copy-value");
+            const text = (valEl?.textContent || "").trim().replace(/\s+/g, " ");
+            try {
+              await navigator.clipboard.writeText(text);
+            } catch (_) {
+              // fallback
+              const ta = document.createElement("textarea");
+              ta.value = text;
+              document.body.appendChild(ta);
+              ta.select();
+              try {
+                document.execCommand("copy");
+              } catch (_) {}
+              ta.remove();
+            }
+            const icon = btn.querySelector(".copy-icon");
+            if (!icon) return;
+            icon.innerHTML = CHECK_PATH;
+            btn.classList.add("text-emerald-600");
+            showToast("Скопировано в буфер обмена", "info");
+            setTimeout(() => {
+              icon.innerHTML = COPY_PATH;
+              btn.classList.remove("text-emerald-600");
+            }, 1500);
+          });
+        });
+
+        // ===== § 6. Платёжный шлюз (заглушка) =====
+        document.getElementById("btn-open-gateway")?.addEventListener("click", () => {
+          // Здесь должна быть реальная инициализация YooMoneyCheckoutWidget.
+          // Сейчас — имитация: показываем info-toast и редирект-параметр.
+          showToast("Открываем платёжный шлюз…", "info");
+        });
+
+        // ===== § 7. Toast =====
+        function showToast(message, type) {
+          const root = document.getElementById("toast-root");
+          if (!root) return;
+          const palette = {
+            success: { dot: "bg-emerald-500", text: "text-emerald-700" },
+            error: { dot: "bg-rose-500", text: "text-rose-700" },
+            info: { dot: "bg-indigo-500", text: "text-indigo-700" },
+          };
+          const p = palette[type] || palette.info;
+          const el = document.createElement("div");
+          el.className =
+            "pointer-events-auto bg-white border border-gray-200 rounded-xl shadow-lg px-4 py-3 text-sm text-gray-800 flex items-center gap-2 min-w-[16rem]";
+          el.setAttribute("role", "status");
+          el.innerHTML = `
+            <span class="w-1.5 h-1.5 rounded-full ${p.dot}"></span>
+            <span class="${p.text}">${message}</span>
+          `;
+          root.appendChild(el);
+          setTimeout(() => {
+            el.classList.add("opacity-0", "transition-opacity", "duration-300");
+            setTimeout(() => el.remove(), 320);
+          }, 3000);
+        }
+        // Делаем showToast глобально доступным внутри замыкания (для отладки)
+        window.__yurclickShowToast = showToast;
+
+        // §6 — обработка ?paid=1
+        const params = new URLSearchParams(location.search);
+        if (params.get("paid") === "1") {
+          showToast(
+            "Оплата прошла успешно. Счёт обновится в течение нескольких минут.",
+            "success"
+          );
+          history.replaceState({}, "", location.pathname);
+        }
+      });
+    </script>
+  </body>
+</html>
