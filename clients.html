@@ -712,34 +712,37 @@
 
                       <!-- Панель: Долги -->
                       <div class="ct-panel" data-ct-panel="debts">
-                        <div>
-                          <table class="min-w-full text-xs md:text-sm">
-                            <thead class="bg-[#f3f4f6] text-gray-600">
-                              <tr>
-                                <th class="px-1.5 md:px-2 py-1.5 text-left">Тип обязательства</th>
-                                <th class="px-1.5 md:px-2 py-1.5 text-left">Кредитор</th>
-                                <th class="px-1.5 md:px-2 py-1.5 text-right">Итого</th>
-                                <th class="px-1.5 md:px-2 py-1.5 text-right">Из них основной долг</th>
+                        <div class="flex items-center justify-between px-4 py-3 border-b border-gray-100 bg-gray-50">
+                          <div class="flex items-center gap-2 text-sm text-gray-500">
+                            <svg class="w-3.5 h-3.5 text-indigo-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+                            Долги · <span class="text-gray-700 font-medium">${c.detail.debts.length}</span>
+                          </div>
+                          <span class="text-sm text-gray-500">Итого: <span class="font-semibold text-gray-900 tabular-nums">${money(c.detail.debts.reduce((s,d)=>s+d.total,0))}</span></span>
+                        </div>
+                        <div class="overflow-x-auto">
+                          <table class="w-full min-w-[580px] text-sm text-left" id="tbl-debts-${idx}">
+                            <thead>
+                              <tr class="border-b border-gray-200 bg-gray-50 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                <th scope="col" class="px-4 py-2.5 text-left" data-sortable><span class="flex items-center gap-1.5">Тип обязательства<svg class="sort-arrow w-3 h-3 text-gray-300 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 9l4-4 4 4"/><path d="M16 15l-4 4-4-4"/></svg></span></th>
+                                <th scope="col" class="px-4 py-2.5 text-left" data-sortable><span class="flex items-center gap-1.5">Кредитор<svg class="sort-arrow w-3 h-3 text-gray-300 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 9l4-4 4 4"/><path d="M16 15l-4 4-4-4"/></svg></span></th>
+                                <th scope="col" class="px-4 py-2.5 text-right w-40" data-sortable><span class="flex items-center justify-end gap-1.5">Основной долг<svg class="sort-arrow w-3 h-3 text-gray-300 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 9l4-4 4 4"/><path d="M16 15l-4 4-4-4"/></svg></span></th>
+                                <th scope="col" class="px-4 py-2.5 text-right w-40" data-sortable><span class="flex items-center justify-end gap-1.5">Итого с %<svg class="sort-arrow w-3 h-3 text-gray-300 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 9l4-4 4 4"/><path d="M16 15l-4 4-4-4"/></svg></span></th>
                               </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-100">
                               ${c.detail.debts.map((d) => `
-                                <tr class="hover:bg-gray-50">
-                                  <td class="px-1.5 md:px-2 py-1.5">
-                                    <span class="inline-flex items-center gap-1.5 text-xs ${d.type.c}">
-                                      <span class="w-1.5 h-1.5 rounded-full ${d.type.d}"></span>
-                                      ${d.type.t}
-                                    </span>
-                                  </td>
-                                  <td class="px-1.5 md:px-2 py-1.5 text-gray-700 truncate max-w-[180px]">${d.creditor}</td>
-                                  <td class="px-1.5 md:px-2 py-1.5 text-right font-medium text-gray-900">${money(d.total)}</td>
-                                  <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-500">${money(d.principal)}</td>
+                                <tr class="hover:bg-indigo-50/40 transition-colors">
+                                  <td class="px-4 py-2.5 text-gray-900" data-val="${d.type.t}">${d.type.t}</td>
+                                  <td class="px-4 py-2.5 text-gray-600" data-val="${d.creditor}">${d.creditor}</td>
+                                  <td class="px-4 py-2.5 text-right tabular-nums text-gray-700" data-val="${d.principal}">${money(d.principal)}</td>
+                                  <td class="px-4 py-2.5 text-right tabular-nums font-medium text-gray-900" data-val="${d.total}">${money(d.total)}</td>
                                 </tr>`).join("")}
                             </tbody>
                             <tfoot>
-                              <tr class="bg-gray-50">
-                                <td class="px-1.5 md:px-2 py-1.5 text-gray-600" colspan="3">Итого по долгам</td>
-                                <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-900">${money(c.detail.debts.reduce((s, d) => s + d.total, 0))}</td>
+                              <tr class="border-t-2 border-gray-300 bg-gray-50">
+                                <td colspan="2" class="px-4 py-2.5 text-xs font-semibold text-gray-500 uppercase tracking-wider">Итого по долгам</td>
+                                <td class="px-4 py-2.5 text-right tabular-nums font-semibold text-gray-700">${money(c.detail.debts.reduce((s,d)=>s+d.principal,0))}</td>
+                                <td class="px-4 py-2.5 text-right tabular-nums font-bold text-gray-900">${money(c.detail.debts.reduce((s,d)=>s+d.total,0))}</td>
                               </tr>
                             </tfoot>
                           </table>
@@ -748,95 +751,115 @@
 
                       <!-- Панель: Кредиторы -->
                       <div class="ct-panel hidden" data-ct-panel="creditors">
-                        <div>
-                          <table class="min-w-full text-xs md:text-sm">
-                            <thead class="bg-[#f3f4f6] text-gray-600">
-                              <tr>
-                                <th class="px-1.5 md:px-2 py-1.5 text-left">Кредитор</th>
-                                <th class="px-1.5 md:px-2 py-1.5 text-right">Сумма требования</th>
-                                <th class="px-1.5 md:px-2 py-1.5 text-right">Просрочка, дн.</th>
-                                <th class="px-1.5 md:px-2 py-1.5 text-left">В реестре</th>
+                        <div class="flex items-center justify-between px-4 py-3 border-b border-gray-100 bg-gray-50">
+                          <div class="flex items-center gap-2 text-sm text-gray-500">
+                            <svg class="w-3.5 h-3.5 text-indigo-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V10l7-5 7 5v11"/><path d="M9 21v-6h6v6"/></svg>
+                            Кредиторы · <span class="text-gray-700 font-medium">${c.detail.creditors.length}</span>
+                          </div>
+                          <span class="text-sm text-gray-500">Сумма требований: <span class="font-semibold text-gray-900 tabular-nums">${money(c.detail.creditors.reduce((s,cr)=>s+cr.amount,0))}</span></span>
+                        </div>
+                        <div class="overflow-x-auto">
+                          <table class="w-full min-w-[580px] text-sm text-left" id="tbl-cred-${idx}">
+                            <thead>
+                              <tr class="border-b border-gray-200 bg-gray-50 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                <th scope="col" class="px-4 py-2.5 text-left" data-sortable><span class="flex items-center gap-1.5">Кредитор<svg class="sort-arrow w-3 h-3 text-gray-300 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 9l4-4 4 4"/><path d="M16 15l-4 4-4-4"/></svg></span></th>
+                                <th scope="col" class="px-4 py-2.5 text-right w-44" data-sortable><span class="flex items-center justify-end gap-1.5">Сумма требования<svg class="sort-arrow w-3 h-3 text-gray-300 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 9l4-4 4 4"/><path d="M16 15l-4 4-4-4"/></svg></span></th>
+                                <th scope="col" class="px-4 py-2.5 text-right w-36" data-sortable><span class="flex items-center justify-end gap-1.5">Просрочка, дн.<svg class="sort-arrow w-3 h-3 text-gray-300 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 9l4-4 4 4"/><path d="M16 15l-4 4-4-4"/></svg></span></th>
+                                <th scope="col" class="px-4 py-2.5 text-left w-32" data-sortable><span class="flex items-center gap-1.5">В реестре<svg class="sort-arrow w-3 h-3 text-gray-300 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 9l4-4 4 4"/><path d="M16 15l-4 4-4-4"/></svg></span></th>
                               </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-100">
                               ${c.detail.creditors.map((cr) => `
-                                <tr class="hover:bg-gray-50">
-                                  <td class="px-1.5 md:px-2 py-1.5 text-gray-900">${cr.bank}</td>
-                                  <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-900">${money(cr.amount)}</td>
-                                  <td class="px-1.5 md:px-2 py-1.5 text-right ${cr.overdue > 180 ? "text-rose-700" : (cr.overdue > 60 ? "text-amber-700" : "text-gray-700")}">${cr.overdue}</td>
-                                  <td class="px-1.5 md:px-2 py-1.5">
-                                    <span class="inline-flex items-center gap-1.5 text-xs ${cr.inRegistry ? "text-emerald-700" : "text-gray-600"}">
-                                      <span class="w-1.5 h-1.5 rounded-full ${cr.inRegistry ? "bg-emerald-500" : "bg-gray-400"}"></span>
-                                      ${cr.inRegistry ? "Включён" : "Не включён"}
-                                    </span>
+                                <tr class="hover:bg-indigo-50/40 transition-colors">
+                                  <td class="px-4 py-2.5 text-gray-900" data-val="${cr.bank}">${cr.bank}</td>
+                                  <td class="px-4 py-2.5 text-right tabular-nums font-medium text-gray-900" data-val="${cr.amount}">${money(cr.amount)}</td>
+                                  <td class="px-4 py-2.5 text-right tabular-nums" data-val="${cr.overdue}"><span class="${cr.overdue > 180 ? "text-red-700 font-medium" : cr.overdue > 60 ? "text-yellow-700" : "text-gray-600"}">${cr.overdue}</span></td>
+                                  <td class="px-4 py-2.5" data-val="${cr.inRegistry ? "1" : "0"}">
+                                    <span class="text-sm font-medium ${cr.inRegistry ? "text-green-700" : "text-gray-500"}">${cr.inRegistry ? "Включён" : "Не включён"}</span>
                                   </td>
                                 </tr>`).join("")}
                             </tbody>
+                            <tfoot>
+                              <tr class="border-t-2 border-gray-300 bg-gray-50">
+                                <td class="px-4 py-2.5 text-xs font-semibold text-gray-500 uppercase tracking-wider">Итого кредиторов: ${c.detail.creditors.length}</td>
+                                <td class="px-4 py-2.5 text-right tabular-nums font-bold text-gray-900">${money(c.detail.creditors.reduce((s,cr)=>s+cr.amount,0))}</td>
+                                <td colspan="2" class="px-4 py-2.5"></td>
+                              </tr>
+                            </tfoot>
                           </table>
                         </div>
                       </div>
 
                       <!-- Панель: Имущество -->
                       <div class="ct-panel hidden" data-ct-panel="property">
-                        <div>
-                          <table class="min-w-full text-xs md:text-sm">
-                            <thead class="bg-[#f3f4f6] text-gray-600">
-                              <tr>
-                                <th class="px-1.5 md:px-2 py-1.5 text-left">Объект</th>
-                                <th class="px-1.5 md:px-2 py-1.5 text-left">Дата регистрации</th>
-                                <th class="px-1.5 md:px-2 py-1.5 text-right">Оценочная стоимость</th>
-                                <th class="px-1.5 md:px-2 py-1.5 text-left">Статус</th>
+                        <div class="flex items-center justify-between px-4 py-3 border-b border-gray-100 bg-gray-50">
+                          <div class="flex items-center gap-2 text-sm text-gray-500">
+                            <svg class="w-3.5 h-3.5 text-indigo-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg>
+                            Имущество · <span class="text-gray-700 font-medium">${c.detail.property.length}</span>
+                          </div>
+                          <span class="text-sm text-gray-500">Оценка: <span class="font-semibold text-gray-900 tabular-nums">${money(c.detail.property.reduce((s,p)=>s+p.value,0))}</span></span>
+                        </div>
+                        <div class="overflow-x-auto">
+                          <table class="w-full min-w-[580px] text-sm text-left" id="tbl-prop-${idx}">
+                            <thead>
+                              <tr class="border-b border-gray-200 bg-gray-50 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                <th scope="col" class="px-4 py-2.5 text-left" data-sortable><span class="flex items-center gap-1.5">Объект<svg class="sort-arrow w-3 h-3 text-gray-300 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 9l4-4 4 4"/><path d="M16 15l-4 4-4-4"/></svg></span></th>
+                                <th scope="col" class="px-4 py-2.5 text-left w-36" data-sortable><span class="flex items-center gap-1.5">Дата регистрации<svg class="sort-arrow w-3 h-3 text-gray-300 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 9l4-4 4 4"/><path d="M16 15l-4 4-4-4"/></svg></span></th>
+                                <th scope="col" class="px-4 py-2.5 text-right w-44" data-sortable><span class="flex items-center justify-end gap-1.5">Оценочная стоимость<svg class="sort-arrow w-3 h-3 text-gray-300 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 9l4-4 4 4"/><path d="M16 15l-4 4-4-4"/></svg></span></th>
+                                <th scope="col" class="px-4 py-2.5 text-left w-44" data-sortable><span class="flex items-center gap-1.5">Статус<svg class="sort-arrow w-3 h-3 text-gray-300 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 9l4-4 4 4"/><path d="M16 15l-4 4-4-4"/></svg></span></th>
                               </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-100">
-                              ${c.detail.property.length ? c.detail.property.map((p) => {
-                                const statusColor = p.status === "Единственное жильё" ? "text-emerald-700" : (p.status === "В залоге" ? "text-amber-700" : "text-indigo-700");
-                                const statusDot = p.status === "Единственное жильё" ? "bg-emerald-500" : (p.status === "В залоге" ? "bg-amber-500" : "bg-indigo-500");
-                                return `
-                                <tr class="hover:bg-gray-50">
-                                  <td class="px-1.5 md:px-2 py-1.5 text-gray-900">${p.type}</td>
-                                  <td class="px-1.5 md:px-2 py-1.5 text-gray-700">${p.registered}</td>
-                                  <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-900">${money(p.value)}</td>
-                                  <td class="px-1.5 md:px-2 py-1.5">
-                                    <span class="inline-flex items-center gap-1.5 text-xs ${statusColor}">
-                                      <span class="w-1.5 h-1.5 rounded-full ${statusDot}"></span>${p.status}
-                                    </span>
+                              ${c.detail.property.length ? c.detail.property.map((p) => `
+                                <tr class="hover:bg-indigo-50/40 transition-colors">
+                                  <td class="px-4 py-2.5 text-gray-900" data-val="${p.type}">${p.type}</td>
+                                  <td class="px-4 py-2.5 text-gray-600" data-val="${p.registered}">${p.registered}</td>
+                                  <td class="px-4 py-2.5 text-right tabular-nums font-medium text-gray-900" data-val="${p.value}">${money(p.value)}</td>
+                                  <td class="px-4 py-2.5" data-val="${p.status}">
+                                    <span class="text-sm font-medium ${p.status === "Единственное жильё" ? "text-green-700" : p.status === "В залоге" ? "text-yellow-700" : "text-indigo-700"}">${p.status}</span>
                                   </td>
-                                </tr>`;
-                              }).join("") : `<tr><td colspan="4" class="px-1.5 md:px-2 py-1.5 text-center text-gray-400">Имущество не зарегистрировано</td></tr>`}
+                                </tr>`).join("") : `<tr><td colspan="4" class="px-4 py-4 text-center text-sm text-gray-400">Имущество не зарегистрировано</td></tr>`}
                             </tbody>
+                            <tfoot>
+                              <tr class="border-t-2 border-gray-300 bg-gray-50">
+                                <td colspan="2" class="px-4 py-2.5 text-xs font-semibold text-gray-500 uppercase tracking-wider">Итого оценка</td>
+                                <td class="px-4 py-2.5 text-right tabular-nums font-bold text-gray-900">${money(c.detail.property.reduce((s,p)=>s+p.value,0))}</td>
+                                <td class="px-4 py-2.5"></td>
+                              </tr>
+                            </tfoot>
                           </table>
                         </div>
                       </div>
 
                       <!-- Панель: Сделки -->
                       <div class="ct-panel hidden" data-ct-panel="deals">
-                        <div>
-                          <table class="min-w-full text-xs md:text-sm">
-                            <thead class="bg-[#f3f4f6] text-gray-600">
-                              <tr>
-                                <th class="px-1.5 md:px-2 py-1.5 text-left">Тип сделки</th>
-                                <th class="px-1.5 md:px-2 py-1.5 text-left">Дата</th>
-                                <th class="px-1.5 md:px-2 py-1.5 text-right">Сумма</th>
-                                <th class="px-1.5 md:px-2 py-1.5 text-left">Риск оспаривания</th>
+                        <div class="flex items-center justify-between px-4 py-3 border-b border-gray-100 bg-gray-50">
+                          <div class="flex items-center gap-2 text-sm text-gray-500">
+                            <svg class="w-3.5 h-3.5 text-indigo-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3l5 5-5 5"/><path d="M21 8H8"/><path d="M8 21l-5-5 5-5"/><path d="M3 16h13"/></svg>
+                            Сделки · <span class="text-gray-700 font-medium">${c.detail.deals.length}</span>
+                          </div>
+                          <span class="text-sm text-gray-500">За последние 3 года</span>
+                        </div>
+                        <div class="overflow-x-auto">
+                          <table class="w-full min-w-[580px] text-sm text-left" id="tbl-deals-${idx}">
+                            <thead>
+                              <tr class="border-b border-gray-200 bg-gray-50 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                <th scope="col" class="px-4 py-2.5 text-left" data-sortable><span class="flex items-center gap-1.5">Тип сделки<svg class="sort-arrow w-3 h-3 text-gray-300 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 9l4-4 4 4"/><path d="M16 15l-4 4-4-4"/></svg></span></th>
+                                <th scope="col" class="px-4 py-2.5 text-left w-32" data-sortable><span class="flex items-center gap-1.5">Дата<svg class="sort-arrow w-3 h-3 text-gray-300 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 9l4-4 4 4"/><path d="M16 15l-4 4-4-4"/></svg></span></th>
+                                <th scope="col" class="px-4 py-2.5 text-right w-44" data-sortable><span class="flex items-center justify-end gap-1.5">Сумма<svg class="sort-arrow w-3 h-3 text-gray-300 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 9l4-4 4 4"/><path d="M16 15l-4 4-4-4"/></svg></span></th>
+                                <th scope="col" class="px-4 py-2.5 text-left w-36" data-sortable><span class="flex items-center gap-1.5">Риск оспаривания<svg class="sort-arrow w-3 h-3 text-gray-300 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 9l4-4 4 4"/><path d="M16 15l-4 4-4-4"/></svg></span></th>
                               </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-100">
-                              ${c.detail.deals.length ? c.detail.deals.map((dl) => {
-                                const riskColor = dl.risk === "Высокий" ? "text-rose-700" : (dl.risk === "Средний" ? "text-amber-700" : "text-emerald-700");
-                                const riskDot = dl.risk === "Высокий" ? "bg-rose-500" : (dl.risk === "Средний" ? "bg-amber-500" : "bg-emerald-500");
-                                return `
-                                <tr class="hover:bg-gray-50">
-                                  <td class="px-1.5 md:px-2 py-1.5 text-gray-900">${dl.type}</td>
-                                  <td class="px-1.5 md:px-2 py-1.5 text-gray-700">${dl.date}</td>
-                                  <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-900">${money(dl.amount)}</td>
-                                  <td class="px-1.5 md:px-2 py-1.5">
-                                    <span class="inline-flex items-center gap-1.5 text-xs ${riskColor}">
-                                      <span class="w-1.5 h-1.5 rounded-full ${riskDot}"></span>${dl.risk}
-                                    </span>
+                              ${c.detail.deals.length ? c.detail.deals.map((dl) => `
+                                <tr class="hover:bg-indigo-50/40 transition-colors">
+                                  <td class="px-4 py-2.5 text-gray-900" data-val="${dl.type}">${dl.type}</td>
+                                  <td class="px-4 py-2.5 text-gray-600" data-val="${dl.date}">${dl.date}</td>
+                                  <td class="px-4 py-2.5 text-right tabular-nums font-medium text-gray-900" data-val="${dl.amount}">${money(dl.amount)}</td>
+                                  <td class="px-4 py-2.5" data-val="${dl.risk}">
+                                    <span class="text-sm font-medium ${dl.risk === "Высокий" ? "text-red-700" : dl.risk === "Средний" ? "text-yellow-700" : "text-green-700"}">${dl.risk}</span>
                                   </td>
-                                </tr>`;
-                              }).join("") : `<tr><td colspan="4" class="px-1.5 md:px-2 py-1.5 text-center text-gray-400">Сделок за 3 года не зафиксировано</td></tr>`}
+                                </tr>`).join("") : `<tr><td colspan="4" class="px-4 py-4 text-center text-sm text-gray-400">Сделок за 3 года не зафиксировано</td></tr>`}
                             </tbody>
                           </table>
                         </div>
@@ -844,37 +867,39 @@
 
                       <!-- Панель: Налоги и сборы -->
                       <div class="ct-panel hidden" data-ct-panel="taxes">
-                        <div>
-                          <table class="min-w-full text-xs md:text-sm">
-                            <thead class="bg-[#f3f4f6] text-gray-600">
-                              <tr>
-                                <th class="px-1.5 md:px-2 py-1.5 text-left">Вид налога / сбора</th>
-                                <th class="px-1.5 md:px-2 py-1.5 text-left">Период</th>
-                                <th class="px-1.5 md:px-2 py-1.5 text-right">Итого</th>
-                                <th class="px-1.5 md:px-2 py-1.5 text-left">Статус</th>
+                        <div class="flex items-center justify-between px-4 py-3 border-b border-gray-100 bg-gray-50">
+                          <div class="flex items-center gap-2 text-sm text-gray-500">
+                            <svg class="w-3.5 h-3.5 text-indigo-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8"/><path d="M8 11h8"/><path d="M8 15h5"/></svg>
+                            Налоги и сборы · <span class="text-gray-700 font-medium">${c.detail.taxes.length}</span>
+                          </div>
+                          <span class="text-sm text-gray-500">Итого: <span class="font-semibold text-gray-900 tabular-nums">${money(c.detail.taxes.reduce((s,t)=>s+t.total,0))}</span></span>
+                        </div>
+                        <div class="overflow-x-auto">
+                          <table class="w-full min-w-[580px] text-sm text-left" id="tbl-taxes-${idx}">
+                            <thead>
+                              <tr class="border-b border-gray-200 bg-gray-50 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                <th scope="col" class="px-4 py-2.5 text-left" data-sortable><span class="flex items-center gap-1.5">Вид налога / сбора<svg class="sort-arrow w-3 h-3 text-gray-300 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 9l4-4 4 4"/><path d="M16 15l-4 4-4-4"/></svg></span></th>
+                                <th scope="col" class="px-4 py-2.5 text-left w-28" data-sortable><span class="flex items-center gap-1.5">Период<svg class="sort-arrow w-3 h-3 text-gray-300 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 9l4-4 4 4"/><path d="M16 15l-4 4-4-4"/></svg></span></th>
+                                <th scope="col" class="px-4 py-2.5 text-right w-40" data-sortable><span class="flex items-center justify-end gap-1.5">Итого<svg class="sort-arrow w-3 h-3 text-gray-300 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 9l4-4 4 4"/><path d="M16 15l-4 4-4-4"/></svg></span></th>
+                                <th scope="col" class="px-4 py-2.5 text-left w-44" data-sortable><span class="flex items-center gap-1.5">Статус<svg class="sort-arrow w-3 h-3 text-gray-300 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 9l4-4 4 4"/><path d="M16 15l-4 4-4-4"/></svg></span></th>
                               </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-100">
-                              ${c.detail.taxes.map((t) => {
-                                const stColor = t.status === "К оплате" ? "text-rose-700" : (t.status === "В реестре требований" ? "text-indigo-700" : "text-amber-700");
-                                const stDot = t.status === "К оплате" ? "bg-rose-500" : (t.status === "В реестре требований" ? "bg-indigo-500" : "bg-amber-500");
-                                return `
-                                <tr class="hover:bg-gray-50">
-                                  <td class="px-1.5 md:px-2 py-1.5 text-gray-900">${t.type}</td>
-                                  <td class="px-1.5 md:px-2 py-1.5 text-gray-700">${t.period}</td>
-                                  <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-900">${money(t.total)}</td>
-                                  <td class="px-1.5 md:px-2 py-1.5">
-                                    <span class="inline-flex items-center gap-1.5 text-xs ${stColor}">
-                                      <span class="w-1.5 h-1.5 rounded-full ${stDot}"></span>${t.status}
-                                    </span>
+                              ${c.detail.taxes.map((t) => `
+                                <tr class="hover:bg-indigo-50/40 transition-colors">
+                                  <td class="px-4 py-2.5 text-gray-900" data-val="${t.type}">${t.type}</td>
+                                  <td class="px-4 py-2.5 text-gray-600" data-val="${t.period}">${t.period}</td>
+                                  <td class="px-4 py-2.5 text-right tabular-nums font-medium text-gray-900" data-val="${t.total}">${money(t.total)}</td>
+                                  <td class="px-4 py-2.5" data-val="${t.status}">
+                                    <span class="text-sm font-medium ${t.status === "К оплате" ? "text-red-700" : t.status === "В реестре требований" ? "text-indigo-700" : "text-yellow-700"}">${t.status}</span>
                                   </td>
-                                </tr>`;
-                              }).join("")}
+                                </tr>`).join("")}
                             </tbody>
                             <tfoot>
-                              <tr class="bg-gray-50">
-                                <td class="px-1.5 md:px-2 py-1.5 text-gray-600" colspan="3">Итого по налогам и сборам</td>
-                                <td class="px-1.5 md:px-2 py-1.5 text-right text-gray-900">${money(c.detail.taxes.reduce((s, t) => s + t.total, 0))}</td>
+                              <tr class="border-t-2 border-gray-300 bg-gray-50">
+                                <td colspan="2" class="px-4 py-2.5 text-xs font-semibold text-gray-500 uppercase tracking-wider">Итого по налогам и сборам</td>
+                                <td class="px-4 py-2.5 text-right tabular-nums font-bold text-gray-900">${money(c.detail.taxes.reduce((s,t)=>s+t.total,0))}</td>
+                                <td class="px-4 py-2.5"></td>
                               </tr>
                             </tfoot>
                           </table>
@@ -973,7 +998,13 @@
             frame.classList.remove("border-transparent");
             frame.classList.add("border-indigo-600", "shadow-sm");
           }
-          if (expand) expand.classList.remove("hidden");
+          if (expand) {
+            expand.classList.remove("hidden");
+            // Инициализируем сортировку для всех таблиц в карточке
+            ['debts','cred','prop','deals','taxes'].forEach(n =>
+              initSortableTable('tbl-' + n + '-' + tb.dataset.idx)
+            );
+          }
           const ch = tb.querySelector(".chevron");
           if (ch) ch.classList.add("rotate-90");
         }
@@ -989,6 +1020,44 @@
           if (expand) expand.classList.add("hidden");
           const ch = tb.querySelector(".chevron");
           if (ch) ch.classList.remove("rotate-90");
+        }
+
+        // ── Инициализация сортировки во всех таблицах карточки ──
+        function initSortableTable(tableId) {
+          const table = document.getElementById(tableId);
+          if (!table) return;
+          let sortCol = -1, sortAsc = true;
+          table.querySelectorAll('thead th[data-sortable]').forEach((th, idx) => {
+            th.style.cursor = 'pointer';
+            th.addEventListener('click', () => {
+              sortAsc = sortCol === idx ? !sortAsc : (idx >= 2 ? false : true);
+              sortCol = idx;
+              const tbody = table.querySelector('tbody');
+              const rows = Array.from(tbody.querySelectorAll('tr'));
+              rows.sort((a, b) => {
+                const aV = a.querySelectorAll('td')[idx]?.dataset.val ?? '';
+                const bV = b.querySelectorAll('td')[idx]?.dataset.val ?? '';
+                const aN = parseFloat(aV), bN = parseFloat(bV);
+                const isNum = !isNaN(aN) && !isNaN(bN);
+                const cmp = isNum ? aN - bN : aV.localeCompare(bV, 'ru');
+                return sortAsc ? cmp : -cmp;
+              });
+              rows.forEach(r => tbody.appendChild(r));
+              table.querySelectorAll('thead th[data-sortable] .sort-arrow').forEach((ic, i) => {
+                if (i === idx) {
+                  ic.innerHTML = sortAsc
+                    ? '<path d="M8 15l4-4 4 4"/><path d="M12 19V5"/>'
+                    : '<path d="M8 9l4 4 4-4"/><path d="M12 5v14"/>';
+                  ic.classList.add('text-indigo-500');
+                  ic.classList.remove('text-gray-300');
+                } else {
+                  ic.innerHTML = '<path d="M8 9l4-4 4 4"/><path d="M16 15l-4 4-4-4"/>';
+                  ic.classList.remove('text-indigo-500');
+                  ic.classList.add('text-gray-300');
+                }
+              });
+            });
+          });
         }
 
         function bindRowEvents() {
