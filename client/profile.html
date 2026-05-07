@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ЮрКлик — Профиль и настройки</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: { sans: ["Inter", "ui-sans-serif", "system-ui"] },
+          },
+        },
+      };
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.2/flowbite.min.css"
+    />
+  </head>
+  <body class="bg-gray-50 font-sans text-gray-900 antialiased">
+    <div id="app-shell" data-page="profile" data-title="Профиль и настройки"></div>
+
+    <div id="page-source">
+      <!-- ===== 8.1. Вкладки (Flowbite Tabs underline) ===== -->
+      <div class="mb-4 border-b border-gray-200">
+        <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="profile-tabs"
+            data-tabs-toggle="#profile-tab-content" role="tablist">
+          <li class="me-1" role="presentation">
+            <button id="tab-personal-btn" type="button"
+                    data-tabs-target="#panel-personal" role="tab"
+                    aria-controls="panel-personal" aria-selected="true"
+                    class="inline-flex items-center gap-2 px-4 py-2.5 border-b-2 border-indigo-600 text-indigo-600 rounded-t-lg">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+              Мои данные
+            </button>
+          </li>
+          <li class="me-1" role="presentation">
+            <button id="tab-security-btn" type="button"
+                    data-tabs-target="#panel-security" role="tab"
+                    aria-controls="panel-security" aria-selected="false"
+                    class="inline-flex items-center gap-2 px-4 py-2.5 border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 rounded-t-lg">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+              Безопасность
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      <div id="profile-tab-content">
+
+        <!-- ===== 8.2. Вкладка «Мои данные» ===== -->
+        <div id="panel-personal" role="tabpanel" aria-labelledby="tab-personal-btn">
+          <section class="bg-white rounded-xl border border-gray-200 p-5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+              <div>
+                <label for="profile-fio"
+                       class="block text-xs text-gray-500 uppercase tracking-wider mb-1.5">ФИО</label>
+                <input id="profile-fio" type="text" value="Иванов Иван Иванович" readonly
+                       class="h-10 w-full px-3 rounded-lg border border-gray-200 bg-gray-50 text-gray-700 text-sm" />
+              </div>
+
+              <div>
+                <label for="profile-case"
+                       class="block text-xs text-gray-500 uppercase tracking-wider mb-1.5">Номер дела</label>
+                <input id="profile-case" type="text" value="А40-12345/2026" readonly
+                       class="h-10 w-full px-3 rounded-lg border border-gray-200 bg-gray-50 text-gray-700 text-sm" />
+              </div>
+
+              <div>
+                <label for="profile-passport"
+                       class="block text-xs text-gray-500 uppercase tracking-wider mb-1.5">Паспорт</label>
+                <input id="profile-passport" type="text" value="45 18 №№№№№№" readonly
+                       class="h-10 w-full px-3 rounded-lg border border-gray-200 bg-gray-50 text-gray-700 text-sm" />
+              </div>
+
+              <div>
+                <label for="profile-snils"
+                       class="block text-xs text-gray-500 uppercase tracking-wider mb-1.5">СНИЛС</label>
+                <input id="profile-snils" type="text" value="123-456-789 00" readonly
+                       class="h-10 w-full px-3 rounded-lg border border-gray-200 bg-gray-50 text-gray-700 text-sm" />
+              </div>
+
+              <div>
+                <label for="profile-phone"
+                       class="block text-xs text-gray-500 uppercase tracking-wider mb-1.5">Телефон</label>
+                <input id="profile-phone" type="tel" value="+7 (916) 123-45-67"
+                       class="h-10 w-full px-3 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400" />
+              </div>
+
+              <div>
+                <label for="profile-email"
+                       class="block text-xs text-gray-500 uppercase tracking-wider mb-1.5">Email</label>
+                <input id="profile-email" type="email" value="ivanov@example.com"
+                       class="h-10 w-full px-3 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400" />
+              </div>
+
+            </div>
+
+            <div class="mt-5 flex justify-end">
+              <button type="button"
+                      class="inline-flex items-center gap-2 h-10 px-4 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm transition-colors">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                Сохранить
+              </button>
+            </div>
+          </section>
+
+          <!-- Информационный блок -->
+          <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 mt-4 flex items-start gap-3">
+            <svg class="w-5 h-5 text-amber-600 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="16" x2="12" y2="12"/>
+              <line x1="12" y1="8" x2="12.01" y2="8"/>
+            </svg>
+            <p class="text-sm text-amber-800">
+              Для изменения паспортных данных или ФИО обратитесь к юристу через
+              <a href="chat.html" class="text-amber-900 underline hover:text-amber-950">чат</a>.
+            </p>
+          </div>
+        </div>
+
+        <!-- ===== 8.3. Вкладка «Безопасность» ===== -->
+        <div id="panel-security" class="hidden" role="tabpanel" aria-labelledby="tab-security-btn">
+
+          <!-- Смена пароля -->
+          <section class="bg-white rounded-xl border border-gray-200 p-5">
+            <h2 class="text-base text-gray-900">Смена пароля</h2>
+            <p class="text-sm text-gray-500 mt-1">Используйте пароль не короче 8 символов с цифрами и буквами разного регистра.</p>
+
+            <div class="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <!-- Текущий пароль -->
+              <div class="sm:col-span-2">
+                <label for="pwd-current"
+                       class="block text-xs text-gray-500 uppercase tracking-wider mb-1.5">Текущий пароль</label>
+                <div class="relative">
+                  <input id="pwd-current" type="password" autocomplete="current-password"
+                         class="h-10 w-full pl-3 pr-10 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400" />
+                  <button type="button" data-pwd-toggle="pwd-current" aria-label="Показать пароль"
+                          class="absolute inset-y-0 right-2 my-auto inline-flex items-center justify-center w-7 h-7 rounded-md text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                    <svg class="w-4 h-4 pwd-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/>
+                      <circle cx="12" cy="12" r="3"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Новый пароль -->
+              <div>
+                <label for="pwd-new"
+                       class="block text-xs text-gray-500 uppercase tracking-wider mb-1.5">Новый пароль</label>
+                <div class="relative">
+                  <input id="pwd-new" type="password" autocomplete="new-password"
+                         class="h-10 w-full pl-3 pr-10 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400" />
+                  <button type="button" data-pwd-toggle="pwd-new" aria-label="Показать пароль"
+                          class="absolute inset-y-0 right-2 my-auto inline-flex items-center justify-center w-7 h-7 rounded-md text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                    <svg class="w-4 h-4 pwd-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/>
+                      <circle cx="12" cy="12" r="3"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Повторите новый пароль -->
+              <div>
+                <label for="pwd-repeat"
+                       class="block text-xs text-gray-500 uppercase tracking-wider mb-1.5">Повторите новый пароль</label>
+                <div class="relative">
+                  <input id="pwd-repeat" type="password" autocomplete="new-password"
+                         class="h-10 w-full pl-3 pr-10 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400" />
+                  <button type="button" data-pwd-toggle="pwd-repeat" aria-label="Показать пароль"
+                          class="absolute inset-y-0 right-2 my-auto inline-flex items-center justify-center w-7 h-7 rounded-md text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                    <svg class="w-4 h-4 pwd-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/>
+                      <circle cx="12" cy="12" r="3"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-5 flex justify-end">
+              <button type="button"
+                      class="inline-flex items-center gap-2 h-10 px-4 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm transition-colors">
+                Обновить пароль
+              </button>
+            </div>
+          </section>
+
+          <!-- Устройства -->
+          <section class="bg-white rounded-xl border border-gray-200 p-5 mt-5">
+            <h2 class="text-base text-gray-900">Устройства</h2>
+            <p class="text-sm text-gray-500 mt-1">Список активных сессий, в которых вы вошли в кабинет.</p>
+
+            <ul class="mt-5 divide-y divide-gray-100">
+
+              <!-- Текущее устройство -->
+              <li class="bg-indigo-50 rounded-lg flex items-start gap-3 px-3 py-3">
+                <span class="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-indigo-100 text-indigo-600 shrink-0">
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="3" width="20" height="14" rx="2"/>
+                    <line x1="8" y1="21" x2="16" y2="21"/>
+                    <line x1="12" y1="17" x2="12" y2="21"/>
+                  </svg>
+                </span>
+                <div class="min-w-0 flex-1">
+                  <div class="text-sm text-gray-900">MacBook · Safari 17</div>
+                  <div class="text-xs text-gray-500 mt-0.5">Москва · IP 192.168.0.1</div>
+                  <div class="text-xs mt-1 inline-flex items-center gap-1.5 text-emerald-700">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                    Текущее устройство
+                  </div>
+                </div>
+              </li>
+
+              <!-- Другая сессия -->
+              <li class="flex items-start gap-3 px-3 py-3">
+                <span class="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-gray-100 text-gray-500 shrink-0">
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="5" y="2" width="14" height="20" rx="2"/>
+                    <line x1="12" y1="18" x2="12.01" y2="18"/>
+                  </svg>
+                </span>
+                <div class="min-w-0 flex-1">
+                  <div class="text-sm text-gray-900">iPhone · Mobile Safari</div>
+                  <div class="text-xs text-gray-500 mt-0.5">Москва · последний вход 3 дня назад</div>
+                </div>
+                <button type="button"
+                        class="inline-flex items-center gap-1.5 text-xs text-rose-600 hover:text-rose-700 shrink-0 mt-1">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 6h18"/>
+                    <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+                    <path d="M10 11v6"/>
+                    <path d="M14 11v6"/>
+                  </svg>
+                  Завершить сессию
+                </button>
+              </li>
+
+              <!-- Ещё одна сессия -->
+              <li class="flex items-start gap-3 px-3 py-3">
+                <span class="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-gray-100 text-gray-500 shrink-0">
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="3" width="20" height="14" rx="2"/>
+                    <line x1="8" y1="21" x2="16" y2="21"/>
+                    <line x1="12" y1="17" x2="12" y2="21"/>
+                  </svg>
+                </span>
+                <div class="min-w-0 flex-1">
+                  <div class="text-sm text-gray-900">Windows PC · Chrome 124</div>
+                  <div class="text-xs text-gray-500 mt-0.5">Санкт-Петербург · последний вход 2 нед. назад</div>
+                </div>
+                <button type="button"
+                        class="inline-flex items-center gap-1.5 text-xs text-rose-600 hover:text-rose-700 shrink-0 mt-1">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 6h18"/>
+                    <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+                    <path d="M10 11v6"/>
+                    <path d="M14 11v6"/>
+                  </svg>
+                  Завершить сессию
+                </button>
+              </li>
+
+            </ul>
+          </section>
+        </div>
+
+      </div>
+    </div>
+
+    <script src="assets/client-layout.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.2/flowbite.min.js"></script>
+    <script>
+      document.addEventListener("layout:ready", () => {
+        // ===== Простое переключение вкладок (без зависимости от Flowbite Tabs API) =====
+        const tabs = document.querySelectorAll('#profile-tabs [role="tab"]');
+        const panels = document.querySelectorAll('#profile-tab-content [role="tabpanel"]');
+        tabs.forEach((tab) => {
+          tab.addEventListener("click", () => {
+            tabs.forEach((t) => {
+              t.setAttribute("aria-selected", "false");
+              t.classList.remove("border-indigo-600", "text-indigo-600");
+              t.classList.add("border-transparent", "text-gray-500", "hover:text-gray-700", "hover:border-gray-300");
+            });
+            tab.setAttribute("aria-selected", "true");
+            tab.classList.add("border-indigo-600", "text-indigo-600");
+            tab.classList.remove("border-transparent", "text-gray-500", "hover:text-gray-700", "hover:border-gray-300");
+
+            const target = tab.getAttribute("data-tabs-target");
+            panels.forEach((p) => p.classList.add("hidden"));
+            const panel = target ? document.querySelector(target) : null;
+            if (panel) panel.classList.remove("hidden");
+          });
+        });
+
+        // ===== Toggle видимости пароля =====
+        document.querySelectorAll("[data-pwd-toggle]").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const id = btn.getAttribute("data-pwd-toggle");
+            const input = document.getElementById(id);
+            if (!input) return;
+            const isPwd = input.getAttribute("type") === "password";
+            input.setAttribute("type", isPwd ? "text" : "password");
+            btn.setAttribute("aria-label", isPwd ? "Скрыть пароль" : "Показать пароль");
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

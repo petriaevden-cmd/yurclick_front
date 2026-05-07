@@ -1,0 +1,556 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ЮрКлик — Мои документы</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: { sans: ["Inter", "ui-sans-serif", "system-ui"] },
+          },
+        },
+      };
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.2/flowbite.min.css"
+    />
+  </head>
+  <body class="bg-gray-50 font-sans text-gray-900 antialiased">
+    <div id="app-shell" data-page="documents" data-title="Мои документы"></div>
+
+    <div id="page-source">
+      <!-- ===== 5.1. Sticky-тулбар ===== -->
+      <div class="sticky top-0 z-20 -mx-4 sm:-mx-6 lg:-mx-10 px-4 sm:px-6 lg:px-10 py-3 bg-gray-50/95 backdrop-blur border-b border-gray-200 mb-4">
+        <div class="flex flex-wrap items-center gap-3">
+          <!-- Прогресс «X из Y загружено» -->
+          <div class="flex items-center gap-2 text-sm text-gray-700">
+            <span class="w-2 h-2 rounded-full bg-indigo-500"></span>
+            <span><span class="text-gray-900">5</span> из 12 загружено</span>
+          </div>
+          <div class="flex items-center gap-2 text-sm text-gray-500">
+            <span class="text-gray-300">·</span>
+            <span class="inline-flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
+              1 проблемный
+            </span>
+          </div>
+
+          <div class="flex-1"></div>
+
+          <!-- Кнопка множественной загрузки -->
+          <label class="inline-flex items-center gap-2 h-10 px-4 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm cursor-pointer transition-colors">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="17 8 12 3 7 8"/>
+              <line x1="12" y1="3" x2="12" y2="15"/>
+            </svg>
+            <span>Загрузить файлы</span>
+            <input type="file" class="sr-only" multiple aria-label="Загрузить несколько файлов" />
+          </label>
+        </div>
+      </div>
+
+      <!-- ===== 5.2. Группа: Проблемные файлы ===== -->
+      <section class="mb-5">
+        <button type="button" class="doc-group-toggle flex items-center gap-2 w-full text-left mb-2"
+                aria-expanded="true">
+          <svg class="w-3.5 h-3.5 text-gray-400 transition-transform chevron-group shrink-0 rotate-90" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 6l6 6-6 6"/>
+          </svg>
+          <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
+          <span class="text-xs text-rose-600 tracking-wider uppercase">
+            Проблемные файлы
+            <span class="font-medium text-gray-700">— 1</span>
+          </span>
+        </button>
+        <ul class="doc-group-list grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+
+          <!-- Карточка: unreadable -->
+          <li>
+            <label class="doc-card group relative flex flex-col gap-1 rounded-lg bg-white border border-rose-200 px-3 py-2 cursor-pointer hover:border-rose-300 transition-colors"
+                   data-status="unreadable">
+              <div class="flex items-center justify-between gap-2 min-w-0">
+                <div class="flex items-center gap-2 min-w-0">
+                  <svg class="w-4 h-4 text-rose-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                  </svg>
+                  <span class="text-sm text-gray-900 truncate">Выписка из ЕГРН</span>
+                </div>
+                <span class="inline-flex items-center gap-1 text-xs text-rose-700 shrink-0">
+                  <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
+                  Ошибка
+                </span>
+              </div>
+              <div class="flex items-center justify-between gap-2 pl-6">
+                <span class="text-xs text-gray-500 truncate">Плохое качество скана</span>
+                <button type="button" class="text-xs text-indigo-600 hover:underline shrink-0">
+                  Загрузить заново
+                </button>
+              </div>
+              <span class="doc-dropzone pointer-events-none absolute inset-0 rounded-lg border-2 border-dashed border-indigo-400 bg-indigo-50/95 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 px-3">
+                <svg class="w-4 h-4 text-indigo-600 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="17 8 12 3 7 8"/>
+                  <line x1="12" y1="3" x2="12" y2="15"/>
+                </svg>
+                <span class="text-xs text-indigo-700 truncate">Перетащите или выберите</span>
+              </span>
+              <input type="file" class="sr-only doc-input" aria-label="Загрузить файл «Выписка из ЕГРН»" />
+            </label>
+          </li>
+
+        </ul>
+      </section>
+
+      <!-- ===== 5.2. Группа: Ожидают загрузки ===== -->
+      <section class="mb-5">
+        <button type="button" class="doc-group-toggle flex items-center gap-2 w-full text-left mb-2"
+                aria-expanded="true">
+          <svg class="w-3.5 h-3.5 text-gray-400 transition-transform chevron-group shrink-0 rotate-90" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 6l6 6-6 6"/>
+          </svg>
+          <span class="w-1.5 h-1.5 rounded-full bg-gray-400"></span>
+          <span class="text-xs text-gray-500 tracking-wider uppercase">
+            Ожидают загрузки
+            <span class="font-medium text-gray-700">— 6</span>
+          </span>
+        </button>
+        <ul class="doc-group-list grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+
+          <!-- Pending: Паспорт -->
+          <li>
+            <label class="doc-card group relative flex flex-col gap-1 rounded-lg bg-white border border-gray-200 px-3 py-2 cursor-pointer hover:border-indigo-300 transition-colors"
+                   data-status="pending">
+              <div class="flex items-center justify-between gap-2 min-w-0">
+                <div class="flex items-center gap-2 min-w-0">
+                  <svg class="w-4 h-4 text-gray-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                  </svg>
+                  <span class="text-sm text-gray-900 truncate">Паспорт (скан)</span>
+                </div>
+                <span class="inline-flex items-center gap-1 text-xs text-gray-500 shrink-0">
+                  <span class="w-1.5 h-1.5 rounded-full bg-gray-300"></span>
+                  Ожидает
+                </span>
+              </div>
+              <div class="flex items-center justify-between gap-2 pl-6">
+                <span class="text-xs text-gray-500 truncate">Не загружен</span>
+                <button type="button" class="text-xs text-indigo-600 hover:underline shrink-0">
+                  Загрузить
+                </button>
+              </div>
+              <span class="doc-dropzone pointer-events-none absolute inset-0 rounded-lg border-2 border-dashed border-indigo-400 bg-indigo-50/95 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 px-3">
+                <svg class="w-4 h-4 text-indigo-600 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="17 8 12 3 7 8"/>
+                  <line x1="12" y1="3" x2="12" y2="15"/>
+                </svg>
+                <span class="text-xs text-indigo-700 truncate">Перетащите или выберите</span>
+              </span>
+              <input type="file" class="sr-only doc-input" aria-label="Загрузить файл «Паспорт (скан)»" />
+            </label>
+          </li>
+
+          <!-- Pending: СНИЛС -->
+          <li>
+            <label class="doc-card group relative flex flex-col gap-1 rounded-lg bg-white border border-gray-200 px-3 py-2 cursor-pointer hover:border-indigo-300 transition-colors"
+                   data-status="pending">
+              <div class="flex items-center justify-between gap-2 min-w-0">
+                <div class="flex items-center gap-2 min-w-0">
+                  <svg class="w-4 h-4 text-gray-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                  </svg>
+                  <span class="text-sm text-gray-900 truncate">СНИЛС</span>
+                </div>
+                <span class="inline-flex items-center gap-1 text-xs text-gray-500 shrink-0">
+                  <span class="w-1.5 h-1.5 rounded-full bg-gray-300"></span>
+                  Ожидает
+                </span>
+              </div>
+              <div class="flex items-center justify-between gap-2 pl-6">
+                <span class="text-xs text-gray-500 truncate">Не загружен</span>
+                <button type="button" class="text-xs text-indigo-600 hover:underline shrink-0">
+                  Загрузить
+                </button>
+              </div>
+              <span class="doc-dropzone pointer-events-none absolute inset-0 rounded-lg border-2 border-dashed border-indigo-400 bg-indigo-50/95 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 px-3">
+                <svg class="w-4 h-4 text-indigo-600 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="17 8 12 3 7 8"/>
+                  <line x1="12" y1="3" x2="12" y2="15"/>
+                </svg>
+                <span class="text-xs text-indigo-700 truncate">Перетащите или выберите</span>
+              </span>
+              <input type="file" class="sr-only doc-input" aria-label="Загрузить файл «СНИЛС»" />
+            </label>
+          </li>
+
+          <!-- Pending: ИНН -->
+          <li>
+            <label class="doc-card group relative flex flex-col gap-1 rounded-lg bg-white border border-gray-200 px-3 py-2 cursor-pointer hover:border-indigo-300 transition-colors"
+                   data-status="pending">
+              <div class="flex items-center justify-between gap-2 min-w-0">
+                <div class="flex items-center gap-2 min-w-0">
+                  <svg class="w-4 h-4 text-gray-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                  </svg>
+                  <span class="text-sm text-gray-900 truncate">Свидетельство ИНН</span>
+                </div>
+                <span class="inline-flex items-center gap-1 text-xs text-gray-500 shrink-0">
+                  <span class="w-1.5 h-1.5 rounded-full bg-gray-300"></span>
+                  Ожидает
+                </span>
+              </div>
+              <div class="flex items-center justify-between gap-2 pl-6">
+                <span class="text-xs text-gray-500 truncate">Не загружен</span>
+                <button type="button" class="text-xs text-indigo-600 hover:underline shrink-0">
+                  Загрузить
+                </button>
+              </div>
+              <span class="doc-dropzone pointer-events-none absolute inset-0 rounded-lg border-2 border-dashed border-indigo-400 bg-indigo-50/95 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 px-3">
+                <svg class="w-4 h-4 text-indigo-600 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="17 8 12 3 7 8"/>
+                  <line x1="12" y1="3" x2="12" y2="15"/>
+                </svg>
+                <span class="text-xs text-indigo-700 truncate">Перетащите или выберите</span>
+              </span>
+              <input type="file" class="sr-only doc-input" aria-label="Загрузить файл «Свидетельство ИНН»" />
+            </label>
+          </li>
+
+          <!-- Pending: Справка о доходах -->
+          <li>
+            <label class="doc-card group relative flex flex-col gap-1 rounded-lg bg-white border border-gray-200 px-3 py-2 cursor-pointer hover:border-indigo-300 transition-colors"
+                   data-status="pending">
+              <div class="flex items-center justify-between gap-2 min-w-0">
+                <div class="flex items-center gap-2 min-w-0">
+                  <svg class="w-4 h-4 text-gray-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                  </svg>
+                  <span class="text-sm text-gray-900 truncate">Справка 2-НДФЛ</span>
+                </div>
+                <span class="inline-flex items-center gap-1 text-xs text-gray-500 shrink-0">
+                  <span class="w-1.5 h-1.5 rounded-full bg-gray-300"></span>
+                  Ожидает
+                </span>
+              </div>
+              <div class="flex items-center justify-between gap-2 pl-6">
+                <span class="text-xs text-gray-500 truncate">За последние 6 мес.</span>
+                <button type="button" class="text-xs text-indigo-600 hover:underline shrink-0">
+                  Загрузить
+                </button>
+              </div>
+              <span class="doc-dropzone pointer-events-none absolute inset-0 rounded-lg border-2 border-dashed border-indigo-400 bg-indigo-50/95 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 px-3">
+                <svg class="w-4 h-4 text-indigo-600 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="17 8 12 3 7 8"/>
+                  <line x1="12" y1="3" x2="12" y2="15"/>
+                </svg>
+                <span class="text-xs text-indigo-700 truncate">Перетащите или выберите</span>
+              </span>
+              <input type="file" class="sr-only doc-input" aria-label="Загрузить файл «Справка 2-НДФЛ»" />
+            </label>
+          </li>
+
+          <!-- Pending: Список кредиторов -->
+          <li>
+            <label class="doc-card group relative flex flex-col gap-1 rounded-lg bg-white border border-gray-200 px-3 py-2 cursor-pointer hover:border-indigo-300 transition-colors"
+                   data-status="pending">
+              <div class="flex items-center justify-between gap-2 min-w-0">
+                <div class="flex items-center gap-2 min-w-0">
+                  <svg class="w-4 h-4 text-gray-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                  </svg>
+                  <span class="text-sm text-gray-900 truncate">Список кредиторов</span>
+                </div>
+                <span class="inline-flex items-center gap-1 text-xs text-gray-500 shrink-0">
+                  <span class="w-1.5 h-1.5 rounded-full bg-gray-300"></span>
+                  Ожидает
+                </span>
+              </div>
+              <div class="flex items-center justify-between gap-2 pl-6">
+                <span class="text-xs text-gray-500 truncate">Шаблон в чате</span>
+                <button type="button" class="text-xs text-indigo-600 hover:underline shrink-0">
+                  Загрузить
+                </button>
+              </div>
+              <span class="doc-dropzone pointer-events-none absolute inset-0 rounded-lg border-2 border-dashed border-indigo-400 bg-indigo-50/95 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 px-3">
+                <svg class="w-4 h-4 text-indigo-600 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="17 8 12 3 7 8"/>
+                  <line x1="12" y1="3" x2="12" y2="15"/>
+                </svg>
+                <span class="text-xs text-indigo-700 truncate">Перетащите или выберите</span>
+              </span>
+              <input type="file" class="sr-only doc-input" aria-label="Загрузить файл «Список кредиторов»" />
+            </label>
+          </li>
+
+          <!-- Pending: Опись имущества -->
+          <li>
+            <label class="doc-card group relative flex flex-col gap-1 rounded-lg bg-white border border-gray-200 px-3 py-2 cursor-pointer hover:border-indigo-300 transition-colors"
+                   data-status="pending">
+              <div class="flex items-center justify-between gap-2 min-w-0">
+                <div class="flex items-center gap-2 min-w-0">
+                  <svg class="w-4 h-4 text-gray-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                  </svg>
+                  <span class="text-sm text-gray-900 truncate">Опись имущества</span>
+                </div>
+                <span class="inline-flex items-center gap-1 text-xs text-gray-500 shrink-0">
+                  <span class="w-1.5 h-1.5 rounded-full bg-gray-300"></span>
+                  Ожидает
+                </span>
+              </div>
+              <div class="flex items-center justify-between gap-2 pl-6">
+                <span class="text-xs text-gray-500 truncate">Шаблон в чате</span>
+                <button type="button" class="text-xs text-indigo-600 hover:underline shrink-0">
+                  Загрузить
+                </button>
+              </div>
+              <span class="doc-dropzone pointer-events-none absolute inset-0 rounded-lg border-2 border-dashed border-indigo-400 bg-indigo-50/95 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 px-3">
+                <svg class="w-4 h-4 text-indigo-600 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="17 8 12 3 7 8"/>
+                  <line x1="12" y1="3" x2="12" y2="15"/>
+                </svg>
+                <span class="text-xs text-indigo-700 truncate">Перетащите или выберите</span>
+              </span>
+              <input type="file" class="sr-only doc-input" aria-label="Загрузить файл «Опись имущества»" />
+            </label>
+          </li>
+
+        </ul>
+      </section>
+
+      <!-- ===== 5.2. Группа: Принятые документы ===== -->
+      <section class="mb-5">
+        <button type="button" class="doc-group-toggle flex items-center gap-2 w-full text-left mb-2"
+                aria-expanded="true">
+          <svg class="w-3.5 h-3.5 text-gray-400 transition-transform chevron-group shrink-0 rotate-90" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 6l6 6-6 6"/>
+          </svg>
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+          <span class="text-xs text-emerald-700 tracking-wider uppercase">
+            Принятые документы
+            <span class="font-medium text-gray-700">— 5</span>
+          </span>
+        </button>
+        <ul class="doc-group-list grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+
+          <!-- Ready: Договор -->
+          <li>
+            <label class="doc-card group relative flex flex-col gap-1 rounded-lg bg-white border border-gray-200 px-3 py-2 cursor-pointer hover:border-indigo-300 transition-colors"
+                   data-status="ready">
+              <div class="flex items-center justify-between gap-2 min-w-0">
+                <div class="flex items-center gap-2 min-w-0">
+                  <svg class="w-4 h-4 text-emerald-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                  </svg>
+                  <span class="text-sm text-gray-900 truncate">Договор оказания услуг</span>
+                </div>
+                <span class="inline-flex items-center gap-1 text-xs text-emerald-700 shrink-0">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                  Принят
+                </span>
+              </div>
+              <div class="flex items-center justify-between gap-2 pl-6">
+                <span class="text-xs text-gray-500 truncate">Документ принят</span>
+                <button type="button" class="text-xs text-indigo-600 hover:underline shrink-0">
+                  Просмотр
+                </button>
+              </div>
+              <input type="file" class="sr-only doc-input" aria-label="Заменить файл «Договор оказания услуг»" />
+            </label>
+          </li>
+
+          <!-- Ready: Анкета -->
+          <li>
+            <label class="doc-card group relative flex flex-col gap-1 rounded-lg bg-white border border-gray-200 px-3 py-2 cursor-pointer hover:border-indigo-300 transition-colors"
+                   data-status="ready">
+              <div class="flex items-center justify-between gap-2 min-w-0">
+                <div class="flex items-center gap-2 min-w-0">
+                  <svg class="w-4 h-4 text-emerald-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                  </svg>
+                  <span class="text-sm text-gray-900 truncate">Анкета должника</span>
+                </div>
+                <span class="inline-flex items-center gap-1 text-xs text-emerald-700 shrink-0">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                  Принят
+                </span>
+              </div>
+              <div class="flex items-center justify-between gap-2 pl-6">
+                <span class="text-xs text-gray-500 truncate">Документ принят</span>
+                <button type="button" class="text-xs text-indigo-600 hover:underline shrink-0">
+                  Просмотр
+                </button>
+              </div>
+              <input type="file" class="sr-only doc-input" aria-label="Заменить файл «Анкета должника»" />
+            </label>
+          </li>
+
+          <!-- Verifying: Свидетельство о браке -->
+          <li>
+            <label class="doc-card group relative flex flex-col gap-1 rounded-lg bg-white border border-gray-200 px-3 py-2 cursor-pointer hover:border-indigo-300 transition-colors"
+                   data-status="verifying">
+              <div class="flex items-center justify-between gap-2 min-w-0">
+                <div class="flex items-center gap-2 min-w-0">
+                  <svg class="w-4 h-4 text-violet-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                  </svg>
+                  <span class="text-sm text-gray-900 truncate">Свидетельство о браке</span>
+                </div>
+                <span class="inline-flex items-center gap-1 text-xs text-violet-700 shrink-0">
+                  <span class="w-1.5 h-1.5 rounded-full bg-violet-500"></span>
+                  На проверке
+                </span>
+              </div>
+              <div class="flex items-center justify-between gap-2 pl-6">
+                <span class="text-xs text-gray-500 truncate">Юрист проверяет</span>
+                <button type="button" class="text-xs text-indigo-600 hover:underline shrink-0">
+                  Открыть
+                </button>
+              </div>
+              <input type="file" class="sr-only doc-input" aria-label="Заменить файл «Свидетельство о браке»" />
+            </label>
+          </li>
+
+          <!-- Processing: Выписка по счёту -->
+          <li>
+            <label class="doc-card group relative flex flex-col gap-1 rounded-lg bg-white border border-gray-200 px-3 py-2 cursor-pointer hover:border-indigo-300 transition-colors"
+                   data-status="processing">
+              <div class="flex items-center justify-between gap-2 min-w-0">
+                <div class="flex items-center gap-2 min-w-0">
+                  <svg class="w-4 h-4 text-indigo-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                  </svg>
+                  <span class="text-sm text-gray-900 truncate">Выписка по счёту (Сбербанк)</span>
+                </div>
+                <span class="inline-flex items-center gap-1 text-xs text-indigo-700 shrink-0">
+                  <span class="w-1.5 h-1.5 rounded-full bg-indigo-500"></span>
+                  Обработка
+                </span>
+              </div>
+              <div class="flex items-center justify-between gap-2 pl-6">
+                <span class="text-xs text-gray-500 truncate">Извлекаем данные</span>
+                <span class="text-xs text-gray-400 shrink-0">Ожидайте</span>
+              </div>
+              <input type="file" class="sr-only doc-input" aria-label="Заменить файл «Выписка по счёту (Сбербанк)»" />
+            </label>
+          </li>
+
+          <!-- Uploaded: Трудовая книжка -->
+          <li>
+            <label class="doc-card group relative flex flex-col gap-1 rounded-lg bg-white border border-gray-200 px-3 py-2 cursor-pointer hover:border-indigo-300 transition-colors"
+                   data-status="uploaded">
+              <div class="flex items-center justify-between gap-2 min-w-0">
+                <div class="flex items-center gap-2 min-w-0">
+                  <svg class="w-4 h-4 text-sky-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                  </svg>
+                  <span class="text-sm text-gray-900 truncate">Трудовая книжка</span>
+                </div>
+                <span class="inline-flex items-center gap-1 text-xs text-sky-700 shrink-0">
+                  <span class="w-1.5 h-1.5 rounded-full bg-sky-500"></span>
+                  Загружен
+                </span>
+              </div>
+              <div class="flex items-center justify-between gap-2 pl-6">
+                <span class="text-xs text-gray-500 truncate">Файл получен, проверяем</span>
+                <button type="button" class="text-xs text-indigo-600 hover:underline shrink-0">
+                  Заменить
+                </button>
+              </div>
+              <span class="doc-dropzone pointer-events-none absolute inset-0 rounded-lg border-2 border-dashed border-indigo-400 bg-indigo-50/95 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 px-3">
+                <svg class="w-4 h-4 text-indigo-600 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="17 8 12 3 7 8"/>
+                  <line x1="12" y1="3" x2="12" y2="15"/>
+                </svg>
+                <span class="text-xs text-indigo-700 truncate">Перетащите, чтобы заменить</span>
+              </span>
+              <input type="file" class="sr-only doc-input" aria-label="Заменить файл «Трудовая книжка»" />
+            </label>
+          </li>
+
+        </ul>
+      </section>
+
+      <!-- ===== 5.5. Toast при успешной загрузке ===== -->
+      <div id="upload-toast"
+           class="hidden fixed bottom-6 right-6 z-50 flex items-center gap-3 px-4 py-3 rounded-xl border border-emerald-200 bg-white shadow-lg text-sm text-gray-800"
+           role="status" aria-live="polite">
+        <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 shrink-0">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </span>
+        <span id="upload-toast-text">Файл загружен</span>
+      </div>
+    </div>
+
+    <script src="assets/client-layout.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.2/flowbite.min.js"></script>
+    <script>
+      // ===== Раскрытие/сворачивание групп документов =====
+      document.addEventListener("layout:ready", () => {
+        document.querySelectorAll(".doc-group-toggle").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const expanded = btn.getAttribute("aria-expanded") === "true";
+            btn.setAttribute("aria-expanded", String(!expanded));
+            const list = btn.nextElementSibling;
+            const chevron = btn.querySelector(".chevron-group");
+            if (list) list.classList.toggle("hidden");
+            if (chevron) chevron.classList.toggle("rotate-90");
+          });
+        });
+
+        // ===== Toast при успешной загрузке файла =====
+        const toast = document.getElementById("upload-toast");
+        const toastText = document.getElementById("upload-toast-text");
+        let toastTimer = null;
+        function showToast(text) {
+          if (!toast) return;
+          if (toastText) toastText.textContent = text || "Файл загружен";
+          toast.classList.remove("hidden");
+          clearTimeout(toastTimer);
+          toastTimer = setTimeout(() => toast.classList.add("hidden"), 3500);
+        }
+
+        document.querySelectorAll(".doc-input").forEach((input) => {
+          input.addEventListener("change", (e) => {
+            const file = e.target.files && e.target.files[0];
+            if (!file) return;
+            const card = e.target.closest(".doc-card");
+            const name = card?.querySelector(".text-sm.text-gray-900.truncate")?.textContent?.trim();
+            showToast(name ? `«${name}» загружен` : "Файл загружен");
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
