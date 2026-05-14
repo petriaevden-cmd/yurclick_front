@@ -96,24 +96,6 @@
 
       <!-- Панель вкладки «Требуются документы» — видна только при currentStage === 'required' -->
       <div id="required-tab-panel" class="hidden" role="tabpanel" aria-labelledby="tab-required-btn">
-        <!-- Шапка -->
-        <div class="mb-4 bg-white rounded-xl border border-gray-200 px-4 md:px-5 py-4">
-          <div class="flex flex-wrap items-start justify-between gap-4">
-            <div class="min-w-0">
-              <div class="flex items-center gap-2 text-sm">
-                <span id="req-progress-dot" class="w-2 h-2 rounded-full bg-gray-400"></span>
-                <span id="req-progress-text" class="text-gray-700">0 из 0 файлов загружено</span>
-              </div>
-            </div>
-            <div class="flex items-center">
-              <button id="req-submit-btn" type="button" disabled
-                      class="inline-flex items-center gap-2 h-10 px-4 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm disabled:opacity-50 disabled:cursor-not-allowed">
-                <span>Подать в суд</span>
-                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 5l7 7-7 7"/></svg>
-              </button>
-            </div>
-          </div>
-        </div>
         <!-- Блок: Автоматическая рассылка писем кредиторам -->
         <section id="auto-email-send" class="mb-4 bg-white rounded-2xl border border-gray-200 overflow-hidden" aria-label="Автоматическая рассылка писем кредиторам">
           <div class="p-6 border-b border-gray-100">
@@ -248,6 +230,24 @@
             </div>
           </details>
         </section>
+        <!-- Шапка -->
+        <div class="mb-4 bg-white rounded-xl border border-gray-200 px-4 md:px-5 py-4">
+          <div class="flex flex-wrap items-start justify-between gap-4">
+            <div class="min-w-0">
+              <div class="flex items-center gap-2 text-sm">
+                <span id="req-progress-dot" class="w-2 h-2 rounded-full bg-gray-400"></span>
+                <span id="req-progress-text" class="text-gray-700">0 из 0 файлов загружено</span>
+              </div>
+            </div>
+            <div class="flex items-center">
+              <button id="req-submit-btn" type="button" disabled
+                      class="inline-flex items-center gap-2 h-10 px-4 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm disabled:opacity-50 disabled:cursor-not-allowed">
+                <span>Подать в суд</span>
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 5l7 7-7 7"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
 
         <!-- Контейнер блоков по типам документов -->
         <div id="req-blocks" class="space-y-4"></div>
