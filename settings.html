@@ -16,6 +16,159 @@
   <body class="bg-gray-50 font-sans text-gray-900 antialiased">
     <div id="app-shell" data-page="settings" data-title="Настройки"></div>
 
+    <!-- ===== DRAWER: Сопоставление полей ===== -->
+    <div id="field-mapping-drawer" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true" aria-labelledby="drawer-title">
+      <!-- Overlay -->
+      <div id="drawer-overlay" class="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
+      <!-- Panel -->
+      <div class="absolute right-0 top-0 h-full w-full max-w-3xl bg-white shadow-2xl flex flex-col">
+        <!-- Header -->
+        <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200 shrink-0">
+          <div>
+            <h2 id="drawer-title" class="text-base font-semibold text-gray-900">Сопоставление полей</h2>
+            <p id="drawer-subtitle" class="text-sm text-gray-500 mt-0.5">Привяжите поля CRM к полям платформы ЮрКлик</p>
+          </div>
+          <button id="drawer-close" type="button" class="p-2 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+          </button>
+        </div>
+        <!-- Column headers -->
+        <div class="grid grid-cols-2 gap-4 px-6 py-3 bg-gray-50 border-b border-gray-200 text-xs font-medium text-gray-500 uppercase tracking-wide shrink-0">
+          <span>Поле платформы (ЮрКлик)</span>
+          <span>Поле CRM клиента</span>
+        </div>
+        <!-- Rows -->
+        <div class="flex-1 overflow-y-auto px-6 py-4 space-y-2">
+          <!-- 30 mapping rows -->
+          <div class="grid grid-cols-2 gap-4 items-center py-2 border-b border-gray-100">
+            <div class="text-sm text-gray-800 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-indigo-400 shrink-0"></span>ID клиента</div>
+            <select class="h-9 w-full px-3 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-200"><option>contact_id</option><option>client_id</option><option>lead_id</option></select>
+          </div>
+          <div class="grid grid-cols-2 gap-4 items-center py-2 border-b border-gray-100">
+            <div class="text-sm text-gray-800 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-indigo-400 shrink-0"></span>Имя</div>
+            <select class="h-9 w-full px-3 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-200"><option>first_name</option><option>name</option><option>full_name</option></select>
+          </div>
+          <div class="grid grid-cols-2 gap-4 items-center py-2 border-b border-gray-100">
+            <div class="text-sm text-gray-800 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-indigo-400 shrink-0"></span>Фамилия</div>
+            <select class="h-9 w-full px-3 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-200"><option>last_name</option><option>surname</option><option>family_name</option></select>
+          </div>
+          <div class="grid grid-cols-2 gap-4 items-center py-2 border-b border-gray-100">
+            <div class="text-sm text-gray-800 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-indigo-400 shrink-0"></span>Отчество</div>
+            <select class="h-9 w-full px-3 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-200"><option>middle_name</option><option>patronymic</option><option>— не заполнять —</option></select>
+          </div>
+          <div class="grid grid-cols-2 gap-4 items-center py-2 border-b border-gray-100">
+            <div class="text-sm text-gray-800 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-indigo-400 shrink-0"></span>Телефон</div>
+            <select class="h-9 w-full px-3 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-200"><option>phone</option><option>mobile</option><option>phone_work</option></select>
+          </div>
+          <div class="grid grid-cols-2 gap-4 items-center py-2 border-b border-gray-100">
+            <div class="text-sm text-gray-800 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-indigo-400 shrink-0"></span>Email</div>
+            <select class="h-9 w-full px-3 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-200"><option>email</option><option>email_work</option><option>contact_email</option></select>
+          </div>
+          <div class="grid grid-cols-2 gap-4 items-center py-2 border-b border-gray-100">
+            <div class="text-sm text-gray-800 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-emerald-400 shrink-0"></span>Дата рождения</div>
+            <select class="h-9 w-full px-3 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-200"><option>birthdate</option><option>birthday</option><option>dob</option></select>
+          </div>
+          <div class="grid grid-cols-2 gap-4 items-center py-2 border-b border-gray-100">
+            <div class="text-sm text-gray-800 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-emerald-400 shrink-0"></span>Паспорт серия</div>
+            <select class="h-9 w-full px-3 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-200"><option>passport_series</option><option>doc_series</option><option>— не заполнять —</option></select>
+          </div>
+          <div class="grid grid-cols-2 gap-4 items-center py-2 border-b border-gray-100">
+            <div class="text-sm text-gray-800 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-emerald-400 shrink-0"></span>Паспорт номер</div>
+            <select class="h-9 w-full px-3 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-200"><option>passport_number</option><option>doc_number</option><option>— не заполнять —</option></select>
+          </div>
+          <div class="grid grid-cols-2 gap-4 items-center py-2 border-b border-gray-100">
+            <div class="text-sm text-gray-800 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-emerald-400 shrink-0"></span>ИНН</div>
+            <select class="h-9 w-full px-3 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-200"><option>inn</option><option>tax_id</option><option>UF_INN</option></select>
+          </div>
+          <div class="grid grid-cols-2 gap-4 items-center py-2 border-b border-gray-100">
+            <div class="text-sm text-gray-800 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-emerald-400 shrink-0"></span>СНИЛС</div>
+            <select class="h-9 w-full px-3 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-200"><option>snils</option><option>pension_id</option><option>— не заполнять —</option></select>
+          </div>
+          <div class="grid grid-cols-2 gap-4 items-center py-2 border-b border-gray-100">
+            <div class="text-sm text-gray-800 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-amber-400 shrink-0"></span>Адрес регистрации</div>
+            <select class="h-9 w-full px-3 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-200"><option>reg_address</option><option>address</option><option>UF_REG_ADDRESS</option></select>
+          </div>
+          <div class="grid grid-cols-2 gap-4 items-center py-2 border-b border-gray-100">
+            <div class="text-sm text-gray-800 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-amber-400 shrink-0"></span>Адрес проживания</div>
+            <select class="h-9 w-full px-3 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-200"><option>live_address</option><option>address2</option><option>— не заполнять —</option></select>
+          </div>
+          <div class="grid grid-cols-2 gap-4 items-center py-2 border-b border-gray-100">
+            <div class="text-sm text-gray-800 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-amber-400 shrink-0"></span>Регион</div>
+            <select class="h-9 w-full px-3 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-200"><option>region</option><option>city</option><option>UF_REGION</option></select>
+          </div>
+          <div class="grid grid-cols-2 gap-4 items-center py-2 border-b border-gray-100">
+            <div class="text-sm text-gray-800 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-amber-400 shrink-0"></span>Сумма долга</div>
+            <select class="h-9 w-full px-3 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-200"><option>debt_amount</option><option>amount</option><option>UF_DEBT</option></select>
+          </div>
+          <div class="grid grid-cols-2 gap-4 items-center py-2 border-b border-gray-100">
+            <div class="text-sm text-gray-800 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-rose-400 shrink-0"></span>Количество кредиторов</div>
+            <select class="h-9 w-full px-3 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-200"><option>creditors_count</option><option>UF_CREDITORS</option><option>— не заполнять —</option></select>
+          </div>
+          <div class="grid grid-cols-2 gap-4 items-center py-2 border-b border-gray-100">
+            <div class="text-sm text-gray-800 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-rose-400 shrink-0"></span>Источник лида</div>
+            <select class="h-9 w-full px-3 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-200"><option>lead_source</option><option>utm_source</option><option>source</option></select>
+          </div>
+          <div class="grid grid-cols-2 gap-4 items-center py-2 border-b border-gray-100">
+            <div class="text-sm text-gray-800 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-rose-400 shrink-0"></span>Ответственный менеджер</div>
+            <select class="h-9 w-full px-3 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-200"><option>assigned_user_id</option><option>manager_id</option><option>responsible_id</option></select>
+          </div>
+          <div class="grid grid-cols-2 gap-4 items-center py-2 border-b border-gray-100">
+            <div class="text-sm text-gray-800 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-purple-400 shrink-0"></span>Стадия дела</div>
+            <select class="h-9 w-full px-3 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-200"><option>stage_id</option><option>deal_stage</option><option>status</option></select>
+          </div>
+          <div class="grid grid-cols-2 gap-4 items-center py-2 border-b border-gray-100">
+            <div class="text-sm text-gray-800 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-purple-400 shrink-0"></span>Дата создания</div>
+            <select class="h-9 w-full px-3 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-200"><option>created_at</option><option>date_create</option><option>DATE_CREATE</option></select>
+          </div>
+          <div class="grid grid-cols-2 gap-4 items-center py-2 border-b border-gray-100">
+            <div class="text-sm text-gray-800 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-purple-400 shrink-0"></span>Дата последнего изменения</div>
+            <select class="h-9 w-full px-3 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-200"><option>updated_at</option><option>date_modify</option><option>DATE_MODIFY</option></select>
+          </div>
+          <div class="grid grid-cols-2 gap-4 items-center py-2 border-b border-gray-100">
+            <div class="text-sm text-gray-800 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-sky-400 shrink-0"></span>Комментарий</div>
+            <select class="h-9 w-full px-3 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-200"><option>comment</option><option>notes</option><option>description</option></select>
+          </div>
+          <div class="grid grid-cols-2 gap-4 items-center py-2 border-b border-gray-100">
+            <div class="text-sm text-gray-800 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-sky-400 shrink-0"></span>Теги</div>
+            <select class="h-9 w-full px-3 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-200"><option>tags</option><option>UF_TAGS</option><option>— не заполнять —</option></select>
+          </div>
+          <div class="grid grid-cols-2 gap-4 items-center py-2 border-b border-gray-100">
+            <div class="text-sm text-gray-800 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-sky-400 shrink-0"></span>Тип банкротства</div>
+            <select class="h-9 w-full px-3 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-200"><option>bankruptcy_type</option><option>UF_TYPE</option><option>deal_type</option></select>
+          </div>
+          <div class="grid grid-cols-2 gap-4 items-center py-2 border-b border-gray-100">
+            <div class="text-sm text-gray-800 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-sky-400 shrink-0"></span>Арбитражный управляющий</div>
+            <select class="h-9 w-full px-3 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-200"><option>arbitr_manager</option><option>UF_ARBITR</option><option>— не заполнять —</option></select>
+          </div>
+          <div class="grid grid-cols-2 gap-4 items-center py-2 border-b border-gray-100">
+            <div class="text-sm text-gray-800 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-teal-400 shrink-0"></span>Дата суда</div>
+            <select class="h-9 w-full px-3 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-200"><option>court_date</option><option>UF_COURT_DATE</option><option>hearing_date</option></select>
+          </div>
+          <div class="grid grid-cols-2 gap-4 items-center py-2 border-b border-gray-100">
+            <div class="text-sm text-gray-800 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-teal-400 shrink-0"></span>Номер дела в суде</div>
+            <select class="h-9 w-full px-3 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-200"><option>court_case_number</option><option>UF_CASE_NUM</option><option>case_id</option></select>
+          </div>
+          <div class="grid grid-cols-2 gap-4 items-center py-2 border-b border-gray-100">
+            <div class="text-sm text-gray-800 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-teal-400 shrink-0"></span>Оплата (факт)</div>
+            <select class="h-9 w-full px-3 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-200"><option>payment_amount</option><option>UF_PAYMENT</option><option>paid_sum</option></select>
+          </div>
+          <div class="grid grid-cols-2 gap-4 items-center py-2 border-b border-gray-100">
+            <div class="text-sm text-gray-800 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-teal-400 shrink-0"></span>Договор №</div>
+            <select class="h-9 w-full px-3 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-200"><option>contract_number</option><option>UF_CONTRACT</option><option>deal_name</option></select>
+          </div>
+          <div class="grid grid-cols-2 gap-4 items-center py-2">
+            <div class="text-sm text-gray-800 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-gray-400 shrink-0"></span>Дата заключения договора</div>
+            <select class="h-9 w-full px-3 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-200"><option>contract_date</option><option>UF_CONTRACT_DATE</option><option>— не заполнять —</option></select>
+          </div>
+        </div>
+        <!-- Footer -->
+        <div class="flex items-center justify-end gap-3 px-6 py-4 border-t border-gray-200 shrink-0">
+          <button id="drawer-cancel" type="button" class="h-9 px-4 rounded-lg border border-gray-200 text-sm text-gray-700 hover:bg-gray-50">Отмена</button>
+          <button type="button" class="h-9 px-5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm">Сохранить сопоставление</button>
+        </div>
+      </div>
+    </div>
+
     <div id="page-source">
       <!-- ==== Вкладки настроек (underline tabs) ==== -->
       <div class="border-b border-gray-200 mb-6">
@@ -40,6 +193,7 @@
       <!-- ==== Панель: Интеграции ==== -->
       <section id="panel-integrations" role="tabpanel" aria-labelledby="tab-integrations-btn" class="settings-panel">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+
           <!-- Карточка: Битрикс24 -->
           <article class="bg-white rounded-xl border border-gray-200 p-6">
             <header class="flex items-start justify-between gap-3">
@@ -115,6 +269,10 @@
               <span class="text-xs text-gray-500">Последняя синхронизация: 5 минут назад</span>
               <div class="flex items-center gap-2">
                 <button type="button" class="h-9 px-3 rounded-lg border border-gray-200 text-sm text-gray-700 hover:bg-gray-50">Проверить соединение</button>
+                <button type="button" data-open-mapping="b24" class="h-9 px-3 rounded-lg border border-indigo-200 text-sm text-indigo-700 hover:bg-indigo-50 inline-flex items-center gap-1.5">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/></svg>
+                  Поля
+                </button>
                 <button type="button" class="h-9 px-3 rounded-lg border border-rose-200 text-sm text-rose-700 hover:bg-rose-50">Отключить</button>
                 <button type="button" class="h-9 px-4 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm">Сохранить</button>
               </div>
@@ -193,6 +351,133 @@
               <button type="button" class="h-9 px-4 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm">Подключить</button>
             </div>
           </article>
+
+          <!-- ===== Карточка: Отправка писем ===== -->
+          <article class="lg:col-span-2 bg-white rounded-xl border border-gray-200 p-6">
+            <header class="flex items-start justify-between gap-3 mb-5">
+              <div class="flex items-center gap-3">
+                <span class="inline-flex items-center justify-center w-11 h-11 rounded-lg bg-violet-100 text-violet-600">
+                  <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                </span>
+                <div>
+                  <h2 class="text-base text-gray-900">Отправка писем</h2>
+                  <p class="text-sm text-gray-500">Настройте SMTP/IMAP и шаблон письма для клиентов</p>
+                </div>
+              </div>
+              <span class="inline-flex items-center gap-1.5 h-6 px-2 rounded-full bg-gray-100 text-gray-600 text-xs">
+                <span class="w-1.5 h-1.5 rounded-full bg-gray-400"></span>
+                Не настроено
+              </span>
+            </header>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <!-- Левая часть: серверные настройки -->
+              <div class="space-y-4">
+                <p class="text-sm font-medium text-gray-700">Параметры сервера</p>
+
+                <!-- Протокол -->
+                <div class="flex gap-2">
+                  <label class="flex-1">
+                    <input type="radio" name="mail-proto" value="smtp" class="peer sr-only" checked />
+                    <span class="flex items-center justify-center h-9 rounded-lg border border-gray-200 text-sm cursor-pointer peer-checked:border-indigo-500 peer-checked:bg-indigo-50 peer-checked:text-indigo-700 hover:border-gray-300">SMTP</span>
+                  </label>
+                  <label class="flex-1">
+                    <input type="radio" name="mail-proto" value="imap" class="peer sr-only" />
+                    <span class="flex items-center justify-center h-9 rounded-lg border border-gray-200 text-sm cursor-pointer peer-checked:border-indigo-500 peer-checked:bg-indigo-50 peer-checked:text-indigo-700 hover:border-gray-300">IMAP</span>
+                  </label>
+                  <label class="flex-1">
+                    <input type="radio" name="mail-proto" value="api" class="peer sr-only" />
+                    <span class="flex items-center justify-center h-9 rounded-lg border border-gray-200 text-sm cursor-pointer peer-checked:border-indigo-500 peer-checked:bg-indigo-50 peer-checked:text-indigo-700 hover:border-gray-300">API</span>
+                  </label>
+                </div>
+
+                <div class="grid grid-cols-3 gap-3">
+                  <div class="col-span-2">
+                    <label for="mail-host" class="block text-sm text-gray-700 mb-1.5">SMTP-сервер</label>
+                    <input id="mail-host" name="mail-host" type="text" placeholder="smtp.mail.ru" class="h-10 w-full px-3 rounded-lg border border-gray-200 bg-white text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400" />
+                  </div>
+                  <div>
+                    <label for="mail-port" class="block text-sm text-gray-700 mb-1.5">Порт</label>
+                    <input id="mail-port" name="mail-port" type="number" placeholder="465" class="h-10 w-full px-3 rounded-lg border border-gray-200 bg-white text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400" />
+                  </div>
+                </div>
+
+                <div>
+                  <label for="mail-login" class="block text-sm text-gray-700 mb-1.5">Логин (email)</label>
+                  <input id="mail-login" name="mail-login" type="email" placeholder="noreply@example.com" class="h-10 w-full px-3 rounded-lg border border-gray-200 bg-white text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400" />
+                </div>
+
+                <div>
+                  <label for="mail-password" class="block text-sm text-gray-700 mb-1.5">Пароль / App-password</label>
+                  <input id="mail-password" name="mail-password" type="password" placeholder="••••••••••••" class="h-10 w-full px-3 rounded-lg border border-gray-200 bg-white text-sm font-mono placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400" />
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                  <div>
+                    <label for="mail-from-name" class="block text-sm text-gray-700 mb-1.5">Имя отправителя</label>
+                    <input id="mail-from-name" name="mail-from-name" type="text" placeholder="ЮрКлик" class="h-10 w-full px-3 rounded-lg border border-gray-200 bg-white text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400" />
+                  </div>
+                  <div>
+                    <label for="mail-encryption" class="block text-sm text-gray-700 mb-1.5">Шифрование</label>
+                    <select id="mail-encryption" name="mail-encryption" class="h-10 w-full px-3 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400">
+                      <option>SSL/TLS</option>
+                      <option>STARTTLS</option>
+                      <option>Нет</option>
+                    </select>
+                  </div>
+                </div>
+
+                <button type="button" class="h-9 px-4 rounded-lg border border-gray-200 text-sm text-gray-700 hover:bg-gray-50 inline-flex items-center gap-2">
+                  <svg class="w-4 h-4 text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 17H2a3 3 0 0 0 3-3V9a7 7 0 0 1 14 0v5a3 3 0 0 0 3 3Z"/><path d="M9 17v1a3 3 0 0 0 6 0v-1"/></svg>
+                  Отправить тестовое письмо
+                </button>
+              </div>
+
+              <!-- Правая часть: шаблон письма -->
+              <div class="space-y-4">
+                <p class="text-sm font-medium text-gray-700">Шаблон письма</p>
+
+                <div>
+                  <label for="mail-subject" class="block text-sm text-gray-700 mb-1.5">Тема письма</label>
+                  <input id="mail-subject" name="mail-subject" type="text" value="Обновление по вашему делу о банкротстве" class="h-10 w-full px-3 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400" />
+                  <p class="mt-1 text-xs text-gray-500">Переменные: <code class="bg-gray-100 px-1 rounded">{{client_name}}</code> <code class="bg-gray-100 px-1 rounded">{{stage}}</code> <code class="bg-gray-100 px-1 rounded">{{date}}</code></p>
+                </div>
+
+                <div class="flex-1">
+                  <label for="mail-body" class="block text-sm text-gray-700 mb-1.5">Тело письма</label>
+                  <textarea id="mail-body" name="mail-body" rows="9" class="w-full px-3 py-2.5 rounded-lg border border-gray-200 bg-white text-sm resize-none focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400">Уважаемый {{client_name}},
+
+информируем вас об изменении статуса по делу:
+
+Текущий этап: {{stage}}
+Дата обновления: {{date}}
+
+Для получения подробной информации войдите в личный кабинет по ссылке: {{cabinet_url}}
+
+С уважением,
+Команда ЮрКлик</textarea>
+                </div>
+
+                <div class="flex items-center gap-3 pt-1">
+                  <label class="relative inline-flex items-center cursor-pointer shrink-0">
+                    <input type="checkbox" class="peer sr-only" checked />
+                    <span class="w-10 h-5 bg-gray-200 rounded-full peer-checked:bg-indigo-600 transition-colors"></span>
+                    <span class="absolute left-0.5 top-0.5 w-4 h-4 rounded-full bg-white shadow transition-transform peer-checked:translate-x-5"></span>
+                  </label>
+                  <span class="text-sm text-gray-700">Автоотправка при смене стадии</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-6 flex items-center justify-between gap-3 pt-4 border-t border-gray-200">
+              <span class="text-xs text-gray-500">Последняя отправка: —</span>
+              <div class="flex items-center gap-2">
+                <button type="button" class="h-9 px-3 rounded-lg border border-rose-200 text-sm text-rose-700 hover:bg-rose-50">Отключить</button>
+                <button type="button" class="h-9 px-4 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm">Сохранить</button>
+              </div>
+            </div>
+          </article>
+
         </div>
       </section>
 
@@ -223,42 +508,67 @@
             </div>
           </div>
 
-          <!-- Цвета бренда -->
+          <!-- Цвета бренда с live-preview -->
           <div class="bg-white rounded-xl border border-gray-200 p-6">
             <h2 class="text-base text-gray-900">Цвета бренда</h2>
-            <p class="text-sm text-gray-500 mt-1">Настройте цветовую палитру кабинета</p>
+            <p class="text-sm text-gray-500 mt-1">Настройте цветовую палитру — изменения отражаются мгновенно</p>
 
             <div class="mt-5 space-y-4">
+              <!-- Основной цвет -->
               <div class="flex items-center gap-3">
                 <label class="inline-flex items-center justify-center w-11 h-11 rounded-lg border border-gray-200 overflow-hidden cursor-pointer shrink-0">
-                  <input type="color" value="#4f46e5" aria-label="Основной цвет" class="w-14 h-14 cursor-pointer border-0 p-0" />
+                  <input id="color-primary" type="color" value="#4f46e5" aria-label="Основной цвет" class="w-14 h-14 cursor-pointer border-0 p-0" />
                 </label>
                 <div class="flex-1 min-w-0">
                   <div class="text-sm text-gray-900">Основной цвет</div>
                   <div class="text-xs text-gray-500">Используется в меню и акцентах</div>
                 </div>
-                <input type="text" value="#4F46E5" aria-label="HEX основного цвета" class="h-10 w-28 px-3 rounded-lg border border-gray-200 bg-white text-sm text-gray-700 uppercase focus:outline-none focus:ring-2 focus:ring-indigo-200" />
+                <input id="hex-primary" type="text" value="#4F46E5" aria-label="HEX основного цвета" class="h-10 w-28 px-3 rounded-lg border border-gray-200 bg-white text-sm text-gray-700 uppercase focus:outline-none focus:ring-2 focus:ring-indigo-200" />
               </div>
+              <!-- Дополнительный цвет -->
               <div class="flex items-center gap-3">
                 <label class="inline-flex items-center justify-center w-11 h-11 rounded-lg border border-gray-200 overflow-hidden cursor-pointer shrink-0">
-                  <input type="color" value="#06b6d4" aria-label="Дополнительный цвет" class="w-14 h-14 cursor-pointer border-0 p-0" />
+                  <input id="color-secondary" type="color" value="#06b6d4" aria-label="Дополнительный цвет" class="w-14 h-14 cursor-pointer border-0 p-0" />
                 </label>
                 <div class="flex-1 min-w-0">
                   <div class="text-sm text-gray-900">Дополнительный цвет</div>
                   <div class="text-xs text-gray-500">Используется в графиках и метках</div>
                 </div>
-                <input type="text" value="#06B6D4" aria-label="HEX дополнительного цвета" class="h-10 w-28 px-3 rounded-lg border border-gray-200 bg-white text-sm text-gray-700 uppercase focus:outline-none focus:ring-2 focus:ring-indigo-200" />
+                <input id="hex-secondary" type="text" value="#06B6D4" aria-label="HEX дополнительного цвета" class="h-10 w-28 px-3 rounded-lg border border-gray-200 bg-white text-sm text-gray-700 uppercase focus:outline-none focus:ring-2 focus:ring-indigo-200" />
               </div>
+              <!-- Цвет кнопок -->
               <div class="flex items-center gap-3">
                 <label class="inline-flex items-center justify-center w-11 h-11 rounded-lg border border-gray-200 overflow-hidden cursor-pointer shrink-0">
-                  <input type="color" value="#4f46e5" aria-label="Цвет кнопок" class="w-14 h-14 cursor-pointer border-0 p-0" />
+                  <input id="color-button" type="color" value="#4f46e5" aria-label="Цвет кнопок" class="w-14 h-14 cursor-pointer border-0 p-0" />
                 </label>
                 <div class="flex-1 min-w-0">
                   <div class="text-sm text-gray-900">Кнопки</div>
                   <div class="text-xs text-gray-500">Цвет CTA-кнопок</div>
                 </div>
-                <input type="text" value="#4F46E5" aria-label="HEX кнопок" class="h-10 w-28 px-3 rounded-lg border border-gray-200 bg-white text-sm text-gray-700 uppercase focus:outline-none focus:ring-2 focus:ring-indigo-200" />
+                <input id="hex-button" type="text" value="#4F46E5" aria-label="HEX кнопок" class="h-10 w-28 px-3 rounded-lg border border-gray-200 bg-white text-sm text-gray-700 uppercase focus:outline-none focus:ring-2 focus:ring-indigo-200" />
               </div>
+            </div>
+
+            <!-- Live preview -->
+            <div id="brand-preview" class="mt-5 rounded-xl border border-gray-200 overflow-hidden">
+              <div id="preview-header" class="px-4 py-3 flex items-center gap-3" style="background-color:#4f46e5;">
+                <span class="text-white text-sm font-medium">Правовая группа</span>
+                <span id="preview-badge" class="ml-auto text-xs px-2 py-0.5 rounded-full bg-white/20 text-white">Банкротство</span>
+              </div>
+              <div class="p-4 bg-gray-50 space-y-3">
+                <div class="flex gap-2 items-center">
+                  <span id="preview-dot" class="w-3 h-3 rounded-full shrink-0" style="background-color:#06b6d4;"></span>
+                  <span class="text-sm text-gray-700">Стадия: <strong>Реализация имущества</strong></span>
+                </div>
+                <div class="flex gap-2">
+                  <button id="preview-btn-primary" class="h-8 px-4 rounded-lg text-white text-sm" style="background-color:#4f46e5;">Перейти в дело</button>
+                  <button id="preview-btn-outline" class="h-8 px-4 rounded-lg text-sm border-2" style="color:#4f46e5; border-color:#4f46e5;">Документы</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-4 flex items-center justify-end">
+              <button type="button" class="h-9 px-5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm" id="brand-colors-save">Сохранить цвета</button>
             </div>
           </div>
         </div>
@@ -327,61 +637,4 @@
               <svg class="w-10 h-10 mx-auto text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M12 15V3"/><path d="M7 8l5-5 5 5"/><rect x="3" y="15" width="18" height="6" rx="2"/>
               </svg>
-              <p class="mt-3 text-sm text-gray-700">Перетащите файл сюда или нажмите для выбора</p>
-              <p class="mt-1 text-xs text-gray-500">Загрузить логотип, PNG, SVG, JPG — до 2 МБ</p>
-              <input id="brand-logo-input" name="brand-logo" type="file" class="sr-only" accept=".png,.svg,.jpg,.jpeg" />
-            </label>
-
-            <div class="mt-5">
-              <label for="brand-company-name" class="block text-sm text-gray-700 mb-1.5">Название компании <span class="text-gray-400">(если нет логотипа)</span></label>
-              <input id="brand-company-name" name="brand-company-name" type="text" value="Правовая группа" class="h-10 w-full px-3 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400" />
-            </div>
-
-            <div class="mt-6 flex items-center justify-end gap-2">
-              <button type="button" class="h-10 px-4 rounded-lg border border-gray-200 text-sm text-gray-700 hover:bg-gray-50">Сбросить</button>
-              <button type="button" class="h-10 px-4 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm">Сохранить</button>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
-
-    <script src="assets/layout.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.2/flowbite.min.js"></script>
-    <script>
-      // Переключение вкладок настроек: ставит активную, переключает border-b и текстовый цвет.
-      // Состояние читается из ?tab=integrations|branding (для глубоких ссылок), по умолчанию — integrations.
-      document.addEventListener("layout:ready", () => {
-        const tabs = document.querySelectorAll(".settings-tab");
-        const panels = document.querySelectorAll(".settings-panel");
-
-        function activate(key) {
-          tabs.forEach((t) => {
-            const active = t.dataset.tab === key;
-            t.setAttribute("aria-selected", active ? "true" : "false");
-            t.classList.toggle("border-indigo-600", active);
-            t.classList.toggle("text-indigo-600", active);
-            t.classList.toggle("border-transparent", !active);
-            t.classList.toggle("text-gray-500", !active);
-            t.classList.toggle("hover:text-gray-700", !active);
-            t.classList.toggle("hover:border-gray-300", !active);
-            const svg = t.querySelector("svg");
-            if (svg) svg.classList.toggle("text-gray-400", !active);
-          });
-          panels.forEach((p) => {
-            p.classList.toggle("hidden", p.id !== "panel-" + key);
-          });
-        }
-
-        tabs.forEach((t) => {
-          t.addEventListener("click", () => activate(t.dataset.tab));
-        });
-
-        // ?tab=branding → автостарт на нужной вкладке
-        const params = new URLSearchParams(window.location.search);
-        const initial = params.get("tab");
-        if (initial === "branding" || initial === "integrations") activate(initial);
-      });
-    </script>
-  </body>
-</html>
+              <p class
