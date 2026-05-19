@@ -542,6 +542,35 @@
       </section>
     </div>
 
+    <script>
+      // Переключатель вкладок настроек (Интеграции / Брендинг)
+      (function () {
+        const tabs = document.querySelectorAll('#settings-tablist .settings-tab');
+        const panels = document.querySelectorAll('.settings-panel');
+        if (!tabs.length || !panels.length) return;
+
+        function activate(name) {
+          tabs.forEach(function (btn) {
+            const isActive = btn.getAttribute('data-tab') === name;
+            btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+            btn.classList.toggle('border-indigo-600', isActive);
+            btn.classList.toggle('text-indigo-600', isActive);
+            btn.classList.toggle('border-transparent', !isActive);
+            btn.classList.toggle('text-gray-500', !isActive);
+          });
+          panels.forEach(function (panel) {
+            const matches = panel.id === 'panel-' + name;
+            panel.classList.toggle('hidden', !matches);
+          });
+        }
+
+        tabs.forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            activate(btn.getAttribute('data-tab'));
+          });
+        });
+      })();
+    </script>
     <script src="assets/layout.js"></script>
   </body>
 </html>
