@@ -548,122 +548,144 @@
     </div>
 
     <script>
-      // Переключатель вкладок настроек (Интеграции / Брендинг)
+      // Переключатель вкладок настроек (Интеграции / Брендинг).
+      // ВАЖНО: layout.js переносит разметку из #page-source в #page-content через innerHTML
+      // и удаляет оригинал. Обработчики, навешенные до этого, бы терялись.
+      // Поэтому ждём событие layout:ready.
       (function () {
-        const tabs = document.querySelectorAll('#settings-tablist .settings-tab');
-        const panels = document.querySelectorAll('.settings-panel');
-        if (!tabs.length || !panels.length) return;
+        function initSettingsTabs() {
+          const tabs = document.querySelectorAll('#settings-tablist .settings-tab');
+          const panels = document.querySelectorAll('.settings-panel');
+          if (!tabs.length || !panels.length) return;
 
-        function activate(name) {
+          function activate(name) {
+            tabs.forEach(function (btn) {
+              const isActive = btn.getAttribute('data-tab') === name;
+              btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+              btn.classList.toggle('border-indigo-600', isActive);
+              btn.classList.toggle('text-indigo-600', isActive);
+              btn.classList.toggle('border-transparent', !isActive);
+              btn.classList.toggle('text-gray-500', !isActive);
+            });
+            panels.forEach(function (panel) {
+              const matches = panel.id === 'panel-' + name;
+              panel.classList.toggle('hidden', !matches);
+            });
+          }
+
           tabs.forEach(function (btn) {
-            const isActive = btn.getAttribute('data-tab') === name;
-            btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
-            btn.classList.toggle('border-indigo-600', isActive);
-            btn.classList.toggle('text-indigo-600', isActive);
-            btn.classList.toggle('border-transparent', !isActive);
-            btn.classList.toggle('text-gray-500', !isActive);
-          });
-          panels.forEach(function (panel) {
-            const matches = panel.id === 'panel-' + name;
-            panel.classList.toggle('hidden', !matches);
+            btn.addEventListener('click', function () {
+              activate(btn.getAttribute('data-tab'));
+            });
           });
         }
 
-        tabs.forEach(function (btn) {
-          btn.addEventListener('click', function () {
-            activate(btn.getAttribute('data-tab'));
-          });
-        });
+        if (!document.getElementById('page-source')) {
+          initSettingsTabs();
+        } else {
+          document.addEventListener('layout:ready', initSettingsTabs, { once: true });
+        }
       })();
     </script>
 
     <script>
-      // Брендинг: цвет-пикеры, пресеты, live-превью, тост сохранения
+      // Брендинг: цвет-пикеры, пресеты, live-превью, тост сохранения.
+      // Ждём layout:ready — layout.js переносит разметку из #page-source в #page-content
+      // через innerHTML, поэтому инициализация должна быть ПОСЛЕ этого.
       (function () {
-        const cp = document.getElementById('brand-cp');
-        const cs = document.getElementById('brand-cs');
-        const cb = document.getElementById('brand-cb');
-        if (!cp || !cs || !cb) return;
+        function initBranding() {
+          const cp = document.getElementById('brand-cp');
+          const cs = document.getElementById('brand-cs');
+          const cb = document.getElementById('brand-cb');
+          if (!cp || !cs || !cb) return;
 
-        const state = { p: '#2563eb', sec: '#64748b', b: '#111827' };
+          const state = { p: '#2563eb', sec: '#64748b', b: '#111827' };
 
-        const presets = [
-          { l: 'Синий',      p: '#2563eb', sec: '#64748b', b: '#1e3a8a' },
-          { l: 'Изумруд',    p: '#059669', sec: '#0f766e', b: '#065f46' },
-          { l: 'Фиолетовый', p: '#7c3aed', sec: '#6d28d9', b: '#4c1d95' },
-          { l: 'Розовый',    p: '#db2777', sec: '#9d174d', b: '#831843' },
-          { l: 'Янтарь',     p: '#d97706', sec: '#92400e', b: '#78350f' },
-          { l: 'Тёмный',     p: '#374151', sec: '#6b7280', b: '#111827' }
-        ];
+          const presets = [
+            { l: 'Синий',      p: '#2563eb', sec: '#64748b', b: '#1e3a8a' },
+            { l: 'Изумруд',    p: '#059669', sec: '#0f766e', b: '#065f46' },
+            { l: 'Фиолетовый', p: '#7c3aed', sec: '#6d28d9', b: '#4c1d95' },
+            { l: 'Розовый',    p: '#db2777', sec: '#9d174d', b: '#831843' },
+            { l: 'Янтарь',     p: '#d97706', sec: '#92400e', b: '#78350f' },
+            { l: 'Тёмный',     p: '#374151', sec: '#6b7280', b: '#111827' }
+          ];
 
-        const presetWrap = document.getElementById('brand-presets');
-        if (presetWrap) {
-          presets.forEach(function (item) {
-            const btn = document.createElement('button');
-            btn.type = 'button';
-            btn.className = 'inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-gray-200 text-xs text-gray-600 hover:border-gray-400 transition-colors';
-            const dot = document.createElement('span');
-            dot.className = 'w-2.5 h-2.5 rounded-full inline-block shrink-0';
-            dot.style.backgroundColor = item.p;
-            btn.appendChild(dot);
-            btn.appendChild(document.createTextNode(item.l));
-            btn.addEventListener('click', function () {
-              cp.value = item.p; cs.value = item.sec; cb.value = item.b;
-              state.p = item.p; state.sec = item.sec; state.b = item.b;
-              sync();
+          const presetWrap = document.getElementById('brand-presets');
+          if (presetWrap && !presetWrap.dataset.ready) {
+            presets.forEach(function (item) {
+              const btn = document.createElement('button');
+              btn.type = 'button';
+              btn.className = 'inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-gray-200 text-xs text-gray-600 hover:border-gray-400 transition-colors';
+              const dot = document.createElement('span');
+              dot.className = 'w-2.5 h-2.5 rounded-full inline-block shrink-0';
+              dot.style.backgroundColor = item.p;
+              btn.appendChild(dot);
+              btn.appendChild(document.createTextNode(item.l));
+              btn.addEventListener('click', function () {
+                cp.value = item.p; cs.value = item.sec; cb.value = item.b;
+                state.p = item.p; state.sec = item.sec; state.b = item.b;
+                sync();
+              });
+              presetWrap.appendChild(btn);
             });
-            presetWrap.appendChild(btn);
-          });
+            presetWrap.dataset.ready = '1';
+          }
+
+          function bind(input, key) {
+            input.addEventListener('input', function (e) { state[key] = e.target.value; sync(); });
+          }
+          bind(cp, 'p'); bind(cs, 'sec'); bind(cb, 'b');
+
+          function setBg(id, color) {
+            const el = document.getElementById(id);
+            if (el) el.style.backgroundColor = color;
+          }
+          function setColor(id, color) {
+            const el = document.getElementById(id);
+            if (el) el.style.color = color;
+          }
+          function setText(id, text) {
+            const el = document.getElementById(id);
+            if (el) el.textContent = text;
+          }
+
+          function sync() {
+            const p = state.p, sec = state.sec, b = state.b;
+            setBg('brand-sp', p); setBg('brand-ss', sec); setBg('brand-sb', b);
+            setText('brand-hp', p.toUpperCase());
+            setText('brand-hs', sec.toUpperCase());
+            setText('brand-hb', b.toUpperCase());
+            setBg('brand-pv-top', p);
+            ['brand-pv-k1','brand-pv-k2','brand-pv-k3','brand-pv-lnk'].forEach(function (id) { setColor(id, p); });
+            ['brand-pv-a1','brand-pv-a2'].forEach(function (id) { setBg(id, p); });
+            ['brand-pv-b1','brand-pv-b2'].forEach(function (id) { setBg(id, sec); });
+            setBg('brand-pv-btn1', b);
+            const btn2 = document.getElementById('brand-pv-btn2');
+            if (btn2) { btn2.style.borderColor = b; btn2.style.color = b; }
+            setBg('brand-str-p', p); setBg('brand-str-s', sec); setBg('brand-str-b', b);
+          }
+
+          // Сохранение + тост
+          const saveBtn = document.getElementById('brand-btn-save');
+          const saveLabel = document.getElementById('brand-btn-save-label');
+          const toast = document.getElementById('brand-toast');
+          if (saveBtn && saveLabel && toast) {
+            saveBtn.addEventListener('click', function () {
+              saveLabel.textContent = 'Сохранено!';
+              setTimeout(function () { saveLabel.textContent = 'Сохранить настройки'; }, 2200);
+              toast.classList.remove('hidden');
+              setTimeout(function () { toast.classList.add('hidden'); }, 2600);
+            });
+          }
+
+          sync();
         }
 
-        function bind(input, key) {
-          input.addEventListener('input', function (e) { state[key] = e.target.value; sync(); });
+        if (!document.getElementById('page-source')) {
+          initBranding();
+        } else {
+          document.addEventListener('layout:ready', initBranding, { once: true });
         }
-        bind(cp, 'p'); bind(cs, 'sec'); bind(cb, 'b');
-
-        function setBg(id, color) {
-          const el = document.getElementById(id);
-          if (el) el.style.backgroundColor = color;
-        }
-        function setColor(id, color) {
-          const el = document.getElementById(id);
-          if (el) el.style.color = color;
-        }
-        function setText(id, text) {
-          const el = document.getElementById(id);
-          if (el) el.textContent = text;
-        }
-
-        function sync() {
-          const p = state.p, sec = state.sec, b = state.b;
-          setBg('brand-sp', p); setBg('brand-ss', sec); setBg('brand-sb', b);
-          setText('brand-hp', p.toUpperCase());
-          setText('brand-hs', sec.toUpperCase());
-          setText('brand-hb', b.toUpperCase());
-          setBg('brand-pv-top', p);
-          ['brand-pv-k1','brand-pv-k2','brand-pv-k3','brand-pv-lnk'].forEach(function (id) { setColor(id, p); });
-          ['brand-pv-a1','brand-pv-a2'].forEach(function (id) { setBg(id, p); });
-          ['brand-pv-b1','brand-pv-b2'].forEach(function (id) { setBg(id, sec); });
-          setBg('brand-pv-btn1', b);
-          const btn2 = document.getElementById('brand-pv-btn2');
-          if (btn2) { btn2.style.borderColor = b; btn2.style.color = b; }
-          setBg('brand-str-p', p); setBg('brand-str-s', sec); setBg('brand-str-b', b);
-        }
-
-        // Сохранение + тост
-        const saveBtn = document.getElementById('brand-btn-save');
-        const saveLabel = document.getElementById('brand-btn-save-label');
-        const toast = document.getElementById('brand-toast');
-        if (saveBtn && saveLabel && toast) {
-          saveBtn.addEventListener('click', function () {
-            saveLabel.textContent = 'Сохранено!';
-            setTimeout(function () { saveLabel.textContent = 'Сохранить настройки'; }, 2200);
-            toast.classList.remove('hidden');
-            setTimeout(function () { toast.classList.add('hidden'); }, 2600);
-          });
-        }
-
-        sync();
       })();
     </script>
     <script src="assets/layout.js"></script>
