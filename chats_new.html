@@ -219,14 +219,6 @@
       // ====== Список диалогов (левая колонка) ======
       function lastMsg(c) { return c.messages[c.messages.length - 1]; }
 
-      function dialogPreview(m) {
-        if (!m) return "Нет сообщений";
-        const prefix = m.from === "lawyer" ? "Вы: " : "";
-        if (m.text) return prefix + m.text;
-        if (m.files && m.files.length) return prefix + "📎 " + m.files[0].name;
-        return prefix;
-      }
-
       function renderDialogs(filterText) {
         const list = document.getElementById("dialogs-list");
         const empty = document.getElementById("dialogs-empty");
@@ -268,9 +260,8 @@
                 <span class="text-sm text-gray-900 truncate ${c.unread > 0 ? "font-medium" : ""}">${c.name}</span>
                 <span class="text-xs text-gray-400 shrink-0">${fmtDialogTime(m.ts)}</span>
               </div>
-              <div class="text-xs text-indigo-600 truncate">${c.caseNo}</div>
-              <div class="flex items-center justify-between gap-2 mt-0.5">
-                <span class="text-xs text-gray-500 truncate ${c.unread > 0 ? "text-gray-700" : ""}">${dialogPreview(m)}</span>
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-xs text-indigo-600 truncate">${c.caseNo}</span>
                 ${c.unread > 0
                   ? `<span class="inline-flex items-center justify-center min-w-[1.25rem] h-5 px-1.5 text-[10px] font-medium bg-indigo-600 text-white rounded-full shrink-0" aria-label="Непрочитанных: ${c.unread}">${c.unread}</span>`
                   : ""}
