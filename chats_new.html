@@ -417,20 +417,54 @@
 
         // ===== Сворачиваем сайдбар до иконок (только на этой странице, от lg) =====
         // На мобильных сайдбар по-прежнему выезжает из-за края и работает через гамбургер.
+        // Tailwind CDN плохо жуёт lg:hover:* и lg:group-hover/*, поэтому hover-разворот делаем через mouseenter/mouseleave,
+        // переключая те же Tailwind-классы. Никакого кастомного CSS/inline-style нет.
         const sidebar = document.getElementById("sidebar");
+        const isDesktop = () => window.matchMedia("(min-width: 1024px)").matches;
+
+        // Сбор ссылок-пунктов меню внутри <nav> (обходим логотип и блок уведомлений, они уже выравнены)
+        const navLinks = sidebar ? Array.from(sidebar.querySelectorAll("nav a")) : [];
+
+        function collapseSidebar() {
+          if (!sidebar || !isDesktop()) return;
+          sidebar.classList.remove("w-64", "shadow-2xl");
+          sidebar.classList.add("w-16", "overflow-hidden");
+          sidebar.querySelectorAll(".sidebar-label").forEach((el) => el.classList.add("hidden"));
+          // В свёрнутом виде: иконки по центру, без боковых padding’ов, чтобы active-фон сидел ровно под иконкой
+          navLinks.forEach((a) => {
+            a.classList.remove("gap-3", "px-3");
+            a.classList.add("justify-center", "px-0");
+          });
+        }
+        function expandSidebar() {
+          if (!sidebar || !isDesktop()) return;
+          sidebar.classList.remove("w-16");
+          sidebar.classList.add("w-64", "shadow-2xl", "z-50");
+          sidebar.querySelectorAll(".sidebar-label").forEach((el) => el.classList.remove("hidden"));
+          navLinks.forEach((a) => {
+            a.classList.remove("justify-center", "px-0");
+            a.classList.add("gap-3", "px-3");
+          });
+        }
+
         if (sidebar) {
-          // Базовая ширина w-64 → на lg принудительно w-16, по hover обратно w-64 + тень и z-50 (поверх чата)
-          sidebar.classList.add(
-            "lg:w-16", "lg:hover:w-64",
-            "lg:hover:shadow-2xl", "lg:hover:z-50",
-            "overflow-hidden"
-          );
-          // Скрываем все текстовые подписи в свёрнутом состоянии, показываем при hover по сайдбару
-          sidebar.querySelectorAll(".sidebar-label").forEach((el) => {
-            el.classList.add(
-              "lg:hidden",
-              "lg:group-hover/sidebar:inline"
-            );
+          // Стартовое свёрнутое состояние
+          collapseSidebar();
+          sidebar.addEventListener("mouseenter", expandSidebar);
+          sidebar.addEventListener("mouseleave", collapseSidebar);
+          // При ресайзе (переход mobile <-> desktop) возвращаем всё к base и применяем снова
+          window.addEventListener("resize", () => {
+            if (isDesktop()) {
+              collapseSidebar();
+            } else {
+              sidebar.classList.remove("w-16", "shadow-2xl", "overflow-hidden");
+              sidebar.classList.add("w-64");
+              sidebar.querySelectorAll(".sidebar-label").forEach((el) => el.classList.remove("hidden"));
+              navLinks.forEach((a) => {
+                a.classList.remove("justify-center", "px-0");
+                a.classList.add("gap-3", "px-3");
+              });
+            }
           });
         }
 

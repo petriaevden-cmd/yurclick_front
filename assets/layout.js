@@ -65,7 +65,7 @@
 
   function sidebarHtml(activeKey) {
     return `
-    <aside id="sidebar" class="group/sidebar fixed inset-y-0 left-0 z-40 w-64 bg-white border-r border-gray-200 flex flex-col -translate-x-full lg:translate-x-0 transition-[width,transform] duration-200">
+    <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-64 bg-white border-r border-gray-200 flex flex-col -translate-x-full lg:translate-x-0 transition-all duration-200">
       <!-- Логотип -->
       <div class="h-16 flex items-center px-5 border-b border-gray-200 shrink-0 overflow-hidden">
         <a href="dashboard.html" class="flex items-center gap-2">
