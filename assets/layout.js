@@ -58,19 +58,19 @@
     return `<li>
       <a href="${item.href}" class="${base} ${state}">
         ${item.icon}
-        <span class="truncate">${item.label}</span>
+        <span class="sidebar-label truncate">${item.label}</span>
       </a>
     </li>`;
   }
 
   function sidebarHtml(activeKey) {
     return `
-    <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-64 bg-white border-r border-gray-200 flex flex-col -translate-x-full lg:translate-x-0 transition-transform">
+    <aside id="sidebar" class="group/sidebar fixed inset-y-0 left-0 z-40 w-64 bg-white border-r border-gray-200 flex flex-col -translate-x-full lg:translate-x-0 transition-[width,transform] duration-200">
       <!-- Логотип -->
-      <div class="h-16 flex items-center px-5 border-b border-gray-200 shrink-0">
+      <div class="h-16 flex items-center px-5 border-b border-gray-200 shrink-0 overflow-hidden">
         <a href="dashboard.html" class="flex items-center gap-2">
-          <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-indigo-600 text-white text-sm">Ю</span>
-          <span class="text-gray-900 text-base tracking-tight">ЮрКлик</span>
+          <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-indigo-600 text-white text-sm shrink-0">Ю</span>
+          <span class="sidebar-label text-gray-900 text-base tracking-tight whitespace-nowrap">ЮрКлик</span>
         </a>
       </div>
 
@@ -78,7 +78,7 @@
       <div class="px-4 pt-4">
         <a href="notifications.html" class="flex items-center gap-2 px-3 py-2.5 rounded-lg border border-yellow-300 bg-yellow-50 text-yellow-800 hover:bg-yellow-100 transition-colors">
           ${ICONS.bell}
-          <span class="text-sm">7 уведомлений</span>
+          <span class="sidebar-label text-sm whitespace-nowrap">7 уведомлений</span>
         </a>
       </div>
 
@@ -92,11 +92,11 @@
       <!-- Блок администратора -->
       <div class="px-4 py-4 border-t border-gray-200 shrink-0">
         <div class="flex items-center justify-between gap-2">
-          <div class="min-w-0">
+          <div class="sidebar-label min-w-0">
             <p class="text-sm text-gray-900 truncate">Иван Петров</p>
             <p class="text-xs text-gray-500 truncate">Администратор</p>
           </div>
-          <button type="button" class="inline-flex items-center justify-center w-9 h-9 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-gray-900" title="Выйти">
+          <button type="button" class="inline-flex items-center justify-center w-9 h-9 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-gray-900 shrink-0" title="Выйти">
             <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
               <path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3"/>
               <path d="M10 17l-5-5 5-5"/>

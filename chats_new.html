@@ -400,6 +400,9 @@
         // Чтобы получить full-screen чат: убираем у обёртки все отступы и удаляем <header>.
         const main = document.querySelector("main");
         if (main) {
+          // Сайдбар сворачивается до иконок — двигаем main на 16, а не на 64
+          main.classList.remove("lg:pl-64");
+          main.classList.add("lg:pl-16");
           const wrap = main.firstElementChild; // div с padding'ами
           if (wrap) {
             wrap.classList.remove(
@@ -410,6 +413,25 @@
             const header = wrap.querySelector("header");
             if (header) header.remove();
           }
+        }
+
+        // ===== Сворачиваем сайдбар до иконок (только на этой странице, от lg) =====
+        // На мобильных сайдбар по-прежнему выезжает из-за края и работает через гамбургер.
+        const sidebar = document.getElementById("sidebar");
+        if (sidebar) {
+          // Базовая ширина w-64 → на lg принудительно w-16, по hover обратно w-64 + тень и z-50 (поверх чата)
+          sidebar.classList.add(
+            "lg:w-16", "lg:hover:w-64",
+            "lg:hover:shadow-2xl", "lg:hover:z-50",
+            "overflow-hidden"
+          );
+          // Скрываем все текстовые подписи в свёрнутом состоянии, показываем при hover по сайдбару
+          sidebar.querySelectorAll(".sidebar-label").forEach((el) => {
+            el.classList.add(
+              "lg:hidden",
+              "lg:group-hover/sidebar:inline"
+            );
+          });
         }
 
         // Auto-grow textarea
