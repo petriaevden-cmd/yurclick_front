@@ -17,15 +17,17 @@
     <div id="app-shell" data-page="chats" data-title="Чаты с клиентами"></div>
 
     <div id="page-source">
-      <!-- ==== Двухпанельный мессенджер ==== -->
-      <div class="bg-white rounded-xl border border-gray-200 overflow-hidden h-[calc(100vh-12rem)] min-h-[480px] grid grid-cols-1 md:grid-cols-[320px_1fr] lg:grid-cols-[360px_1fr]">
+      <!-- ==== Двухпанельный мессенджер на всю высоту окна ==== -->
+      <!-- Высота: 100vh; на мобильном вычитаем 4rem под кнопку-гамбургер сверху (pt-16 в layout) -->
+      <div id="chats-root"
+           class="bg-white border-y border-gray-200 lg:border lg:rounded-none overflow-hidden h-[calc(100vh-4rem)] lg:h-screen grid grid-cols-1 md:grid-cols-[320px_1fr] lg:grid-cols-[360px_1fr]">
 
         <!-- ====== Левая колонка: список диалогов ====== -->
         <aside id="chats-aside" class="border-r border-gray-200 flex flex-col min-h-0">
           <!-- Поиск -->
           <div class="p-3 border-b border-gray-200 shrink-0">
             <div class="relative">
-              <svg class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+              <svg class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
               <input id="chats-search" type="text" placeholder="Поиск по ФИО или № дела…" aria-label="Поиск диалогов"
                      class="h-10 w-full pl-9 pr-3 rounded-lg border border-gray-200 bg-white text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400" />
             </div>
@@ -42,12 +44,12 @@
 
         <!-- ====== Правая колонка: лента сообщений ====== -->
         <section class="flex flex-col min-h-0">
-          <!-- Header -->
-          <header id="chat-header" class="px-4 sm:px-5 py-3 border-b border-gray-200 flex items-center justify-between gap-3 shrink-0">
+          <!-- Header диалога -->
+          <header id="chat-header" class="px-4 sm:px-5 py-3 border-b border-gray-200 flex items-center justify-between gap-3 shrink-0 bg-white">
             <div class="flex items-center gap-3 min-w-0">
               <button id="chat-back" type="button" aria-label="Назад к списку"
                       class="md:hidden inline-flex items-center justify-center w-9 h-9 rounded-lg text-gray-600 hover:bg-gray-100">
-                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
               </button>
               <span id="chat-avatar" class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-indigo-100 text-indigo-700 text-sm shrink-0">—</span>
               <div class="min-w-0">
@@ -57,10 +59,10 @@
             </div>
             <div class="flex items-center gap-2 shrink-0">
               <button type="button" aria-label="Видеозвонок" class="hidden sm:inline-flex items-center justify-center w-9 h-9 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-gray-700">
-                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M23 7l-7 5 7 5z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 7l-7 5 7 5z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
               </button>
               <button type="button" aria-label="Информация" class="inline-flex items-center justify-center w-9 h-9 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-gray-700">
-                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
               </button>
             </div>
           </header>
@@ -71,7 +73,7 @@
           <!-- Empty state (когда диалог не выбран) -->
           <div id="chat-empty" class="hidden flex-1 flex-col items-center justify-center p-6 text-center bg-gray-50/50">
             <span class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-indigo-50 text-indigo-600 mb-3">
-              <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
             </span>
             <p class="text-sm text-gray-700">Выберите клиента из списка слева</p>
             <p class="text-xs text-gray-500 mt-1">Здесь появится переписка по делу</p>
@@ -81,7 +83,7 @@
           <form id="composer" class="border-t border-gray-200 p-3 flex items-end gap-2 shrink-0 bg-white">
             <button type="button" aria-label="Прикрепить файл" id="composer-attach"
                     class="inline-flex items-center justify-center w-10 h-10 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-gray-700 shrink-0">
-              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
             </button>
             <input id="composer-file-input" type="file" class="sr-only" multiple aria-label="Файлы" />
 
@@ -91,7 +93,7 @@
 
             <button type="submit" aria-label="Отправить"
                     class="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white shrink-0">
-              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
             </button>
           </form>
         </section>
@@ -101,7 +103,7 @@
     <script src="assets/layout.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.2/flowbite.min.js"></script>
     <script>
-      // ===== Чаты с клиентами =====
+      // ===== Чаты с клиентами (full-screen layout) =====
       // Демо-данные клиентов и переписок. В боевом проекте подменяются API-ответом.
       // Структура: каждый клиент = { id, name, caseNo, messages: [{ from, text, ts, files?, read? }], unread }
       // from: "lawyer" (наше) | "client" (входящее)
@@ -217,14 +219,6 @@
       // ====== Список диалогов (левая колонка) ======
       function lastMsg(c) { return c.messages[c.messages.length - 1]; }
 
-      function dialogPreview(m) {
-        if (!m) return "Нет сообщений";
-        const prefix = m.from === "lawyer" ? "Вы: " : "";
-        if (m.text) return prefix + m.text;
-        if (m.files && m.files.length) return prefix + "📎 " + m.files[0].name;
-        return prefix;
-      }
-
       function renderDialogs(filterText) {
         const list = document.getElementById("dialogs-list");
         const empty = document.getElementById("dialogs-empty");
@@ -258,18 +252,16 @@
             "dialog-item flex items-start gap-3 px-3 py-3 cursor-pointer border-b border-gray-100 " +
             (isActive ? "bg-indigo-50" : "hover:bg-gray-50");
           li.innerHTML = `
-            <span class="relative inline-flex items-center justify-center w-10 h-10 rounded-full bg-indigo-100 text-indigo-700 text-sm shrink-0">
+            <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-indigo-100 text-indigo-700 text-sm shrink-0">
               ${initials(c.name)}
-              ${c.online ? `<span class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-500 border-2 border-white" aria-label="В сети"></span>` : ""}
             </span>
             <div class="min-w-0 flex-1">
               <div class="flex items-center justify-between gap-2">
                 <span class="text-sm text-gray-900 truncate ${c.unread > 0 ? "font-medium" : ""}">${c.name}</span>
                 <span class="text-xs text-gray-400 shrink-0">${fmtDialogTime(m.ts)}</span>
               </div>
-              <div class="text-xs text-indigo-600 truncate">${c.caseNo}</div>
-              <div class="flex items-center justify-between gap-2 mt-0.5">
-                <span class="text-xs text-gray-500 truncate ${c.unread > 0 ? "text-gray-700" : ""}">${dialogPreview(m)}</span>
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-xs text-indigo-600 truncate">${c.caseNo}</span>
                 ${c.unread > 0
                   ? `<span class="inline-flex items-center justify-center min-w-[1.25rem] h-5 px-1.5 text-[10px] font-medium bg-indigo-600 text-white rounded-full shrink-0" aria-label="Непрочитанных: ${c.unread}">${c.unread}</span>`
                   : ""}
@@ -342,15 +334,15 @@
 
         const filesHtml = (m.files || []).map((f) => `
           <a href="#" class="mt-2 flex items-center gap-2 px-2.5 py-2 rounded-lg ${isOwn ? "bg-white/10 hover:bg-white/15 text-white" : "bg-gray-50 hover:bg-gray-100 text-gray-700"} text-xs">
-            <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
             <span class="truncate">${f.name}</span>
             <span class="${isOwn ? "text-white/70" : "text-gray-500"} shrink-0">${f.size || ""}</span>
           </a>`).join("");
 
         const readMark = isOwn
           ? `<span class="inline-flex items-center gap-0.5 ml-1 ${m.read ? "text-white/90" : "text-white/60"}" aria-label="${m.read ? "Прочитано" : "Доставлено"}">
-              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-              ${m.read ? `<svg class="w-3.5 h-3.5 -ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>` : ""}
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              ${m.read ? `<svg class="w-3.5 h-3.5 -ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>` : ""}
             </span>`
           : "";
 
@@ -403,6 +395,106 @@
 
       // ====== Инициализация ======
       document.addEventListener("layout:ready", () => {
+        // ===== Растягиваем чат на всю площадь окна (без заголовка, без отступов main) =====
+        // layout.js рендерит <main class="lg:pl-64 min-h-screen"> и внутри обёртку с padding и <header>.
+        // Чтобы получить full-screen чат: убираем у обёртки все отступы и удаляем <header>.
+        const main = document.querySelector("main");
+        if (main) {
+          // Сайдбар сворачивается до иконок — двигаем main на 16, а не на 64
+          main.classList.remove("lg:pl-64");
+          main.classList.add("lg:pl-16");
+          const wrap = main.firstElementChild; // div с padding'ами
+          if (wrap) {
+            wrap.classList.remove(
+              "px-4", "sm:px-6", "lg:px-10",
+              "py-6", "lg:py-8",
+              "pt-16", "lg:pt-8"
+            );
+            const header = wrap.querySelector("header");
+            if (header) header.remove();
+          }
+        }
+
+        // ===== Сворачиваем сайдбар до иконок (только на этой странице, от lg) =====
+        // На мобильных сайдбар по-прежнему выезжает из-за края и работает через гамбургер.
+        // Tailwind CDN плохо жуёт lg:hover:* и lg:group-hover/*, поэтому hover-разворот делаем через mouseenter/mouseleave,
+        // переключая те же Tailwind-классы. Никакого кастомного CSS/inline-style нет.
+        const sidebar = document.getElementById("sidebar");
+        const isDesktop = () => window.matchMedia("(min-width: 1024px)").matches;
+
+        // Сбор якорных элементов, которые нужно центрировать/расширять при collapse/expand:
+        // 1) логотип-обёртка (с большим боковым padding'ом px-5)
+        // 2) обёртка блока уведомлений (px-4) + внутренний <a>
+        // 3) обёртка навигации (px-4) + все ссылки <nav a>
+        // 4) обёртка блока администратора (px-4)
+        const logoWrap = sidebar?.querySelector(".h-16");
+        const notifWrap = sidebar?.querySelector(".px-4.pt-4");
+        const notifLink = notifWrap?.querySelector("a");
+        const navWrap = sidebar?.querySelector("nav");
+        const adminWrap = sidebar?.querySelector(".border-t");
+        const navLinks = sidebar ? Array.from(sidebar.querySelectorAll("nav a")) : [];
+
+        function collapseSidebar() {
+          if (!sidebar || !isDesktop()) return;
+          sidebar.classList.remove("w-64", "shadow-2xl");
+          sidebar.classList.add("w-16", "overflow-hidden");
+          sidebar.querySelectorAll(".sidebar-label").forEach((el) => el.classList.add("hidden"));
+          // Обёртки: убираем боковые padding’ы, выравниваем внутренние элементы по центру
+          logoWrap?.classList.remove("px-5");
+          logoWrap?.classList.add("justify-center");
+          notifWrap?.classList.remove("px-4");
+          navWrap?.classList.remove("px-4");
+          adminWrap?.classList.remove("px-4");
+          // Каждая иконочная кнопка — квадрат 40×40 с авто-центрированием, чтобы фон (актив/hover/border) был ровным
+          notifLink?.classList.remove("gap-2", "px-3", "py-2.5");
+          notifLink?.classList.add("justify-center", "px-0", "py-0", "w-10", "h-10", "mx-auto");
+          navLinks.forEach((a) => {
+            a.classList.remove("gap-3", "px-3", "py-2.5");
+            a.classList.add("justify-center", "px-0", "py-0", "w-10", "h-10", "mx-auto");
+          });
+          // Блок админа: кнопка выхода в центре
+          const adminRow = adminWrap?.querySelector(".flex");
+          adminRow?.classList.remove("justify-between");
+          adminRow?.classList.add("justify-center");
+        }
+        function expandSidebar() {
+          if (!sidebar || !isDesktop()) return;
+          sidebar.classList.remove("w-16");
+          sidebar.classList.add("w-64", "shadow-2xl", "z-50");
+          sidebar.querySelectorAll(".sidebar-label").forEach((el) => el.classList.remove("hidden"));
+          logoWrap?.classList.add("px-5");
+          logoWrap?.classList.remove("justify-center");
+          notifWrap?.classList.add("px-4");
+          navWrap?.classList.add("px-4");
+          adminWrap?.classList.add("px-4");
+          notifLink?.classList.add("gap-2", "px-3", "py-2.5");
+          notifLink?.classList.remove("justify-center", "px-0", "py-0", "w-10", "h-10", "mx-auto");
+          navLinks.forEach((a) => {
+            a.classList.remove("justify-center", "px-0", "py-0", "w-10", "h-10", "mx-auto");
+            a.classList.add("gap-3", "px-3", "py-2.5");
+          });
+          const adminRow = adminWrap?.querySelector(".flex");
+          adminRow?.classList.add("justify-between");
+          adminRow?.classList.remove("justify-center");
+        }
+
+        if (sidebar) {
+          // Стартовое свёрнутое состояние
+          collapseSidebar();
+          sidebar.addEventListener("mouseenter", expandSidebar);
+          sidebar.addEventListener("mouseleave", collapseSidebar);
+          // При ресайзе (переход mobile <-> desktop) возвращаем всё к base и применяем снова
+          window.addEventListener("resize", () => {
+            if (isDesktop()) {
+              collapseSidebar();
+            } else {
+              // На мобильных: полный развёрнутый вид, как в базовой вёрстке
+              expandSidebar.call(null);
+              sidebar.classList.remove("shadow-2xl", "overflow-hidden", "z-50");
+            }
+          });
+        }
+
         // Auto-grow textarea
         const ta = document.getElementById("composer-text");
         ta.addEventListener("input", () => {
