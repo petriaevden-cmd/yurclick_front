@@ -96,6 +96,108 @@
 
       <!-- Панель вкладки «Требуются документы» — видна только при currentStage === 'required' -->
       <div id="required-tab-panel" class="hidden" role="tabpanel" aria-labelledby="tab-required-btn">
+        <!-- Блок: Выбор СРО -->
+        <section id="sro-select" class="mb-4 bg-white rounded-2xl border border-gray-200 overflow-hidden" aria-label="Выбор СРО">
+          <div class="p-6 border-b border-gray-100">
+            <div class="flex items-start justify-between flex-wrap gap-4">
+              <div class="min-w-0">
+                <h2 class="text-2xl font-semibold text-gray-900">Выбор СРО</h2>
+                <p class="text-gray-600 mt-1 text-sm">Саморегулируемая организация арбитражных управляющих, из которой будет назначен финансовый управляющий по делу.</p>
+              </div>
+              <div class="flex items-center gap-2 bg-emerald-50 border border-emerald-200 text-emerald-700 px-4 py-2 rounded-xl shrink-0">
+                <span class="relative flex h-2.5 w-2.5">
+                  <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                </span>
+                <span class="text-sm font-medium">Данные Федресурса · обновлено 14.05.2026</span>
+              </div>
+            </div>
+
+            <div class="mt-5 flex flex-wrap items-center gap-3">
+              <div class="relative flex-1 min-w-[240px]">
+                <svg class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+                <input id="sro-search" type="text" placeholder="Поиск по названию или № СРО" class="h-10 w-full pl-9 pr-3 rounded-lg border border-gray-200 bg-white text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400" />
+              </div>
+              <button id="sro-favorites-toggle" type="button" class="inline-flex items-center gap-2 h-10 px-3 rounded-lg border border-gray-200 bg-white text-sm text-gray-700 hover:bg-gray-50">
+                <svg class="w-4 h-4 text-amber-400" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.9 5.88 6.49.94-4.7 4.58 1.11 6.46L12 17.27l-5.8 3.09 1.11-6.46-4.7-4.58 6.49-.94L12 2.5z"/></svg>
+                <span>Мои</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="min-w-full text-sm">
+              <thead class="bg-[#f3f4f6] text-gray-600">
+                <tr>
+                  <th class="w-10 px-4 py-3"></th>
+                  <th class="px-4 py-3 text-left font-medium">СРО</th>
+                  <th class="px-4 py-3 text-right"></th>
+                </tr>
+              </thead>
+              <tbody id="sro-tbody" class="divide-y divide-gray-100">
+                <tr class="hover:bg-gray-50" data-favorite="true">
+                  <td class="w-10 px-4 py-3">
+                    <button type="button" class="w-6 h-6 rounded-lg inline-flex items-center justify-center text-amber-400 hover:bg-gray-100" title="В избранном" aria-pressed="true">
+                      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.9 5.88 6.49.94-4.7 4.58 1.11 6.46L12 17.27l-5.8 3.09 1.11-6.46-4.7-4.58 6.49-.94L12 2.5z"/></svg>
+                    </button>
+                  </td>
+                  <td class="px-4 py-3 text-gray-900">Ассоциация «ДМСО»</td>
+                  <td class="px-4 py-3 text-right">
+                    <button type="button" class="inline-flex items-center gap-2 h-8 px-3 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm">Выбрать</button>
+                  </td>
+                </tr>
+                <tr class="hover:bg-gray-50" data-favorite="true">
+                  <td class="w-10 px-4 py-3">
+                    <button type="button" class="w-6 h-6 rounded-lg inline-flex items-center justify-center text-amber-400 hover:bg-gray-100" title="В избранном" aria-pressed="true">
+                      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.9 5.88 6.49.94-4.7 4.58 1.11 6.46L12 17.27l-5.8 3.09 1.11-6.46-4.7-4.58 6.49-.94L12 2.5z"/></svg>
+                    </button>
+                  </td>
+                  <td class="px-4 py-3 text-gray-900">СОАУ «Меркурий»</td>
+                  <td class="px-4 py-3 text-right">
+                    <button type="button" class="inline-flex items-center gap-2 h-8 px-3 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm">Выбрать</button>
+                  </td>
+                </tr>
+                <tr class="hover:bg-gray-50" data-favorite="false">
+                  <td class="w-10 px-4 py-3">
+                    <button type="button" class="w-6 h-6 rounded-lg inline-flex items-center justify-center text-gray-300 hover:text-amber-400 hover:bg-gray-100" title="Добавить в избранное" aria-pressed="false">
+                      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5l2.9 5.88 6.49.94-4.7 4.58 1.11 6.46L12 17.27l-5.8 3.09 1.11-6.46-4.7-4.58 6.49-.94L12 2.5z"/></svg>
+                    </button>
+                  </td>
+                  <td class="px-4 py-3 text-gray-900">ОАУ «Лидер»</td>
+                  <td class="px-4 py-3 text-right">
+                    <button type="button" class="inline-flex items-center gap-2 h-8 px-3 rounded-lg border border-gray-200 bg-white text-sm text-gray-700 hover:bg-gray-50">Выбрать</button>
+                  </td>
+                </tr>
+                <tr class="hover:bg-gray-50" data-favorite="false">
+                  <td class="w-10 px-4 py-3">
+                    <button type="button" class="w-6 h-6 rounded-lg inline-flex items-center justify-center text-gray-300 hover:text-amber-400 hover:bg-gray-100" title="Добавить в избранное" aria-pressed="false">
+                      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5l2.9 5.88 6.49.94-4.7 4.58 1.11 6.46L12 17.27l-5.8 3.09 1.11-6.46-4.7-4.58 6.49-.94L12 2.5z"/></svg>
+                    </button>
+                  </td>
+                  <td class="px-4 py-3 text-gray-900">Союз «СРО ГАУ»</td>
+                  <td class="px-4 py-3 text-right">
+                    <button type="button" class="inline-flex items-center gap-2 h-8 px-3 rounded-lg border border-gray-200 bg-white text-sm text-gray-700 hover:bg-gray-50">Выбрать</button>
+                  </td>
+                </tr>
+                <tr class="hover:bg-gray-50" data-favorite="false">
+                  <td class="w-10 px-4 py-3">
+                    <button type="button" class="w-6 h-6 rounded-lg inline-flex items-center justify-center text-gray-300 hover:text-amber-400 hover:bg-gray-100" title="Добавить в избранное" aria-pressed="false">
+                      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5l2.9 5.88 6.49.94-4.7 4.58 1.11 6.46L12 17.27l-5.8 3.09 1.11-6.46-4.7-4.58 6.49-.94L12 2.5z"/></svg>
+                    </button>
+                  </td>
+                  <td class="px-4 py-3 text-gray-900">ААУ «Гарантия»</td>
+                  <td class="px-4 py-3 text-right">
+                    <button type="button" class="inline-flex items-center gap-2 h-8 px-3 rounded-lg border border-gray-200 bg-white text-sm text-gray-700 hover:bg-gray-50">Выбрать</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="px-6 py-3 border-t border-gray-100 text-xs text-gray-500">
+            Список тянется из ЕФРСБ (bankrot.fedresurs.ru) и сводного реестра Росреестра. Синхронизация — раз в сутки.
+          </div>
+        </section>
+
         <!-- Блок: Автоматическая рассылка писем кредиторам -->
         <section id="auto-email-send" class="mb-4 bg-white rounded-2xl border border-gray-200 overflow-hidden" aria-label="Автоматическая рассылка писем кредиторам">
           <div class="p-6 border-b border-gray-100">
