@@ -422,7 +422,16 @@
         const sidebar = document.getElementById("sidebar");
         const isDesktop = () => window.matchMedia("(min-width: 1024px)").matches;
 
-        // Сбор ссылок-пунктов меню внутри <nav> (обходим логотип и блок уведомлений, они уже выравнены)
+        // Сбор якорных элементов, которые нужно центрировать/расширять при collapse/expand:
+        // 1) логотип-обёртка (с большим боковым padding'ом px-5)
+        // 2) обёртка блока уведомлений (px-4) + внутренний <a>
+        // 3) обёртка навигации (px-4) + все ссылки <nav a>
+        // 4) обёртка блока администратора (px-4)
+        const logoWrap = sidebar?.querySelector(".h-16");
+        const notifWrap = sidebar?.querySelector(".px-4.pt-4");
+        const notifLink = notifWrap?.querySelector("a");
+        const navWrap = sidebar?.querySelector("nav");
+        const adminWrap = sidebar?.querySelector(".border-t");
         const navLinks = sidebar ? Array.from(sidebar.querySelectorAll("nav a")) : [];
 
         function collapseSidebar() {
@@ -430,21 +439,43 @@
           sidebar.classList.remove("w-64", "shadow-2xl");
           sidebar.classList.add("w-16", "overflow-hidden");
           sidebar.querySelectorAll(".sidebar-label").forEach((el) => el.classList.add("hidden"));
-          // В свёрнутом виде: иконки по центру, без боковых padding’ов, чтобы active-фон сидел ровно под иконкой
+          // Обёртки: убираем боковые padding’ы, выравниваем внутренние элементы по центру
+          logoWrap?.classList.remove("px-5");
+          logoWrap?.classList.add("justify-center");
+          notifWrap?.classList.remove("px-4");
+          navWrap?.classList.remove("px-4");
+          adminWrap?.classList.remove("px-4");
+          // Каждая иконочная кнопка — квадрат 40×40 с авто-центрированием, чтобы фон (актив/hover/border) был ровным
+          notifLink?.classList.remove("gap-2", "px-3", "py-2.5");
+          notifLink?.classList.add("justify-center", "px-0", "py-0", "w-10", "h-10", "mx-auto");
           navLinks.forEach((a) => {
-            a.classList.remove("gap-3", "px-3");
-            a.classList.add("justify-center", "px-0");
+            a.classList.remove("gap-3", "px-3", "py-2.5");
+            a.classList.add("justify-center", "px-0", "py-0", "w-10", "h-10", "mx-auto");
           });
+          // Блок админа: кнопка выхода в центре
+          const adminRow = adminWrap?.querySelector(".flex");
+          adminRow?.classList.remove("justify-between");
+          adminRow?.classList.add("justify-center");
         }
         function expandSidebar() {
           if (!sidebar || !isDesktop()) return;
           sidebar.classList.remove("w-16");
           sidebar.classList.add("w-64", "shadow-2xl", "z-50");
           sidebar.querySelectorAll(".sidebar-label").forEach((el) => el.classList.remove("hidden"));
+          logoWrap?.classList.add("px-5");
+          logoWrap?.classList.remove("justify-center");
+          notifWrap?.classList.add("px-4");
+          navWrap?.classList.add("px-4");
+          adminWrap?.classList.add("px-4");
+          notifLink?.classList.add("gap-2", "px-3", "py-2.5");
+          notifLink?.classList.remove("justify-center", "px-0", "py-0", "w-10", "h-10", "mx-auto");
           navLinks.forEach((a) => {
-            a.classList.remove("justify-center", "px-0");
-            a.classList.add("gap-3", "px-3");
+            a.classList.remove("justify-center", "px-0", "py-0", "w-10", "h-10", "mx-auto");
+            a.classList.add("gap-3", "px-3", "py-2.5");
           });
+          const adminRow = adminWrap?.querySelector(".flex");
+          adminRow?.classList.add("justify-between");
+          adminRow?.classList.remove("justify-center");
         }
 
         if (sidebar) {
@@ -457,13 +488,9 @@
             if (isDesktop()) {
               collapseSidebar();
             } else {
-              sidebar.classList.remove("w-16", "shadow-2xl", "overflow-hidden");
-              sidebar.classList.add("w-64");
-              sidebar.querySelectorAll(".sidebar-label").forEach((el) => el.classList.remove("hidden"));
-              navLinks.forEach((a) => {
-                a.classList.remove("justify-center", "px-0");
-                a.classList.add("gap-3", "px-3");
-              });
+              // На мобильных: полный развёрнутый вид, как в базовой вёрстке
+              expandSidebar.call(null);
+              sidebar.classList.remove("shadow-2xl", "overflow-hidden", "z-50");
             }
           });
         }
