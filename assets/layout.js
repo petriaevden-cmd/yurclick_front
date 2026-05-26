@@ -22,6 +22,8 @@
     settings: `<svg ${svgAttrs}><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>`,
     // lucide: message-square (пузырёк чата)
     chat: `<svg ${svgAttrs}><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>`,
+    // lucide: log-out (выход)
+    logout: `<svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>`,
   };
 
   const NAV_ITEMS = [
@@ -43,6 +45,7 @@
     clients: "Клиенты",
     chats: "Чаты с клиентами",
     notifications: "Уведомления",
+    profile: "Мой профиль",
   };
 
   function navItemHtml(item, activeKey) {
@@ -64,6 +67,7 @@
   }
 
   function sidebarHtml(activeKey) {
+    const isProfile = activeKey === "profile";
     return `
     <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-64 bg-white border-r border-gray-200 flex flex-col -translate-x-full lg:translate-x-0 transition-all duration-200">
       <!-- Логотип -->
@@ -91,17 +95,23 @@
 
       <!-- Блок администратора -->
       <div class="px-4 py-4 border-t border-gray-200 shrink-0">
-        <div class="flex items-center justify-between gap-2">
-          <div class="sidebar-label min-w-0">
-            <p class="text-sm text-gray-900 truncate">Иван Петров</p>
-            <p class="text-xs text-gray-500 truncate">Администратор</p>
-          </div>
-          <button type="button" class="inline-flex items-center justify-center w-9 h-9 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-gray-900 shrink-0" title="Выйти">
-            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3"/>
-              <path d="M10 17l-5-5 5-5"/>
-              <path d="M15 12H5"/>
-            </svg>
+        <div class="flex items-center gap-2">
+          <!-- Аватар + имя → ссылка на профиль -->
+          <a href="profile.html"
+             class="flex items-center gap-2 flex-1 min-w-0 px-2 py-2 rounded-lg transition-colors ${isProfile ? "bg-indigo-50" : "hover:bg-gray-100"}"
+             aria-label="Перейти в профиль">
+            <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-indigo-100 text-indigo-700 text-xs font-medium shrink-0">ИП</span>
+            <span class="sidebar-label min-w-0">
+              <span class="block text-sm ${isProfile ? "text-indigo-700 font-medium" : "text-gray-900"} truncate">Иван Петров</span>
+              <span class="block text-xs text-gray-500 truncate">Администратор</span>
+            </span>
+          </a>
+          <!-- Кнопка выхода -->
+          <button type="button"
+                  class="inline-flex items-center justify-center w-9 h-9 rounded-lg text-gray-400 hover:bg-red-50 hover:text-red-600 transition-colors shrink-0"
+                  aria-label="Выйти из системы"
+                  title="Выйти">
+            ${ICONS.logout}
           </button>
         </div>
       </div>
