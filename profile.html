@@ -18,266 +18,243 @@
 
     <div id="page-source">
 
-      <div class="max-w-3xl mx-auto space-y-6">
+      <div class="space-y-0 divide-y divide-gray-200">
 
         <!-- ===== Личные данные ===== -->
-        <section class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 space-y-5">
-          <header class="flex items-center justify-between gap-4 flex-wrap">
-            <div>
-              <h2 class="text-base font-semibold text-gray-900">Личные данные</h2>
-              <p class="text-sm text-gray-500">Используются в доверенностях и документах</p>
-            </div>
-            <button type="button" id="btn-save-personal"
-                    class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-900 text-white text-sm font-medium hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors">
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M5 13l4 4L19 7"/>
-              </svg>
-              Сохранить
-            </button>
-          </header>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <!-- Фамилия -->
-            <div>
-              <label for="last-name" class="block text-sm font-medium text-gray-700 mb-1">Фамилия</label>
-              <input type="text" id="last-name" name="last_name" value="Петров"
-                     class="block w-full h-10 px-3 rounded-lg border border-gray-200 bg-white text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-colors" />
-            </div>
-            <!-- Имя -->
-            <div>
-              <label for="first-name" class="block text-sm font-medium text-gray-700 mb-1">Имя</label>
-              <input type="text" id="first-name" name="first_name" value="Иван"
-                     class="block w-full h-10 px-3 rounded-lg border border-gray-200 bg-white text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-colors" />
-            </div>
-            <!-- Отчество -->
-            <div>
-              <label for="middle-name" class="block text-sm font-medium text-gray-700 mb-1">Отчество</label>
-              <input type="text" id="middle-name" name="middle_name" value="Александрович"
-                     class="block w-full h-10 px-3 rounded-lg border border-gray-200 bg-white text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-colors" />
-            </div>
-            <!-- Дата рождения -->
-            <div>
-              <label for="birth-date" class="block text-sm font-medium text-gray-700 mb-1">Дата рождения</label>
-              <input type="date" id="birth-date" name="birth_date" value="1988-05-12"
-                     class="block w-full h-10 px-3 rounded-lg border border-gray-200 bg-white text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-colors" />
-            </div>
+        <div class="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-6 lg:gap-10 py-8 first:pt-0">
+          <!-- Левая колонка: заголовок секции -->
+          <div class="lg:pt-1">
+            <h2 class="text-sm font-semibold text-gray-900">Личные данные</h2>
+            <p class="mt-1 text-sm text-gray-500 leading-relaxed">ФИО, дата рождения и паспортные данные — используются при формировании доверенностей и документов.</p>
           </div>
-
-          <!-- Паспортные данные — для доверенности -->
-          <div class="pt-2">
-            <p class="text-sm font-medium text-gray-700 mb-3">Паспортные данные</p>
+          <!-- Правая колонка: карточка с формой -->
+          <section class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 space-y-6">
+            <!-- ФИО + дата рождения -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <!-- Серия и номер -->
               <div>
-                <label for="passport-series" class="block text-sm font-medium text-gray-700 mb-1">Серия и номер</label>
-                <input type="text" id="passport-series" name="passport_series" placeholder="4515 123456"
+                <label for="last-name" class="block text-sm font-medium text-gray-700 mb-1">Фамилия</label>
+                <input type="text" id="last-name" name="last_name" value="Петров"
                        class="block w-full h-10 px-3 rounded-lg border border-gray-200 bg-white text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-colors" />
               </div>
-              <!-- Дата выдачи -->
               <div>
-                <label for="passport-date" class="block text-sm font-medium text-gray-700 mb-1">Дата выдачи</label>
-                <input type="date" id="passport-date" name="passport_date"
+                <label for="first-name" class="block text-sm font-medium text-gray-700 mb-1">Имя</label>
+                <input type="text" id="first-name" name="first_name" value="Иван"
+                       class="block w-full h-10 px-3 rounded-lg border border-gray-200 bg-white text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-colors" />
+              </div>
+              <div>
+                <label for="middle-name" class="block text-sm font-medium text-gray-700 mb-1">Отчество</label>
+                <input type="text" id="middle-name" name="middle_name" value="Александрович"
+                       class="block w-full h-10 px-3 rounded-lg border border-gray-200 bg-white text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-colors" />
+              </div>
+              <div>
+                <label for="birth-date" class="block text-sm font-medium text-gray-700 mb-1">Дата рождения</label>
+                <input type="date" id="birth-date" name="birth_date" value="1988-05-12"
                        class="block w-full h-10 px-3 rounded-lg border border-gray-200 bg-white text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-colors" />
               </div>
-              <!-- Кем выдан -->
-              <div class="sm:col-span-2">
-                <label for="passport-issued" class="block text-sm font-medium text-gray-700 mb-1">Кем выдан</label>
-                <input type="text" id="passport-issued" name="passport_issued"
-                       placeholder="ОУФМС России по г. Москве, отдел №…"
-                       class="block w-full h-10 px-3 rounded-lg border border-gray-200 bg-white text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-colors" />
-              </div>
-              <!-- Код подразделения -->
-              <div>
-                <label for="passport-code" class="block text-sm font-medium text-gray-700 mb-1">Код подразделения</label>
-                <input type="text" id="passport-code" name="passport_code" placeholder="770-000"
-                       class="block w-full h-10 px-3 rounded-lg border border-gray-200 bg-white text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-colors" />
-              </div>
-              <!-- ИНН -->
-              <div>
-                <label for="inn" class="block text-sm font-medium text-gray-700 mb-1">ИНН</label>
-                <input type="text" id="inn" name="inn" placeholder="770000000000"
-                       class="block w-full h-10 px-3 rounded-lg border border-gray-200 bg-white text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-colors" />
-              </div>
-              <!-- СНИЛС -->
-              <div>
-                <label for="snils" class="block text-sm font-medium text-gray-700 mb-1">СНИЛС</label>
-                <input type="text" id="snils" name="snils" placeholder="000-000-000 00"
-                       class="block w-full h-10 px-3 rounded-lg border border-gray-200 bg-white text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-colors" />
-              </div>
-              <!-- Адрес регистрации -->
-              <div class="sm:col-span-2">
-                <label for="reg-address" class="block text-sm font-medium text-gray-700 mb-1">Адрес регистрации</label>
-                <input type="text" id="reg-address" name="reg_address"
-                       placeholder="г. Москва, ул. Примерная, д. 1, кв. 1"
-                       class="block w-full h-10 px-3 rounded-lg border border-gray-200 bg-white text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-colors" />
+            </div>
+
+            <!-- Разделитель + подзаголовок паспортных данных -->
+            <div class="border-t border-gray-100 pt-5">
+              <p class="text-xs font-semibold uppercase tracking-wide text-gray-400 mb-4">Паспортные данные</p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label for="passport-series" class="block text-sm font-medium text-gray-700 mb-1">Серия и номер</label>
+                  <input type="text" id="passport-series" name="passport_series" placeholder="4515 123456"
+                         class="block w-full h-10 px-3 rounded-lg border border-gray-200 bg-white text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-colors" />
+                </div>
+                <div>
+                  <label for="passport-date" class="block text-sm font-medium text-gray-700 mb-1">Дата выдачи</label>
+                  <input type="date" id="passport-date" name="passport_date"
+                         class="block w-full h-10 px-3 rounded-lg border border-gray-200 bg-white text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-colors" />
+                </div>
+                <div class="sm:col-span-2">
+                  <label for="passport-issued" class="block text-sm font-medium text-gray-700 mb-1">Кем выдан</label>
+                  <input type="text" id="passport-issued" name="passport_issued"
+                         placeholder="ОУФМС России по г. Москве, отдел №…"
+                         class="block w-full h-10 px-3 rounded-lg border border-gray-200 bg-white text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-colors" />
+                </div>
+                <div>
+                  <label for="passport-code" class="block text-sm font-medium text-gray-700 mb-1">Код подразделения</label>
+                  <input type="text" id="passport-code" name="passport_code" placeholder="770-000"
+                         class="block w-full h-10 px-3 rounded-lg border border-gray-200 bg-white text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-colors" />
+                </div>
+                <div>
+                  <label for="inn" class="block text-sm font-medium text-gray-700 mb-1">ИНН</label>
+                  <input type="text" id="inn" name="inn" placeholder="770000000000"
+                         class="block w-full h-10 px-3 rounded-lg border border-gray-200 bg-white text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-colors" />
+                </div>
+                <div>
+                  <label for="snils" class="block text-sm font-medium text-gray-700 mb-1">СНИЛС</label>
+                  <input type="text" id="snils" name="snils" placeholder="000-000-000 00"
+                         class="block w-full h-10 px-3 rounded-lg border border-gray-200 bg-white text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-colors" />
+                </div>
+                <div class="sm:col-span-2">
+                  <label for="reg-address" class="block text-sm font-medium text-gray-700 mb-1">Адрес регистрации</label>
+                  <input type="text" id="reg-address" name="reg_address"
+                         placeholder="г. Москва, ул. Примерная, д. 1, кв. 1"
+                         class="block w-full h-10 px-3 rounded-lg border border-gray-200 bg-white text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-colors" />
+                </div>
               </div>
             </div>
-          </div>
-        </section>
+
+            <!-- Кнопка сохранения -->
+            <div class="flex justify-end border-t border-gray-100 pt-4">
+              <button type="button" id="btn-save-personal"
+                      class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-900 text-white text-sm font-medium hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>
+                Сохранить
+              </button>
+            </div>
+          </section>
+        </div>
 
         <!-- ===== Контакты ===== -->
-        <section class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 space-y-5">
-          <header class="flex items-center justify-between gap-4 flex-wrap">
-            <div>
-              <h2 class="text-base font-semibold text-gray-900">Контакты</h2>
-              <p class="text-sm text-gray-500">Email и телефоны для связи</p>
-            </div>
-            <button type="button" id="btn-save-contacts"
-                    class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-900 text-white text-sm font-medium hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors">
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M5 13l4 4L19 7"/>
-              </svg>
-              Сохранить
-            </button>
-          </header>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <!-- Рабочий email -->
-            <div>
-              <label for="email-work" class="block text-sm font-medium text-gray-700 mb-1">Рабочий email</label>
-              <div class="relative">
-                <span class="absolute inset-y-0 left-3 flex items-center pointer-events-none text-gray-400">
-                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <rect x="2" y="4" width="20" height="16" rx="2"/>
-                    <path d="M2 7l10 7 10-7"/>
-                  </svg>
-                </span>
-                <input type="email" id="email-work" name="email_work" value="i.petrov@yurclick.ru"
-                       class="block w-full h-10 pl-9 pr-3 rounded-lg border border-gray-200 bg-white text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-colors" />
-              </div>
-            </div>
-            <!-- Личный email -->
-            <div>
-              <label for="email-personal" class="block text-sm font-medium text-gray-700 mb-1">Личный email</label>
-              <div class="relative">
-                <span class="absolute inset-y-0 left-3 flex items-center pointer-events-none text-gray-400">
-                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <rect x="2" y="4" width="20" height="16" rx="2"/>
-                    <path d="M2 7l10 7 10-7"/>
-                  </svg>
-                </span>
-                <input type="email" id="email-personal" name="email_personal" placeholder="личный@mail.ru"
-                       class="block w-full h-10 pl-9 pr-3 rounded-lg border border-gray-200 bg-white text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-colors" />
-              </div>
-            </div>
-            <!-- Рабочий телефон -->
-            <div>
-              <label for="phone-work" class="block text-sm font-medium text-gray-700 mb-1">Рабочий телефон</label>
-              <div class="relative">
-                <span class="absolute inset-y-0 left-3 flex items-center pointer-events-none text-gray-400">
-                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.62 3.44 2 2 0 0 1 3.59 1.25h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.95a16 16 0 0 0 6.13 6.13l.91-.91a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-                  </svg>
-                </span>
-                <input type="tel" id="phone-work" name="phone_work" value="+7 (495) 000-00-00"
-                       class="block w-full h-10 pl-9 pr-3 rounded-lg border border-gray-200 bg-white text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-colors" />
-              </div>
-            </div>
-            <!-- Мобильный телефон -->
-            <div>
-              <label for="phone-mobile" class="block text-sm font-medium text-gray-700 mb-1">Мобильный телефон</label>
-              <div class="relative">
-                <span class="absolute inset-y-0 left-3 flex items-center pointer-events-none text-gray-400">
-                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <rect x="5" y="2" width="14" height="20" rx="2"/>
-                    <line x1="12" y1="18" x2="12.01" y2="18"/>
-                  </svg>
-                </span>
-                <input type="tel" id="phone-mobile" name="phone_mobile" placeholder="+7 (___) ___-__-__"
-                       class="block w-full h-10 pl-9 pr-3 rounded-lg border border-gray-200 bg-white text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-colors" />
-              </div>
-            </div>
+        <div class="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-6 lg:gap-10 py-8">
+          <!-- Левая колонка -->
+          <div class="lg:pt-1">
+            <h2 class="text-sm font-semibold text-gray-900">Контакты</h2>
+            <p class="mt-1 text-sm text-gray-500 leading-relaxed">Email и телефоны для связи с сотрудником внутри системы и вне её.</p>
           </div>
-        </section>
+          <!-- Правая колонка -->
+          <section class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 space-y-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <!-- Рабочий email -->
+              <div>
+                <label for="email-work" class="block text-sm font-medium text-gray-700 mb-1">Рабочий email</label>
+                <div class="relative">
+                  <span class="absolute inset-y-0 left-3 flex items-center pointer-events-none text-gray-400">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/>
+                    </svg>
+                  </span>
+                  <input type="email" id="email-work" name="email_work" value="i.petrov@yurclick.ru"
+                         class="block w-full h-10 pl-9 pr-3 rounded-lg border border-gray-200 bg-white text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-colors" />
+                </div>
+              </div>
+              <!-- Личный email -->
+              <div>
+                <label for="email-personal" class="block text-sm font-medium text-gray-700 mb-1">Личный email</label>
+                <div class="relative">
+                  <span class="absolute inset-y-0 left-3 flex items-center pointer-events-none text-gray-400">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/>
+                    </svg>
+                  </span>
+                  <input type="email" id="email-personal" name="email_personal" placeholder="личный@mail.ru"
+                         class="block w-full h-10 pl-9 pr-3 rounded-lg border border-gray-200 bg-white text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-colors" />
+                </div>
+              </div>
+              <!-- Рабочий телефон -->
+              <div>
+                <label for="phone-work" class="block text-sm font-medium text-gray-700 mb-1">Рабочий телефон</label>
+                <div class="relative">
+                  <span class="absolute inset-y-0 left-3 flex items-center pointer-events-none text-gray-400">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.62 3.44 2 2 0 0 1 3.59 1.25h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.95a16 16 0 0 0 6.13 6.13l.91-.91a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                    </svg>
+                  </span>
+                  <input type="tel" id="phone-work" name="phone_work" value="+7 (495) 000-00-00"
+                         class="block w-full h-10 pl-9 pr-3 rounded-lg border border-gray-200 bg-white text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-colors" />
+                </div>
+              </div>
+              <!-- Мобильный телефон -->
+              <div>
+                <label for="phone-mobile" class="block text-sm font-medium text-gray-700 mb-1">Мобильный телефон</label>
+                <div class="relative">
+                  <span class="absolute inset-y-0 left-3 flex items-center pointer-events-none text-gray-400">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>
+                    </svg>
+                  </span>
+                  <input type="tel" id="phone-mobile" name="phone_mobile" placeholder="+7 (___) ___-__-__"
+                         class="block w-full h-10 pl-9 pr-3 rounded-lg border border-gray-200 bg-white text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-colors" />
+                </div>
+              </div>
+            </div>
 
-        <!-- ===== Безопасность: смена пароля ===== -->
-        <section class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 space-y-5">
-          <header>
-            <h2 class="text-base font-semibold text-gray-900">Безопасность</h2>
-            <p class="text-sm text-gray-500">Смена пароля для входа в систему</p>
-          </header>
+            <div class="flex justify-end border-t border-gray-100 pt-4">
+              <button type="button" id="btn-save-contacts"
+                      class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-900 text-white text-sm font-medium hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>
+                Сохранить
+              </button>
+            </div>
+          </section>
+        </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <!-- Текущий пароль -->
-            <div class="sm:col-span-2">
-              <label for="password-current" class="block text-sm font-medium text-gray-700 mb-1">Текущий пароль</label>
-              <div class="relative">
-                <input type="password" id="password-current" name="password_current"
-                       autocomplete="current-password"
-                       class="block w-full h-10 px-3 pr-10 rounded-lg border border-gray-200 bg-white text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-colors" />
-                <button type="button"
-                        data-toggle-password="password-current"
-                        class="absolute inset-y-0 right-0 flex items-center px-3 text-gray-400 hover:text-gray-600"
-                        aria-label="Показать/скрыть пароль">
-                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                    <circle cx="12" cy="12" r="3"/>
-                  </svg>
-                </button>
-              </div>
-            </div>
-            <!-- Новый пароль -->
-            <div>
-              <label for="password-new" class="block text-sm font-medium text-gray-700 mb-1">Новый пароль</label>
-              <div class="relative">
-                <input type="password" id="password-new" name="password_new"
-                       autocomplete="new-password"
-                       class="block w-full h-10 px-3 pr-10 rounded-lg border border-gray-200 bg-white text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-colors" />
-                <button type="button"
-                        data-toggle-password="password-new"
-                        class="absolute inset-y-0 right-0 flex items-center px-3 text-gray-400 hover:text-gray-600"
-                        aria-label="Показать/скрыть пароль">
-                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                    <circle cx="12" cy="12" r="3"/>
-                  </svg>
-                </button>
-              </div>
-            </div>
-            <!-- Подтверждение нового пароля -->
-            <div>
-              <label for="password-confirm" class="block text-sm font-medium text-gray-700 mb-1">Подтверждение пароля</label>
-              <div class="relative">
-                <input type="password" id="password-confirm" name="password_confirm"
-                       autocomplete="new-password"
-                       class="block w-full h-10 px-3 pr-10 rounded-lg border border-gray-200 bg-white text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-colors" />
-                <button type="button"
-                        data-toggle-password="password-confirm"
-                        class="absolute inset-y-0 right-0 flex items-center px-3 text-gray-400 hover:text-gray-600"
-                        aria-label="Показать/скрыть пароль">
-                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                    <circle cx="12" cy="12" r="3"/>
-                  </svg>
-                </button>
-              </div>
-            </div>
+        <!-- ===== Безопасность ===== -->
+        <div class="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-6 lg:gap-10 py-8">
+          <!-- Левая колонка -->
+          <div class="lg:pt-1">
+            <h2 class="text-sm font-semibold text-gray-900">Безопасность</h2>
+            <p class="mt-1 text-sm text-gray-500 leading-relaxed">Смена пароля для входа в систему. Минимум 8 символов, хотя бы одна цифра и заглавная буква.</p>
           </div>
+          <!-- Правая колонка -->
+          <section class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 space-y-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <!-- Текущий пароль — на всю ширину -->
+              <div class="sm:col-span-2">
+                <label for="password-current" class="block text-sm font-medium text-gray-700 mb-1">Текущий пароль</label>
+                <div class="relative">
+                  <input type="password" id="password-current" name="password_current"
+                         autocomplete="current-password"
+                         class="block w-full h-10 px-3 pr-10 rounded-lg border border-gray-200 bg-white text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-colors" />
+                  <button type="button" data-toggle-password="password-current"
+                          class="absolute inset-y-0 right-0 flex items-center px-3 text-gray-400 hover:text-gray-600"
+                          aria-label="Показать/скрыть пароль">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <!-- Новый пароль -->
+              <div>
+                <label for="password-new" class="block text-sm font-medium text-gray-700 mb-1">Новый пароль</label>
+                <div class="relative">
+                  <input type="password" id="password-new" name="password_new"
+                         autocomplete="new-password"
+                         class="block w-full h-10 px-3 pr-10 rounded-lg border border-gray-200 bg-white text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-colors" />
+                  <button type="button" data-toggle-password="password-new"
+                          class="absolute inset-y-0 right-0 flex items-center px-3 text-gray-400 hover:text-gray-600"
+                          aria-label="Показать/скрыть пароль">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <!-- Подтверждение пароля -->
+              <div>
+                <label for="password-confirm" class="block text-sm font-medium text-gray-700 mb-1">Подтверждение</label>
+                <div class="relative">
+                  <input type="password" id="password-confirm" name="password_confirm"
+                         autocomplete="new-password"
+                         class="block w-full h-10 px-3 pr-10 rounded-lg border border-gray-200 bg-white text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-colors" />
+                  <button type="button" data-toggle-password="password-confirm"
+                          class="absolute inset-y-0 right-0 flex items-center px-3 text-gray-400 hover:text-gray-600"
+                          aria-label="Показать/скрыть пароль">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
 
-          <!-- Подсказка требований -->
-          <ul class="space-y-1 text-sm text-gray-500">
-            <li class="flex items-center gap-2">
-              <svg class="w-4 h-4 text-gray-300 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
-              Минимум 8 символов
-            </li>
-            <li class="flex items-center gap-2">
-              <svg class="w-4 h-4 text-gray-300 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
-              Хотя бы одна цифра и одна заглавная буква
-            </li>
-          </ul>
+            <div class="flex justify-end border-t border-gray-100 pt-4">
+              <button type="button" id="btn-save-password"
+                      class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-900 text-white text-sm font-medium hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+                Сменить пароль
+              </button>
+            </div>
+          </section>
+        </div>
 
-          <div>
-            <button type="button" id="btn-save-password"
-                    class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-900 text-white text-sm font-medium hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors">
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-              </svg>
-              Сменить пароль
-            </button>
-          </div>
-        </section>
-
-      </div><!-- /max-w-3xl -->
+      </div><!-- /space-y-0 -->
 
     </div><!-- /page-source -->
 
@@ -287,14 +264,13 @@
       // Переключение видимости паролей
       document.querySelectorAll("[data-toggle-password]").forEach(function (btn) {
         btn.addEventListener("click", function () {
-          var targetId = btn.getAttribute("data-toggle-password");
-          var input = document.getElementById(targetId);
+          var input = document.getElementById(btn.getAttribute("data-toggle-password"));
           if (!input) return;
           input.type = input.type === "password" ? "text" : "password";
         });
       });
 
-      // Тост-уведомление об успешном сохранении
+      // Тост-уведомление
       function showSaveToast(label) {
         var existing = document.getElementById("profile-toast");
         if (existing) existing.remove();
@@ -311,10 +287,10 @@
       document.addEventListener("layout:ready", function () {
         var btnPersonal = document.getElementById("btn-save-personal");
         var btnContacts = document.getElementById("btn-save-contacts");
-        var btnPassword = document.getElementById("btn-save-password");
+        var btnPassword  = document.getElementById("btn-save-password");
         if (btnPersonal) btnPersonal.addEventListener("click", function () { showSaveToast("Личные данные сохранены"); });
         if (btnContacts) btnContacts.addEventListener("click", function () { showSaveToast("Контакты сохранены"); });
-        if (btnPassword) btnPassword.addEventListener("click", function () { showSaveToast("Пароль изменён"); });
+        if (btnPassword)  btnPassword.addEventListener("click",  function () { showSaveToast("Пароль изменён"); });
       });
     </script>
   </body>
