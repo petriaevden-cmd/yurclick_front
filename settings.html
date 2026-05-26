@@ -374,6 +374,13 @@
             </button>
           </li>
           <li role="presentation">
+            <button id="tab-stamp-btn" type="button" data-tab="stamp" role="tab" aria-selected="false" aria-controls="panel-stamp"
+                    class="settings-tab inline-flex items-center gap-2 px-4 py-3 border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300">
+              <svg class="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 14V6a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v8"/><path d="M5 14h14"/><rect x="7" y="14" width="10" height="4" rx="1"/><path d="M9 18v2M15 18v2"/></svg>
+              <span>Подпись и печать</span>
+            </button>
+          </li>
+          <li role="presentation">
             <button id="tab-branding-btn" type="button" data-tab="branding" role="tab" aria-selected="false" aria-controls="panel-branding"
                     class="settings-tab inline-flex items-center gap-2 px-4 py-3 border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300">
               <svg class="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18.37 2.63 14 7l-1.59-1.59a2 2 0 0 0-2.82 0L8 7l9 9 1.59-1.59a2 2 0 0 0 0-2.82L17 10l4.37-4.37a2.12 2.12 0 1 0-3-3Z"/><path d="M9 8c-2 3-4 3.5-7 4l8 10c2-1 6-5 6-7"/><path d="M14.5 17.5 4.5 15"/></svg>
@@ -543,6 +550,75 @@
             </form>
           </article>
 
+        </div>
+      </section>
+
+      <!-- ==== Панель: Подпись и печать ==== -->
+      <section id="panel-stamp" role="tabpanel" aria-labelledby="tab-stamp-btn" class="settings-panel hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+
+          <!-- Карточка: Подпись -->
+          <article class="bg-white rounded-xl border border-gray-200 p-6">
+            <div class="flex items-start justify-between gap-3 mb-5">
+              <div>
+                <h2 class="text-base font-medium text-gray-900">Подпись</h2>
+                <p class="text-sm text-gray-500 mt-0.5">PNG или SVG с прозрачным фоном, до 2 МБ</p>
+              </div>
+              <span id="stamp-sig-badge" class="hidden inline-flex items-center gap-1.5 text-xs text-emerald-600 shrink-0">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                Загружена
+              </span>
+            </div>
+            <div id="stamp-sig-preview-wrap" class="hidden mb-4 flex items-center justify-center rounded-xl border border-gray-200 bg-gray-50 p-4 min-h-[8rem]">
+              <img id="stamp-sig-preview" src="" alt="Превью подписи" class="max-h-28 max-w-full object-contain" />
+            </div>
+            <label for="stamp-sig-input"
+                   class="flex flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed border-gray-200 hover:border-indigo-400 transition-colors cursor-pointer p-8 text-center">
+              <svg class="w-8 h-8 text-gray-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5V19a2 2 0 002 2h14a2 2 0 002-2v-2.5M16 12l-4-4-4 4M12 8v8"/></svg>
+              <span class="text-sm text-gray-500">Перетащите файл или <span class="text-indigo-600 font-medium underline">выберите</span></span>
+              <span class="text-xs text-gray-400">PNG, SVG — до 2 МБ</span>
+              <input id="stamp-sig-input" name="stamp-sig" type="file" accept="image/png,image/svg+xml" class="sr-only" />
+            </label>
+            <div class="mt-4 flex items-center justify-end gap-2 pt-4 border-t border-gray-200">
+              <button type="button" id="stamp-sig-remove" class="hidden h-9 px-3 rounded-lg border border-rose-200 text-sm text-rose-700 hover:bg-rose-50">Удалить</button>
+              <button type="button" id="stamp-sig-save" class="h-9 px-4 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm opacity-40" disabled>Сохранить</button>
+            </div>
+          </article>
+
+          <!-- Карточка: Печать -->
+          <article class="bg-white rounded-xl border border-gray-200 p-6">
+            <div class="flex items-start justify-between gap-3 mb-5">
+              <div>
+                <h2 class="text-base font-medium text-gray-900">Печать</h2>
+                <p class="text-sm text-gray-500 mt-0.5">PNG или SVG с прозрачным фоном, до 2 МБ</p>
+              </div>
+              <span id="stamp-seal-badge" class="hidden inline-flex items-center gap-1.5 text-xs text-emerald-600 shrink-0">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                Загружена
+              </span>
+            </div>
+            <div id="stamp-seal-preview-wrap" class="hidden mb-4 flex items-center justify-center rounded-xl border border-gray-200 bg-gray-50 p-4 min-h-[8rem]">
+              <img id="stamp-seal-preview" src="" alt="Превью печати" class="max-h-28 max-w-full object-contain" />
+            </div>
+            <label for="stamp-seal-input"
+                   class="flex flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed border-gray-200 hover:border-indigo-400 transition-colors cursor-pointer p-8 text-center">
+              <svg class="w-8 h-8 text-gray-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5V19a2 2 0 002 2h14a2 2 0 002-2v-2.5M16 12l-4-4-4 4M12 8v8"/></svg>
+              <span class="text-sm text-gray-500">Перетащите файл или <span class="text-indigo-600 font-medium underline">выберите</span></span>
+              <span class="text-xs text-gray-400">PNG, SVG — до 2 МБ</span>
+              <input id="stamp-seal-input" name="stamp-seal" type="file" accept="image/png,image/svg+xml" class="sr-only" />
+            </label>
+            <div class="mt-4 flex items-center justify-end gap-2 pt-4 border-t border-gray-200">
+              <button type="button" id="stamp-seal-remove" class="hidden h-9 px-3 rounded-lg border border-rose-200 text-sm text-rose-700 hover:bg-rose-50">Удалить</button>
+              <button type="button" id="stamp-seal-save" class="h-9 px-4 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm opacity-40" disabled>Сохранить</button>
+            </div>
+          </article>
+
+        </div>
+
+        <div id="stamp-toast" role="status" aria-live="polite"
+             class="hidden fixed bottom-5 right-5 z-50 flex items-center gap-3 px-4 py-3 bg-gray-900 text-white rounded-xl shadow-2xl text-sm font-medium">
+          <svg class="w-4 h-4 text-emerald-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+          Сохранено
         </div>
       </section>
 
@@ -718,8 +794,12 @@
           }
           tabs.forEach(function (btn) { btn.addEventListener('click', function () { activate(btn.getAttribute('data-tab')); }); });
         }
-        if (!document.getElementById('page-source')) { initSettingsTabs(); }
-        else { document.addEventListener('layout:ready', initSettingsTabs, { once: true }); }
+        function tryInit() {
+          if (document.querySelector('#settings-tablist .settings-tab')) { initSettingsTabs(); }
+          else { document.addEventListener('layout:ready', initSettingsTabs, { once: true }); }
+        }
+        if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', tryInit); }
+        else { tryInit(); }
       })();
     </script>
 
@@ -777,6 +857,67 @@
         }
         if (!document.getElementById('page-source')) { initBranding(); }
         else { document.addEventListener('layout:ready', initBranding, { once: true }); }
+      })();
+    </script>
+    <script>
+      (function () {
+        var MAX_BYTES = 2 * 1024 * 1024;
+        function initStamp() {
+          function setup(inputId, previewId, wrapId, badgeId, saveId, removeId, key) {
+            var inp  = document.getElementById(inputId);
+            var prev = document.getElementById(previewId);
+            var wrap = document.getElementById(wrapId);
+            var badge= document.getElementById(badgeId);
+            var save = document.getElementById(saveId);
+            var rem  = document.getElementById(removeId);
+            var toast= document.getElementById('stamp-toast');
+            if (!inp || !prev || !wrap || !badge || !save || !rem) return;
+            function show(url) {
+              prev.src = url;
+              wrap.classList.remove('hidden');
+              badge.classList.remove('hidden');
+              save.removeAttribute('disabled');
+              save.classList.remove('opacity-40');
+              rem.classList.remove('hidden');
+            }
+            function clear() {
+              prev.src = '';
+              wrap.classList.add('hidden');
+              badge.classList.add('hidden');
+              save.setAttribute('disabled', '');
+              save.classList.add('opacity-40');
+              rem.classList.add('hidden');
+            }
+            var stored = localStorage.getItem(key);
+            if (stored) { show(stored); }
+            inp.addEventListener('change', function () {
+              var file = inp.files && inp.files[0];
+              if (!file) return;
+              if (file.size > MAX_BYTES) { alert('Файл превышает 2 МБ'); inp.value = ''; return; }
+              var r = new FileReader();
+              r.onload = function (e) { show(e.target.result); };
+              r.readAsDataURL(file);
+            });
+            save.addEventListener('click', function () {
+              if (!prev.src) return;
+              try { localStorage.setItem(key, prev.src); } catch (e) { alert('Не удалось сохранить: превышен лимит хранилища'); return; }
+              if (toast) { toast.classList.remove('hidden'); setTimeout(function () { toast.classList.add('hidden'); }, 2500); }
+            });
+            rem.addEventListener('click', function () {
+              localStorage.removeItem(key);
+              inp.value = '';
+              clear();
+            });
+          }
+          setup('stamp-sig-input',  'stamp-sig-preview',  'stamp-sig-preview-wrap',  'stamp-sig-badge',  'stamp-sig-save',  'stamp-sig-remove',  'yurclick_stamp_sig');
+          setup('stamp-seal-input', 'stamp-seal-preview', 'stamp-seal-preview-wrap', 'stamp-seal-badge', 'stamp-seal-save', 'stamp-seal-remove', 'yurclick_stamp_seal');
+        }
+        function tryInitStamp() {
+          if (document.getElementById('stamp-sig-input')) { initStamp(); }
+          else { document.addEventListener('layout:ready', initStamp, { once: true }); }
+        }
+        if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', tryInitStamp); }
+        else { tryInitStamp(); }
       })();
     </script>
     <script src="assets/layout.js"></script>
